@@ -1,0 +1,46 @@
+/* styles.css */
+
+/* Styling form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Styling card */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling card body */
+.card-body {
+  padding: 30px;
+}
+
+/* Styling label */
+.label-text {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Styling input */
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Styling primary button */
+.btn-primary {
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for primary button */
+.btn-primary:hover {
+  background-color: #0056b3;
+}
