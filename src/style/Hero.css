@@ -1,7 +1,10 @@
+/* Hero.css */
+
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+  padding: 10px; /* Mengurangi padding pada card */
 }
 
 .card:hover {
@@ -16,4 +19,20 @@
 .btn-primary:hover {
   background-color: #0056b3;
   border-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .card {
+    font-size: 14px; /* Mengurangi ukuran font pada card */
+    padding: 8px; /* Menyesuaikan padding yang lebih kecil pada card */
+  }
+
+  .card-title {
+    font-size: 16px; /* Mengurangi ukuran font pada judul card */
+  }
+
+  .btn-primary {
+    padding: 0.25rem 0.5rem; /* Mengurangi padding tombol */
+    font-size: 12px; /* Mengurangi ukuran font pada tombol */
+  }
 }

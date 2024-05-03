@@ -10,7 +10,7 @@ const TambahOrder = () => {
             <div className="container">
                 <div className="card">
                     <div className="card-body">
-                        <h2 className="card-title mb-5">Tambah Orderan</h2>
+                        <h2 className="card-title mb-5">Paket Tersedia</h2>
                         <Link to="/dashboard" className="btn btn-primary btn-sm btn-kembali">Kembali</Link>
                         <h5 className="text-center">Pilih Paket</h5>
                         <div className="row mt-3">

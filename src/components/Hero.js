@@ -12,8 +12,8 @@ const Hero = () => {
             </div>
             <div className="row">
                 <div className="col-md-4">
-                    <Link to="/jumlah-karyawan" className="text-decoration-none text-dark">
-                        <div className="card mb-3">
+                    <Link to="/jumlah_karyawan" className="text-decoration-none text-dark">
+                        <div className="card mb-3 p-3">
                             <div className="card-body text-center">
                                 <h5 className="card-title">Jumlah Karyawan</h5>
                                 <p className="card-text">100</p>
@@ -22,8 +22,8 @@ const Hero = () => {
                     </Link>
                 </div>
                 <div className="col-md-4">
-                    <Link to="/total-orderan" className="text-decoration-none text-dark">
-                        <div className="card mb-3">
+                    <Link to="/total_orderan" className="text-decoration-none text-dark">
+                        <div className="card mb-3 p-3">
                             <div className="card-body text-center">
                                 <h5 className="card-title">Total Orderan</h5>
                                 <p className="card-text">500</p>
@@ -32,8 +32,8 @@ const Hero = () => {
                     </Link>
                 </div>
                 <div className="col-md-4">
-                    <Link to="/jumlah-paket-tersedia" className="text-decoration-none text-dark">
-                        <div className="card mb-3">
+                    <Link to="/paket_tersedia" className="text-decoration-none text-dark">
+                        <div className="card mb-3 p-3">
                             <div className="card-body text-center">
                                 <h5 className="card-title">Jumlah Paket Tersedia</h5>
                                 <p className="card-text">200</p>

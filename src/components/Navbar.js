@@ -9,10 +9,15 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
+    const logout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-orange">
-            <div className="container">
-                <Link className="navbar-brand text-white mx-auto" to="/">Bingo Laundry</Link>
+            <div className="full-width d-flex justify-content-between m-lg-2">
+                <Link className="navbar-brand text-white" to="/">Bingo Laundry</Link>
                 <button className="navbar-toggler" type="button" onClick={toggleNavbar}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -35,6 +40,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
+                <button className='btn btn-danger' onClick={logout}>Logout</button>
             </div>
         </nav>
     );

@@ -30,17 +30,24 @@ const Login = () => {
         }
         axios.post('http://localhost:5000/login', data)
         .then(response => {
+            console.log(response)
             if(response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 navigate('/dashboard'); 
             }
         })
-        .catch(e => {
-            setError(e.response.data.errors);
+        .catch(error => {
+            console.log(error.response.data.message)
+            setError(error.response.data.message);
         })
-        .catch(valid => {
-            SetValid(valid.response.data.message);
-        })
+        // .catch(e => {
+        //     console.log(e.response.data.message)
+        //     setError(e.response.data.message);
+        // })
+        // .catch(valid => {
+        //     console.log(valid)
+        //     SetValid(valid.response.data.message);
+        // })
     }
 
     return (
