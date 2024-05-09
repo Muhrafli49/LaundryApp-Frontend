@@ -11,7 +11,7 @@ const Dashboard = () => {
     } 
 
     return (
-        <div>
+        <div className='w-full h-full min-h-screen' style={{ backgroundColor: '#FFFDEF' }}>
             <Navbar />
             <HeroSection />
             <OrderTable/>

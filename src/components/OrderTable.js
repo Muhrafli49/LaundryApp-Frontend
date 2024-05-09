@@ -1,5 +1,4 @@
 import React from 'react';
-import '../style/OrderTable.css';
 
 const OrderTable = () => {
     // Data dummy untuk rekapan orderan
@@ -11,41 +10,38 @@ const OrderTable = () => {
 
     return (
         <div className="container mt-4">
-            <div className="card">
-                <div className="card-body">
-                    <h3 className="mb-3">Rekap Orderan</h3>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>No Order</th>
-                                <th>Tanggal Order</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Jenis Paket</th>
-                                <th>Waktu Kerja</th>
-                                <th>Berat (kg)</th>
-                                <th>Aksi</th>
+            <div className="overflow-x-auto">
+                <table className="w-full table-auto">
+                    <thead>
+                        <tr className="text-left bg-gray-200">
+                            <th className="px-4 py-2">No</th>
+                            <th className="px-4 py-2">No Order</th>
+                            <th className="px-4 py-2">Tanggal Order</th>
+                            <th className="px-4 py-2">Nama Pelanggan</th>
+                            <th className="px-4 py-2">Jenis Paket</th>
+                            <th className="px-4 py-2">Waktu Kerja</th>
+                            <th className="px-4 py-2">Berat (kg)</th>
+                            <th className="px-4 py-2">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.map((order, index) => (
+                            <tr key={order.noOrder} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                                <td className="px-4 py-2">{order.no}</td>
+                                <td className="px-4 py-2">{order.noOrder}</td>
+                                <td className="px-4 py-2">{order.tglOrder}</td>
+                                <td className="px-4 py-2">{order.namaPelanggan}</td>
+                                <td className="px-4 py-2">{order.jenisPaket}</td>
+                                <td className="px-4 py-2">{order.waktuKerja}</td>
+                                <td className="px-4 py-2">{order.berat}</td>
+                                <td className="px-4 py-2 flex space-x-2">
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Detail</button>
+                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Hapus</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {orders.map(order => (
-                                <tr key={order.noOrder}>
-                                    <td>{order.no}</td>
-                                    <td>{order.noOrder}</td>
-                                    <td>{order.tglOrder}</td>
-                                    <td>{order.namaPelanggan}</td>
-                                    <td>{order.jenisPaket}</td>
-                                    <td>{order.waktuKerja}</td>
-                                    <td>{order.berat}</td>
-                                    <td className="btn-group">
-                                        <button className="btn btn-primary btn-md p-2">Detail</button>
-                                        <button className="btn btn-danger btn-md p-2">Hapus</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

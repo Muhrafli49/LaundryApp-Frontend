@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './layouts/Dashboard';
-import PaketTersedia from './layouts/PaketTersedia';
+import PaketTersedia from './layanan/PaketTersedia';
 import PaketExpress from './layanan/PaketExpress';
 import PaketReguler from './layanan/PaketReguler';
 import PaketSetrika from './layanan/PaketSetrika';
-import JumlahKaryawan from './layouts/JumlahKaryawan';
-import TotalOrderan from './layouts/TotalOrderan';
+import JumlahKaryawan from './admin/JumlahKaryawan';
+import RiwayatTransaksi from './layanan/RiwayatTransaksi';
 import TambahOrder from './pages/TambahOrderan';
 import FormOrderExpress from './pages/Form/FormOrderExpress';
 
@@ -25,7 +25,7 @@ function App() {
         <Route path='/paket_reguler' element={<PaketReguler />} />
         <Route path='/paket_setrika' element={<PaketSetrika />} />
         <Route path='/jumlah_karyawan' element={<JumlahKaryawan />} />
-        <Route path='/total_orderan' element={<TotalOrderan />} />
+        <Route path='/riwayat_transaksi' element={<RiwayatTransaksi />} />
         <Route path='/tambah_orderan' element={<TambahOrder />} />
         <Route path='/form_order_express'element={<FormOrderExpress/>}/>
       </Routes>

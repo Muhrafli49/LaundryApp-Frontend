@@ -16,7 +16,7 @@ const TotalOrderan = () => {
             <div className="container mt-4">
                 <div className="card">
                     <div className="card-body">
-                        <h3 className="card-title mb-5">Total Orderan</h3>
+                        <h3 className="card-title mb-5">Riwayat Transaksi</h3>
                         <Link to="/dashboard" className="btn btn-primary btn-sm btn-kembali">Kembali</Link>
                         <table className="table">
                             <thead>
