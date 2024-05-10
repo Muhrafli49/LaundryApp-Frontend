@@ -26,7 +26,7 @@ const OrderTable = () => {
                     </thead>
                     <tbody>
                         {orders.map((order, index) => (
-                            <tr key={order.noOrder} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                            <tr key={order.noOrder} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-300'}>
                                 <td className="px-4 py-2">{order.no}</td>
                                 <td className="px-4 py-2">{order.noOrder}</td>
                                 <td className="px-4 py-2">{order.tglOrder}</td>

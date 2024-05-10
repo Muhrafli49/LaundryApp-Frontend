@@ -34,7 +34,7 @@ const Navbar = () => {
                         <button className="btn btn-danger" onClick={logout}>Logout</button>
                     </div>
                     <div className="md:hidden">
-                        <button onClick={toggleNavbar} type="button" className="inline-flex items-center justify-center p-2 text-white hover:bg-slate-500 focus:outline-none focus:bg-gray-700">
+                        <button onClick={toggleNavbar} type="button" className="inline-flex items-center justify-center p-2 text-white hover:bg-slate-400 focus:outline-none focus:bg-gray-700">
                             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>

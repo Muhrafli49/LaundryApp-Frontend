@@ -9,8 +9,10 @@ import PaketReguler from './layanan/PaketReguler';
 import PaketSetrika from './layanan/PaketSetrika';
 import JumlahKaryawan from './admin/JumlahKaryawan';
 import RiwayatTransaksi from './layanan/RiwayatTransaksi';
-import TambahOrder from './pages/TambahOrderan';
+import TambahOrder from './layanan/TambahOrderan';
 import FormOrderExpress from './pages/Form/FormOrderExpress';
+import FormOrderReguler from './pages/Form/FormOrderReguler';
+import FormOrderSetrika from './pages/Form/FormOrderSetrika';
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
         <Route path='/riwayat_transaksi' element={<RiwayatTransaksi />} />
         <Route path='/tambah_orderan' element={<TambahOrder />} />
         <Route path='/form_order_express'element={<FormOrderExpress/>}/>
+        <Route path='/form_order_reguler'element={<FormOrderReguler/>}/>
+        <Route path='/form_order_setrika'element={<FormOrderSetrika/>}/>
       </Routes>
     </div>
   );

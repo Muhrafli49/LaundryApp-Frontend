@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 
-const FormOrderExpress = () => {
-        const initialFormData = {
-            namaPelangganExp: "",
-            nomorTeleponExp: "",
-            alamatExp: "",
-            paketExp: "",
-            hargaPerKgExp: "",
-            beratExp: "",
-            waktuKerjaExp: "",
-            tglOrderExp: "",
-            tglSelesaiExp: "",
-            keteranganExp: "",
-            totalBayarExp: ""
-        };
+const FormOrderReguler = () => {
+    const initialFormData = {
+        namaPelangganReg: "",
+        nomorTeleponReg: "",
+        alamatReg: "",
+        paketReg: "",
+        hargaPerKgReg: "",
+        beratReg: "",
+        waktuKerjaReg: "",
+        tglOrderReg: "",
+        tglSelesaiReg: "",
+        keteranganReg: "",
+        totalBayarReg: ""
+    };
 
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
@@ -28,7 +28,7 @@ const FormOrderExpress = () => {
             [name]: value
         });
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault(); 
 
@@ -39,8 +39,7 @@ const FormOrderExpress = () => {
                 return; 
             }
         }
-
-        axios.post("http://localhost:5000/order_exp/tambah_order", formData)
+        axios.post("http://localhost:5000/order_reg/tambah_order", formData)
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData); 
@@ -56,9 +55,9 @@ const FormOrderExpress = () => {
             });
     };
 
-        const handleCancel = () => {
-            setFormData(initialFormData); 
-        };
+    const handleCancel = () => {
+        setFormData(initialFormData); 
+    };
 
 
     return (
@@ -66,7 +65,7 @@ const FormOrderExpress = () => {
             <Navbar />
             <div className="max-w-3xl mx-auto mt-5">
                 <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative">
-                    <h2 className="text-xl font-semibold mb-4 text-center">Form Order Express</h2>
+                    <h2 className="text-xl font-semibold mb-4 text-center">Form Order Reguler</h2>
                     {error && <p className="text-red-500">{error}</p>}
                     {showNotification && (
                         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
@@ -76,23 +75,23 @@ const FormOrderExpress = () => {
                     <form id="orderForm" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-2">
                             <div className="mb-2">
-                                <label htmlFor="namaPelangganExp" className="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
+                                <label htmlFor="namaPelangganReg" className="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
                                 <input 
                                     type="text" 
-                                    id="namaPelangganExp" 
-                                    name="namaPelangganExp" 
-                                    value={formData.namaPelangganExp} 
+                                    id="namaPelangganReg" 
+                                    name="namaPelangganReg" 
+                                    value={formData.namaPelangganReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="nomorTeleponExp" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                                <label htmlFor="nomorTeleponReg" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                                 <input 
                                     type="int"
-                                    id="nomorTeleponExp" 
-                                    name="nomorTeleponExp" 
-                                    value={formData.nomorTeleponExp} 
+                                    id="nomorTeleponReg" 
+                                    name="nomorTeleponReg" 
+                                    value={formData.nomorTeleponReg} 
                                     onChange={handleChange} 
                                     maxLength={13} 
                                     pattern="[0-9]*" 
@@ -100,33 +99,33 @@ const FormOrderExpress = () => {
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="alamatExp" className="block text-sm font-medium text-gray-700">Alamat</label>
+                                <label htmlFor="alamatReg" className="block text-sm font-medium text-gray-700">Alamat</label>
                                 <textarea 
-                                    id="alamatExp" 
-                                    name="alamatExp" 
-                                    value={formData.alamatExp} 
+                                    id="alamatReg" 
+                                    name="alamatReg" 
+                                    value={formData.alamatReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="hargaPerKgExp" className="block text-sm font-medium text-gray-700">Harga Per Kg</label>
+                                <label htmlFor="hargaPerKgReg" className="block text-sm font-medium text-gray-700">Harga Per Kg</label>
                                 <input 
                                     type="text" 
-                                    id="hargaPerKgExp" 
-                                    name="hargaPerKgExp" 
-                                    value={formData.hargaPerKgExp} 
+                                    id="hargaPerKgReg" 
+                                    name="hargaPerKgReg" 
+                                    value={formData.hargaPerKgReg} 
                                     onChange={handleChange} 
                                     // disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200"
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="paketExp" className="block text-sm font-medium text-gray-700">Paket</label>
+                                <label htmlFor="paketReg" className="block text-sm font-medium text-gray-700">Paket</label>
                                 <select
-                                    id="paketExp"
-                                    name="paketExp"
-                                    value={formData.paketExp}
+                                    id="paketReg"
+                                    name="paketReg"
+                                    value={formData.paketReg}
                                     onChange={handleChange}
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                     <option value="">Pilih Paket</option>
@@ -136,67 +135,67 @@ const FormOrderExpress = () => {
                                 </select>
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="beratExp" className="block text-sm font-medium text-gray-700">Berat</label>
+                                <label htmlFor="beratReg" className="block text-sm font-medium text-gray-700">Berat</label>
                                 <input 
                                     type="text" 
-                                    id="beratExp" 
-                                    name="beratExp" 
-                                    value={formData.beratExp} 
+                                    id="beratReg" 
+                                    name="beratReg" 
+                                    value={formData.beratReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="waktuKerjaExp" className="block text-sm font-medium text-gray-700">Waktu Kerja</label>
+                                <label htmlFor="waktuKerjaReg" className="block text-sm font-medium text-gray-700">Waktu Kerja</label>
                                 <input 
                                     type="text" 
-                                    id="waktuKerjaExp" 
-                                    name="waktuKerjaExp" 
-                                    value={formData.waktuKerjaExp} 
+                                    id="waktuKerjaReg" 
+                                    name="waktuKerjaReg" 
+                                    value={formData.waktuKerjaReg} 
                                     onChange={handleChange}
                                     // disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="tglOrderExp" className="block text-sm font-medium text-gray-700">Tanggal Order</label>
+                                <label htmlFor="tglOrderReg" className="block text-sm font-medium text-gray-700">Tanggal Order</label>
                                 <input 
                                     type="date" 
-                                    id="tglOrderExp" 
-                                    name="tglOrderExp" 
-                                    value={formData.tglOrderExp} 
+                                    id="tglOrderReg" 
+                                    name="tglOrderReg" 
+                                    value={formData.tglOrderReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="tglSelesaiExp" className="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
+                                <label htmlFor="tglSelesaiReg" className="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
                                 <input 
                                     type="date" 
-                                    id="tglSelesaiExp" 
-                                    name="tglSelesaiExp" 
-                                    value={formData.tglSelesaiExp} 
+                                    id="tglSelesaiReg" 
+                                    name="tglSelesaiReg" 
+                                    value={formData.tglSelesaiReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="keteranganExp" className="block text-sm font-medium text-gray-700">Keterangan</label>
+                                <label htmlFor="keteranganReg" className="block text-sm font-medium text-gray-700">Keterangan</label>
                                 <textarea
-                                    id="keteranganExp" 
-                                    name="keteranganExp" 
-                                    value={formData.keteranganExp} 
+                                    id="keteranganReg" 
+                                    name="keteranganReg" 
+                                    value={formData.keteranganReg} 
                                     onChange={handleChange} 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="totalBayarExp" className="block text-sm font-medium text-gray-700">Total Bayar</label>
+                                <label htmlFor="totalBayarReg" className="block text-sm font-medium text-gray-700">Total Bayar</label>
                                 <input 
                                     type="text" 
-                                    id="totalBayarExp" 
-                                    name="totalBayarExp" 
-                                    value={formData.totalBayarExp} 
+                                    id="totalBayarReg" 
+                                    name="totalBayarReg" 
+                                    value={formData.totalBayarReg} 
                                     onChange={handleChange}
                                     // disabled   
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
@@ -210,7 +209,7 @@ const FormOrderExpress = () => {
                             <button type="button" className="px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none focus:bg-slate-500" onClick={handleCancel}>
                                 Batal
                             </button>
-                        </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -218,6 +217,8 @@ const FormOrderExpress = () => {
             </br>
         </div>
     );
+    
+
 };
 
-export default FormOrderExpress;
+export default FormOrderReguler;
