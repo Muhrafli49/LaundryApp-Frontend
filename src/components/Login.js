@@ -7,6 +7,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
@@ -19,6 +20,7 @@ const Login = () => {
     }
 
     const submitLogin = () => {
+        setIsLoading(true);
         const data = {
             username: username,
             password: password
@@ -27,12 +29,17 @@ const Login = () => {
         .then(response => {
             if(response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                navigate('/dashboard'); 
+                setTimeout(() => {
+                    navigate('/dashboard'); 
+                }, 1500);
             }
         })
         .catch(error => {
             setError(error.response.data.message);
         })
+        .finally(() => {
+            setIsLoading(false);
+        });
     }
 
     return (
@@ -62,8 +69,15 @@ const Login = () => {
                                 placeholder="Password" value={password} onChange={onChangePassword}/>
                         </div>
                         <div className="flex items-center justify-center">
-                            <button type="submit" className="text-white font-bold text-lg py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300 ease-in-out transform hover:bg-customBlueHover hover:scale-105" style={{ backgroundColor: '#ED9455', height: '3rem' }}>
-                                <span className="relative top-0.5">Login</span>
+                            <button type="submit" disabled={isLoading} className={`${isLoading ? 'opacity-50 cursor-not-allowed' : ''} text-white font-bold text-lg py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300 ease-in-out transform hover:bg-customBlueHover hover:scale-105`} style={{ backgroundColor: '#ED9455', height: '3rem' }}>
+                                {isLoading ? (
+                                    <svg className="animate-spin h-5 w-5 mr-3 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.008 8.008 0 014 12H0c0 4.418 3.582 8 8 8v-4zm14-8a8.008 8.008 0 01-4 6.928V20c4.418 0 8-3.582 8-8h-4zm-2-5.291A8.008 8.008 0 0120 12h4c0-4.427-3.584-8-8-8v4z"></path>
+                                    </svg>
+                                ) : (
+                                    <span>Login</span>
+                                )}
                             </button>
                         </div>
                     </form>

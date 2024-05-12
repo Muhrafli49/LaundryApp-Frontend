@@ -48,7 +48,7 @@ const FormOrderExpress = () => {
                 setShowNotification(true); 
                 setTimeout(() => {
                     setShowNotification(false); // 
-                }, 4000);
+                }, 2500);
             })
             .catch(error => {
                 console.error("Error submitting form:", error);

@@ -13,6 +13,8 @@ import TambahOrder from './layanan/TambahOrderan';
 import FormOrderExpress from './pages/Form/FormOrderExpress';
 import FormOrderReguler from './pages/Form/FormOrderReguler';
 import FormOrderSetrika from './pages/Form/FormOrderSetrika';
+import FormPengajuanBarang from './pages/Form/FormPengajuan';
+import PengajuanBarang from './layanan/PengajuanBarang';
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
         <Route path='/form_order_express'element={<FormOrderExpress/>}/>
         <Route path='/form_order_reguler'element={<FormOrderReguler/>}/>
         <Route path='/form_order_setrika'element={<FormOrderSetrika/>}/>
+        <Route path='/pengajuan_barang'element={<PengajuanBarang/>}/>
+        <Route path='/form_pengajuan'element={<FormPengajuanBarang/>}/>
       </Routes>
     </div>
   );
