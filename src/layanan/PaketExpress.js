@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const PaketExpress = () => {
-    // Data dummy untuk rekapan orderan
-    const orders = [
-        { no: 1, namaPaket: 'Cuci Setrika', waktuKerja: '1 hari', beratMin: '5 kg', tarif: '$10' },
-        { no: 2, namaPaket: 'Cuci Kering', waktuKerja: '2 hari', beratMin: '3 kg', tarif: '$15' },
-        { no: 3, namaPaket: 'Cuci Lipat', waktuKerja: '1 hari', beratMin: '4 kg', tarif: '$12' },
-    ];
+    // State untuk menyimpan data paket express
+    const [paketExpress, setPaketExpress] = useState([]);
+
+    // Gunakan useEffect untuk mengambil data paket express dari API saat komponen dimuat
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    // Fungsi untuk mengambil data paket express dari API
+    const fetchData = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/pkt_express");
+            setPaketExpress(response.data.data);
+        } catch (error) {
+            console.error("Error fetching paket express:", error);
+        }
+    };
 
     return (
-        <div>
+        <div className="w-full h-full min-h-screen bg-yellow-50">
             <Navbar />
             <div className="container mx-auto">
                 <div className="card mt-8 rounded-md">
@@ -26,28 +38,23 @@ const PaketExpress = () => {
                             </div>
                         </div>
                         <table className="min-w-full border">
-                            <thead>
+                            <thead className="bg-slate-500 text-white font-semibold ">
                                 <tr>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Paket</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waktu Kerja</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Berat Min(Kg)</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarif</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">No</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Nama Paket</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Waktu Kerja</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Berat Min(Kg)</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Harga/Kg</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {orders.map(order => (
-                                    <tr key={order.no} className="border-b">
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.no}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.namaPaket}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.waktuKerja}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.beratMin}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.tarif}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <button className="btn btn-primary btn-md p-2">Edit</button>
-                                            <button className="btn btn-danger btn-md p-2">Hapus</button>
-                                        </td>
+                                {paketExpress.map((paket, index) => (
+                                    <tr key={paket._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                                        <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{paket.namaPaket}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{paket.waktuKerja} Jam</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{paket.beratMin}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">Rp. {paket.harga}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -1,25 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 
 const FormOrderExpress = () => {
-        const initialFormData = {
-            namaPelangganExp: "",
-            nomorTeleponExp: "",
-            alamatExp: "",
-            paketExp: "",
-            hargaPerKgExp: "",
-            beratExp: "",
-            waktuKerjaExp: "",
-            tglOrderExp: "",
-            tglSelesaiExp: "",
-            keteranganExp: "",
-            totalBayarExp: ""
-        };
+    const initialFormData = {
+        namaPelangganExp: "",
+        nomorTeleponExp: "",
+        alamatExp: "",
+        paketExp: "", 
+        hargaPerKgExp: 0, 
+        beratExp: "",
+        waktuKerjaExp: 0, 
+        tglOrderExp: "",
+        tglSelesaiExp: "",
+        keteranganExp: "",
+        totalBayarExp: ""
+    };
 
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    const [paketOptions, setPaketOptions] = useState([]); // Tambah state untuk menyimpan opsi paket
+
+    useEffect(() => {
+        fetchPaketOptions();
+    }, []);
+
+    // Mengambil opsi paket dari API
+    const fetchPaketOptions = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/pkt_express");
+            setPaketOptions(response.data.data);
+        } catch (error) {
+            console.error("Error fetching paket options:", error);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,39 +42,69 @@ const FormOrderExpress = () => {
             ...formData,
             [name]: value
         });
+
+        // Jika nama paket dipilih, isi waktu kerja dan harga per kg sesuai dengan paket yang dipilih
+        if (name === 'paketExp') {
+            const selectedPaket = paketOptions.find(paket => paket._id === value);
+            if (selectedPaket) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    waktuKerjaExp: selectedPaket.waktuKerja,
+                    hargaPerKgExp: selectedPaket.harga
+                }));
+            }
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         
         for (const key in formData) {
-            if (formData[key] === "") {
+            if (key !== "totalBayarExp" && formData[key] === "") {
                 alert("Semua field harus diisi");
                 return; 
             }
         }
-
-        axios.post("http://localhost:5000/order_exp/tambah_order", formData)
-            .then(response => {
-                console.log("Response from API:", response.data);
-                setFormData(initialFormData); 
-                setError(''); 
-                setShowNotification(true); 
-                setTimeout(() => {
-                    setShowNotification(false); // 
-                }, 2500);
-            })
-            .catch(error => {
-                console.error("Error submitting form:", error);
-                setError(error.response.data.message);
+    
+        // Hitung total bayar berdasarkan harga per kg dan berat
+        const totalBayar = formData.hargaPerKgExp * formData.beratExp;
+        setFormData(prevState => ({
+            ...prevState,
+            totalBayarExp: totalBayar
+        }));
+    
+        try {
+            // Dapatkan nama paket berdasarkan ID yang dipilih dari formData
+            const selectedPaket = paketOptions.find(paket => paket._id === formData.paketExp);
+            if (!selectedPaket) {
+                // Jika tidak ada paket yang sesuai, tangani kesalahan atau kembali
+                return;
+            }
+    
+            // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
+            await axios.post("http://localhost:5000/order_exp/tambah_order", {
+                ...formData,
+                paketExp: selectedPaket.namaPaket, // Kirim nama paket sebagai gantinya
+                totalBayarExp: totalBayar
             });
+    
+            // Setelah berhasil, atur kembali formData dan tampilkan notifikasi
+            setFormData(initialFormData);
+            setError('');
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 2500);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            setError(error.response.data.message);
+        }
     };
+    
 
-        const handleCancel = () => {
-            setFormData(initialFormData); 
-        };
-
+    const handleCancel = () => {
+        setFormData(initialFormData);
+    };
 
     return (
         <div className="bg-yellow-50 min-h-screen">
@@ -117,7 +162,7 @@ const FormOrderExpress = () => {
                                     name="hargaPerKgExp" 
                                     value={formData.hargaPerKgExp} 
                                     onChange={handleChange} 
-                                    // disabled 
+                                    disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200"
                                 />
                             </div>
@@ -130,9 +175,9 @@ const FormOrderExpress = () => {
                                     onChange={handleChange}
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                     <option value="">Pilih Paket</option>
-                                    <option value="Paket A">Paket A</option>
-                                    <option value="Paket B">Paket B</option>
-                                    <option value="Paket C">Paket C</option>
+                                    {paketOptions.map((paket, index) => (
+                                        <option key={index} value={paket._id}>{paket.namaPaket}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="mb-2">
@@ -147,14 +192,14 @@ const FormOrderExpress = () => {
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="waktuKerjaExp" className="block text-sm font-medium text-gray-700">Waktu Kerja</label>
+                                <label htmlFor="waktuKerjaExp" className="block text-sm font-medium text-gray-700">Waktu Kerja (Jam)</label>
                                 <input 
                                     type="text" 
                                     id="waktuKerjaExp" 
                                     name="waktuKerjaExp" 
                                     value={formData.waktuKerjaExp} 
                                     onChange={handleChange}
-                                    // disabled 
+                                    disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
                                 />
                             </div>
@@ -196,9 +241,9 @@ const FormOrderExpress = () => {
                                     type="text" 
                                     id="totalBayarExp" 
                                     name="totalBayarExp" 
-                                    value={formData.totalBayarExp} 
+                                    value={formData.hargaPerKgExp * formData.beratExp} 
                                     onChange={handleChange}
-                                    // disabled   
+                                    disabled   
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
                                 />
                             </div>
@@ -214,8 +259,6 @@ const FormOrderExpress = () => {
                     </form>
                 </div>
             </div>
-            <br>
-            </br>
         </div>
     );
 };

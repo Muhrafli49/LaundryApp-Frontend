@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 
@@ -8,9 +8,9 @@ const FormOrderReguler = () => {
         nomorTeleponReg: "",
         alamatReg: "",
         paketReg: "",
-        hargaPerKgReg: "",
+        hargaPerKgReg: 0,
         beratReg: "",
-        waktuKerjaReg: "",
+        waktuKerjaReg: 0,
         tglOrderReg: "",
         tglSelesaiReg: "",
         keteranganReg: "",
@@ -20,39 +20,82 @@ const FormOrderReguler = () => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    const [paketOptions, setPaketOptions] = useState([]);
 
+    useEffect(() => {
+        fetchPaketOptions();
+    }, []);
+
+    const fetchPaketOptions = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/pkt_reguler");
+            setPaketOptions(response.data.data);
+        } catch (error) {
+            console.error("Error fetching paket options:", error);
+        }
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
+
+        if (name === 'paketReg') {
+            const selectedPaket = paketOptions.find(paket => paket._id === value);
+            if (selectedPaket) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    waktuKerjaReg: selectedPaket.waktuKerja,
+                    hargaPerKgReg: selectedPaket.harga
+                }));
+            }
+        }
     };
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); 
 
         
         for (const key in formData) {
-            if (formData[key] === "") {
+            if (key !== "totalBayarReg" && formData[key] === "") {
                 alert("Semua field harus diisi");
                 return; 
             }
         }
-        axios.post("http://localhost:5000/order_reg/tambah_order", formData)
-            .then(response => {
-                console.log("Response from API:", response.data);
-                setFormData(initialFormData); 
-                setError(''); 
-                setShowNotification(true); 
-                setTimeout(() => {
-                    setShowNotification(false); // 
-                }, 2500);
-            })
-            .catch(error => {
-                console.error("Error submitting form:", error);
-                setError(error.response.data.message);
+
+        const totalBayar = formData.hargaPerKgReg * formData.beratReg;
+        setFormData(prevState => ({
+            ...prevState,
+            totalBayarReg: totalBayar
+        }));
+
+        try {
+            // Dapatkan nama paket berdasarkan ID yang dipilih dari formData
+            const selectedPaket = paketOptions.find(paket => paket._id === formData.paketReg);
+            if (!selectedPaket) {
+                // Jika tidak ada paket yang sesuai, tangani kesalahan atau kembali
+                return;
+            }
+    
+            // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
+            await axios.post("http://localhost:5000/order_Reg/tambah_order", {
+                ...formData,
+                paketReg: selectedPaket.namaPaket, // Kirim nama paket sebagai gantinya
+                totalBayarReg: totalBayar
             });
+    
+            // Setelah berhasil, atur kembali formData dan tampilkan notifikasi
+            setFormData(initialFormData);
+            setError('');
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 2500);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            setError(error.response.data.message);
+        }
     };
 
     const handleCancel = () => {
@@ -116,7 +159,7 @@ const FormOrderReguler = () => {
                                     name="hargaPerKgReg" 
                                     value={formData.hargaPerKgReg} 
                                     onChange={handleChange} 
-                                    // disabled 
+                                    disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200"
                                 />
                             </div>
@@ -129,9 +172,9 @@ const FormOrderReguler = () => {
                                     onChange={handleChange}
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                     <option value="">Pilih Paket</option>
-                                    <option value="Paket A">Paket A</option>
-                                    <option value="Paket B">Paket B</option>
-                                    <option value="Paket C">Paket C</option>
+                                    {paketOptions.map((paket, index) => (
+                                        <option key={index} value={paket._id}>{paket.namaPaket}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="mb-2">
@@ -146,14 +189,14 @@ const FormOrderReguler = () => {
                                 />
                             </div>
                             <div className="mb-2">
-                                <label htmlFor="waktuKerjaReg" className="block text-sm font-medium text-gray-700">Waktu Kerja</label>
+                                <label htmlFor="waktuKerjaReg" className="block text-sm font-medium text-gray-700">Waktu Kerja (Hari)</label>
                                 <input 
                                     type="text" 
                                     id="waktuKerjaReg" 
                                     name="waktuKerjaReg" 
                                     value={formData.waktuKerjaReg} 
                                     onChange={handleChange}
-                                    // disabled 
+                                    disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
                                 />
                             </div>
@@ -195,9 +238,9 @@ const FormOrderReguler = () => {
                                     type="text" 
                                     id="totalBayarReg" 
                                     name="totalBayarReg" 
-                                    value={formData.totalBayarReg} 
+                                    value={formData.hargaPerKgReg * formData.beratReg}
                                     onChange={handleChange}
-                                    // disabled   
+                                    disabled   
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
                                 />
                             </div>

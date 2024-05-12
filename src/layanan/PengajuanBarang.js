@@ -1,14 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PengajuanBarang = () => {
-    // Data dummy untuk daftar pengajuan barang
-    const pengajuanBarang = [
-        { no: 1, jenisBarang: 'Sabun Cuci Pewangi', jumlah: '10', merk: 'ABC', hargaSatuan: 5000, totalHarga: 50000 },
-        { no: 2, jenisBarang: 'Pembersih Lantai', jumlah: '5', merk: 'XYZ', hargaSatuan: 10000, totalHarga: 50000 },
-        { no: 3, jenisBarang: 'Pengharum Ruangan', jumlah: '2', merk: 'DEF', hargaSatuan: 20000, totalHarga: 40000 },
-    ];
+    const [pengajuanBarang, setPengajuanBarang] = useState([]);
+
+    useEffect(() => {
+        // Ambil data pengajuan barang dari API saat komponen dimuat
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios.get("http://localhost:5000/pengajuan")
+            .then(response => {
+                // Tambahkan nomor urut otomatis ke setiap pengajuan
+                const dataWithIndex = response.data.data.map((item, index) => ({
+                    ...item,
+                    noUrut: index + 1
+                }));
+                setPengajuanBarang(dataWithIndex);
+            })
+            .catch(error => {
+                console.error("Error fetching pengajuan barang:", error);
+            });
+    };
+
+    const handleDelete = (id, index) => {
+        if (window.confirm("Apakah Anda yakin ingin menghapus pengajuan ini?")) {
+            axios.delete(`http://localhost:5000/pengajuan/delete/${id}`)
+                .then(response => {
+                    alert("Pengajuan berhasil dihapus.");
+                    // Hapus pengajuan dari state
+                    const updatedPengajuan = [...pengajuanBarang];
+                    updatedPengajuan.splice(index, 1);
+                    setPengajuanBarang(updatedPengajuan);
+                })
+                .catch(error => {
+                    console.error("Error deleting pengajuan:", error);
+                });
+        }
+    };
 
     return (
         <div>
@@ -32,6 +64,7 @@ const PengajuanBarang = () => {
                         <thead>
                             <tr>
                                 <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Pengajuan</th>
                                 <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Barang</th>
                                 <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
                                 <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merk</th>
@@ -41,9 +74,10 @@ const PengajuanBarang = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {pengajuanBarang.map(pengajuan => (
-                                <tr key={pengajuan.no} className="border-b">
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.no}</td>
+                            {pengajuanBarang.map((pengajuan, index) => (
+                                <tr key={pengajuan._id} className="border-b">
+                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noUrut}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noPengajuan}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jenisBarang}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jumlah}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
@@ -51,7 +85,7 @@ const PengajuanBarang = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
                                     <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
                                         <button className="btn btn-primary btn-md p-2">Edit</button>
-                                        <button className="btn btn-danger btn-md p-2">Hapus</button>
+                                        <button className="btn btn-danger btn-md p-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
                                     </td>
                                 </tr>
                             ))}

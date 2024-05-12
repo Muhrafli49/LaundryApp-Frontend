@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../components/Navbar'; 
 import HeroSection from '../components/Hero'; 
 import OrderTable from '../components/OrderTable';
+import OrderTable2 from '../components/OrderTable2';
+import OrderTable3 from '../components/OrderTable3';
 
 const Dashboard = () => {
     const token = localStorage.getItem('token');
@@ -15,6 +17,8 @@ const Dashboard = () => {
             <Navbar />
             <HeroSection />
             <OrderTable/>
+            <OrderTable2/>
+            <OrderTable3/>
         </div>
     );
 }
