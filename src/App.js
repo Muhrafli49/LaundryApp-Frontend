@@ -15,6 +15,9 @@ import FormOrderReguler from './pages/Form/FormOrderReguler';
 import FormOrderSetrika from './pages/Form/FormOrderSetrika';
 import FormPengajuanBarang from './pages/Form/FormPengajuan';
 import PengajuanBarang from './layanan/PengajuanBarang';
+import EditFormPengajuan from './pages/Edit/EditFormPengajuan';
+import DetailOrderExp from './pages/Detail/DetailOrderExp';
+import DetailOrderReg from './pages/Detail/DetailOrderReg';
 
 
 function App() {
@@ -36,6 +39,9 @@ function App() {
         <Route path='/form_order_setrika'element={<FormOrderSetrika/>}/>
         <Route path='/pengajuan_barang'element={<PengajuanBarang/>}/>
         <Route path='/form_pengajuan'element={<FormPengajuanBarang/>}/>
+        <Route path='/edit/form_pengajuan/:id'element={<EditFormPengajuan/>}/>
+        <Route path='/detail/order_exp/:id'element={<DetailOrderExp/>}/>
+        <Route path='/detail/order_reg/:id'element={<DetailOrderReg/>}/>
       </Routes>
     </div>
   );

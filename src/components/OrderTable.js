@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const OrderTable = () => {
     const [orders, setOrders] = useState([]);
@@ -17,14 +18,14 @@ const OrderTable = () => {
         }
     };
 
-    const handleDetail = async (id) => {
-        try {
-            const response = await axios.get(`http://localhost:5000/order_exp/${id}`);
-            alert(JSON.stringify(response.data)); // Tampilkan informasi data pada ID tersebut
-        } catch (error) {
-            console.error('Error fetching order detail:', error);
-        }
-    };
+    // const handleDetail = async (id) => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:5000/order_exp/${id}`);
+    //         alert(JSON.stringify(response.data)); // Tampilkan informasi data pada ID tersebut
+    //     } catch (error) {
+    //         console.error('Error fetching order detail:', error);
+    //     }
+    // };
 
     const handleDelete = async (id) => {
         try {
@@ -64,7 +65,7 @@ const OrderTable = () => {
                                 <td className="px-6 py-3">{order.waktuKerjaExp} Jam</td>
                                 <td className="px-6 py-3">{order.beratExp}</td>
                                 <td className="px-6 py-3 flex space-x-2">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDetail(order._id)}>Detail</button>
+                                <Link to={`/detail/order_exp/${order._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Detail</Link>
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDelete(order._id)}>Hapus</button>
                                 </td>
                             </tr>
