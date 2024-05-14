@@ -37,27 +37,29 @@ const PaketSetrika = () => {
                                 </button>
                             </div>
                         </div>
-                        <table className="min-w-full border">
-                            <thead className="bg-slate-500 text-white font-semibold">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">No</th>
-                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Nama Paket</th>
-                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Waktu Kerja</th>
-                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Berat Min(Kg)</th>
-                                    <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Harga/Kg</th>                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {paketSetrika.map((paket, index) => (
-                                    <tr key={paket._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
-                                        <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{paket.namaPaket}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{paket.waktuKerja}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{paket.beratMin}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">Rp. {paket.harga}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className="overflow-x-auto"> 
+                            <table className="min-w-full border">
+                                <thead className="bg-slate-500 text-white font-semibold">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">No</th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Nama Paket</th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Waktu Kerja</th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Berat Min(Kg)</th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium tracking-wider">Harga/Kg</th>                                </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {paketSetrika.map((paket, index) => (
+                                        <tr key={paket._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                                            <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{paket.namaPaket}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{paket.waktuKerja}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{paket.beratMin}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">Rp. {paket.harga}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -30,70 +30,74 @@ const DetailOrderReg = () => {
     }
 
     return (
-        <div className="bg-yellow-50 custom-height-110vh">
+        <div className="bg-orange-100 to-orange-50 custom-height-110vh">
             <Navbar />
             <div className="bg-gradient-to-br from-orange-500 to-orange-600 shadow-md rounded-lg max-w-3xl mx-auto mt-5">
                 <div className="bg-gradient-to-r from-orange-400 to-orange-500 rounded-t-lg p-4 flex justify-between items-center">
                     <h2 className="text-2xl font-bold text-white">Detail Order Paket Reguler</h2>
-                    <p className="text-right text-white">No Order: {order.noOrderReg}</p>
+                    <p className="text-right text-white font-bold">No Order: #{order.noOrderReg}</p>
                 </div>
-                <div className="bg-slate-50 shadow-md rounded-b-lg">
-                <div className="bg-orange-200 to-orange-500 p-2 mb-2">
-                    <h4 className="text-lg font-bold ml-5">Pelanggan</h4>
-                </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Nama Pelanggan :</p>
-                        <p className="flex-1">{order.namaPelangganReg}</p>
+                <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 shadow-md rounded-b-lg">
+                    <div className="bg-orange-200 to-orange-500 p-2 mb-2">
+                        <h4 className="text-lg font-bold ml-5">Pelanggan</h4>
                     </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Nomor Telepon :</p>
-                        <p className="flex-1">{order.nomorTeleponReg}</p>
-                    </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Alamat :</p>
-                        <p className="flex-1">{order.alamatReg}</p>
-                    </div>
-                <div className="bg-orange-200 to-orange-500 p-2 mb-2">
-                    <h4 className="text-lg font-bold ml-5">Detail Pesanan</h4>
-                </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Waktu Kerja :</p>
-                        <p className="flex-1">{order.waktuKerjaReg} Hari</p>
-                    </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Tanggal Order :</p>
-                        <p className="flex-1">{cleanDate(order.tglOrderReg)}</p>
-                    </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Tanggal Selesai :</p>
-                        <p className="flex-1">{cleanDate(order.tglSelesaiReg)}</p>
-                    </div>
-                    <div className="flex p-2">
-                        <p className="flex-1 ml-5 font-semibold">Jenis Paket :</p>
-                        <p className="flex-1">{order.paketReg}</p>
-                    </div>
-                <div className="bg-orange-200 to-orange-500 p-2 mb-2">
-                    <h4 className="text-lg font-bold ml-5">Order</h4>
-                </div>
-                    <div className="flex p-2 justify-center">
-                        <div className="flex flex-col items-center mx-auto">
-                            <p className="mb-1 font-semibold">Berat (Kg)</p>
-                            <p className="text-center">{order.beratReg}</p>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Nama Pelanggan :</p>
+                            <p className="flex-1 font-bold">{order.namaPelangganReg}</p>
                         </div>
-                        <div className="flex flex-col items-center mx-auto">
-                            <p className="mb-1 font-semibold">Harga (Kg)</p>
-                            <p className="text-center">Rp. {order.hargaPerKgReg}</p>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Nomor Telepon :</p>
+                            <p className="flex-1 font-bold">{order.nomorTeleponReg}</p>
                         </div>
-                        <div className="flex flex-col items-center mx-auto">
-                            <p className="mb-1 font-semibold">Total Bayar</p>
-                            <p className="text-center">Rp. {order.totalBayarReg}</p>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Alamat :</p>
+                            <p className="flex-1 font-bold">{order.alamatReg}</p>
                         </div>
+                    <div className="bg-orange-200 to-orange-500 p-2 mb-2">
+                        <h4 className="text-lg font-bold ml-5">Detail Pesanan</h4>
                     </div>
-                    <div className="text-right p-3">
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
-                            Bayar Sekarang
-                        </button>
+                    <div className="flex p-2">
+                            <p className="flex-1 ml-5">Jenis Paket :</p>
+                            <p className="flex-1 font-bold">{order.paketReg}</p>
+                        </div>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Waktu Kerja :</p>
+                            <p className="flex-1 font-bold">{order.waktuKerjaReg} Hari</p>
+                        </div>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Tanggal Order :</p>
+                            <p className="flex-1 font-bold">{cleanDate(order.tglOrderReg)}</p>
+                        </div>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Tanggal Selesai :</p>
+                            <p className="flex-1 font-bold">{cleanDate(order.tglSelesaiReg)}</p>
+                        </div>
+                        <div className="flex p-2">
+                            <p className="flex-1 ml-5">Keterangan :</p>
+                            <p className="flex-1 font-bold">{order.keteranganReg}</p>
+                        </div>
+                    <div className="bg-orange-200 to-orange-500 p-2 mb-2">
+                        <h4 className="text-lg font-bold ml-5">Order</h4>
                     </div>
+                        <div className="flex p-2 justify-center">
+                            <div className="flex flex-col items-center mx-auto">
+                                <p className="mb-1">Berat (Kg)</p>
+                                <p className="text-center font-bold">{order.beratReg}</p>
+                            </div>
+                            <div className="flex flex-col items-center mx-auto">
+                                <p className="mb-1">Harga (Kg)</p>
+                                <p className="text-center font-bold">Rp. {order.hargaPerKgReg}</p>
+                            </div>
+                            <div className="flex flex-col items-center mx-auto">
+                                <p className="mb-1">Total Bayar</p>
+                                <p className="text-center font-bold">Rp. {order.totalBayarReg}</p>
+                            </div>
+                        </div>
+                        <div className="text-right p-3">
+                            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                                Bayar Sekarang
+                            </button>
+                        </div>
                 </div>
             </div>
             <br></br>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const OrderTable3 = () => {
     const [orders, setOrders] = useState([]);
@@ -17,15 +18,6 @@ const OrderTable3 = () => {
         }
     };
 
-    const handleDetail = async (id) => {
-        try {
-            const response = await axios.get(`http://localhost:5000/order_str/${id}`);
-            alert(JSON.stringify(response.data)); // Tampilkan informasi data pada ID tersebut
-        } catch (error) {
-            console.error('Error fetching order detail:', error);
-        }
-    };
-
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/order_str/delete/${id}`);
@@ -35,6 +27,7 @@ const OrderTable3 = () => {
             console.error('Error deleting order:', error);
         }
     };
+
 
     return (
         <div className="container mt-4">
@@ -64,7 +57,7 @@ const OrderTable3 = () => {
                                 <td className="px-6 py-3">{order.waktuKerjaStr}</td>
                                 <td className="px-6 py-3">{order.beratStr}</td>
                                 <td className="px-6 py-3 flex space-x-2">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDetail(order._id)}>Detail</button>
+                                <Link to={`/detail/order_str/${order._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Detail</Link>
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDelete(order._id)}>Hapus</button>
                                 </td>
                             </tr>

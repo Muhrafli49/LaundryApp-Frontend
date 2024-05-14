@@ -60,37 +60,39 @@ const PengajuanBarang = () => {
                             </Link>
                         </div>
                     </div>
-                    <table className="min-w-full border">
-                        <thead>
-                            <tr>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Pengajuan</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Barang</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merk</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Satuan</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
-                                <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {pengajuanBarang.map((pengajuan, index) => (
-                                <tr key={pengajuan._id} className="border-b">
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noUrut}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noPengajuan}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jenisBarang}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jumlah}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.hargaSatuan.toLocaleString()}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                        <Link to={`/edit/form_pengajuan/${pengajuan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
-                                        <button className="btn btn-danger btn-md p-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full border">
+                            <thead>
+                                <tr>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Pengajuan</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Barang</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merk</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Satuan</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {pengajuanBarang.map((pengajuan, index) => (
+                                    <tr key={pengajuan._id} className="border-b">
+                                        <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noUrut}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{pengajuan.noPengajuan}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jenisBarang}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jumlah}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.hargaSatuan.toLocaleString()}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
+                                            <Link to={`/edit/form_pengajuan/${pengajuan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
+                                            <button className="btn btn-danger btn-md p-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

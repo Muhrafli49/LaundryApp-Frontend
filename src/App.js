@@ -18,6 +18,7 @@ import PengajuanBarang from './layanan/PengajuanBarang';
 import EditFormPengajuan from './pages/Edit/EditFormPengajuan';
 import DetailOrderExp from './pages/Detail/DetailOrderExp';
 import DetailOrderReg from './pages/Detail/DetailOrderReg';
+import DetailOrderStr from './pages/Detail/DetailOrderStr';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path='/edit/form_pengajuan/:id'element={<EditFormPengajuan/>}/>
         <Route path='/detail/order_exp/:id'element={<DetailOrderExp/>}/>
         <Route path='/detail/order_reg/:id'element={<DetailOrderReg/>}/>
+        <Route path='/detail/order_str/:id'element={<DetailOrderStr/>}/>
       </Routes>
     </div>
   );

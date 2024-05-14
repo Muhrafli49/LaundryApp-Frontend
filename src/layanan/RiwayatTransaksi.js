@@ -25,41 +25,43 @@ const TotalOrderan = () => {
                                 </button>
                             </div>
                         </div>
-                        <table className="min-w-full border">
-                            <thead>
-                                <tr>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Order</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Paket</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uang Bayar</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kembalian</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {orders.map(order => (
-                                    <tr key={order.noOrder} className="border-b">
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.no}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.noOrder}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.nama}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.jenisPaket}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.jumlah}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.total}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.uangBayar}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.kembalian}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <button className="btn btn-primary btn-md p-2">Detail</button>
-                                            <button className="btn btn-danger btn-md p-2">Cetak</button>
-                                        </td>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full border">
+                                <thead>
+                                    <tr>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Order</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Paket</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uang Bayar</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kembalian</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {orders.map(order => (
+                                        <tr key={order.noOrder} className="border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.no}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.noOrder}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.nama}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.jenisPaket}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.jumlah}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.total}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.uangBayar}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.kembalian}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
+                                                <button className="btn btn-primary btn-md p-2">Detail</button>
+                                                <button className="btn btn-danger btn-md p-2">Cetak</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
