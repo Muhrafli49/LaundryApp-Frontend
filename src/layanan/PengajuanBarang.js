@@ -86,7 +86,7 @@ const PengajuanBarang = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
                                             <Link to={`/edit/form_pengajuan/${pengajuan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
-                                            <button className="btn btn-danger btn-md p-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
+                                            <button className="btn btn-danger btn-md p-2 ml-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
                                         </td>
                                     </tr>
                                 ))}

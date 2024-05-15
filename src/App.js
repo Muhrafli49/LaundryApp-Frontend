@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+// Pegawai
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './layouts/Dashboard';
@@ -7,7 +8,6 @@ import PaketTersedia from './layanan/PaketTersedia';
 import PaketExpress from './layanan/PaketExpress';
 import PaketReguler from './layanan/PaketReguler';
 import PaketSetrika from './layanan/PaketSetrika';
-import JumlahKaryawan from './admin/JumlahKaryawan';
 import RiwayatTransaksi from './layanan/RiwayatTransaksi';
 import TambahOrder from './layanan/TambahOrderan';
 import FormOrderExpress from './pages/Form/FormOrderExpress';
@@ -19,12 +19,22 @@ import EditFormPengajuan from './pages/Edit/EditFormPengajuan';
 import DetailOrderExp from './pages/Detail/DetailOrderExp';
 import DetailOrderReg from './pages/Detail/DetailOrderReg';
 import DetailOrderStr from './pages/Detail/DetailOrderStr';
+import PembayaranExp from './layanan/PembayaranExp';
+import PembayaranReg from './layanan/PembayaranReg';
+import PembayaranStr from './layanan/PembayaranReg';
+import TentangKami from './components/TentangKami';
 
+
+// Admin
+import DashboardAdmin from './admin/DashboardAdmin';
+import JumlahKaryawan from './admin/JumlahKaryawan';
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        {/* Pegawai */}
+
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />'
@@ -32,7 +42,6 @@ function App() {
         <Route path='/paket_express' element={<PaketExpress />} />
         <Route path='/paket_reguler' element={<PaketReguler />} />
         <Route path='/paket_setrika' element={<PaketSetrika />} />
-        <Route path='/jumlah_karyawan' element={<JumlahKaryawan />} />
         <Route path='/riwayat_transaksi' element={<RiwayatTransaksi />} />
         <Route path='/tambah_orderan' element={<TambahOrder />} />
         <Route path='/form_order_express'element={<FormOrderExpress/>}/>
@@ -44,6 +53,14 @@ function App() {
         <Route path='/detail/order_exp/:id'element={<DetailOrderExp/>}/>
         <Route path='/detail/order_reg/:id'element={<DetailOrderReg/>}/>
         <Route path='/detail/order_str/:id'element={<DetailOrderStr/>}/>
+        <Route path='/pembayaran/exp/:id'element={<PembayaranExp/>}/>
+        <Route path='/pembayaran/reg/:id'element={<PembayaranReg/>}/>
+        <Route path='/pembayaran/str/:id'element={<PembayaranStr/>}/>
+        <Route path='/tentang_kami'element={<TentangKami/>}/>
+
+        {/* Admin */}
+        <Route path='/dashboard/admin'element={<DashboardAdmin/>}/>
+        <Route path='/jumlah_karyawan' element={<JumlahKaryawan />} />
       </Routes>
     </div>
   );

@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const TotalOrderan = () => {
-    // Data dummy untuk rekap orderan
-    const orders = [
-        { no: 1, noOrder: 'ORD001', nama: 'John Doe', jenisPaket: 'Cuci Setrika', jumlah: 2, total: '$20', uangBayar: '$50', kembalian: '$30', status: 'Selesai' },
-        { no: 2, noOrder: 'ORD002', nama: 'Jane Smith', jenisPaket: 'Cuci Kering', jumlah: 1, total: '$15', uangBayar: '$20', kembalian: '$5', status: 'Proses' },
-        { no: 3, noOrder: 'ORD003', nama: 'Michael Johnson', jenisPaket: 'Cuci Lipat', jumlah: 3, total: '$36', uangBayar: '$40', kembalian: '$4', status: 'Selesai' },
-    ];
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const responseExp = await axios.get('http://localhost:5000/order_exp');
+            const responseReg = await axios.get('http://localhost:5000/order_reg');
+            const responseStr = await axios.get('http://localhost:5000/order_str');
+            
+            const combinedOrders = [
+                ...responseExp.data.data,
+                ...responseReg.data.data,
+                ...responseStr.data.data
+            ];
+            
+            setOrders(combinedOrders);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
+    };
 
     return (
         <div>
@@ -33,29 +51,25 @@ const TotalOrderan = () => {
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Order</th>
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Paket</th>
-                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Berat (Kg)</th>
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uang Bayar</th>
-                                        <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kembalian</th>
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                         <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {orders.map(order => (
-                                        <tr key={order.noOrder} className="border-b">
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.no}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.noOrder}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.nama}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.jenisPaket}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.jumlah}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.total}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.uangBayar}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.kembalian}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
+                                    {Array.isArray(orders) && orders.length > 0 && orders.map((order, index) => (
+                                        <tr key={order._id} className="border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.noOrderExp || order.noOrderReg || order.noOrderStr}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.namaPelangganExp || order.namaPelangganReg || order.namaPelangganStr}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.paketExp || order.paketReg || order.paketStr}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.beratExp || order.beratReg || order.beratStr}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">Rp. {order.totalBayarExp || order.totalBayarReg || order.totalBayarStr}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{order.status ? 'Selesai' : 'Pending'}</td>
                                             <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
                                                 <button className="btn btn-primary btn-md p-2">Detail</button>
-                                                <button className="btn btn-danger btn-md p-2">Cetak</button>
+                                                <button className="btn btn-danger btn-md p-2 ml-2">Cetak</button>
                                             </td>
                                         </tr>
                                     ))}

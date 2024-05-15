@@ -57,7 +57,13 @@ const OrderTable3 = () => {
                                 <td className="px-6 py-3">{order.waktuKerjaStr}</td>
                                 <td className="px-6 py-3">{order.beratStr}</td>
                                 <td className="px-6 py-3 flex space-x-2">
-                                <Link to={`/detail/order_str/${order._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Detail</Link>
+                                    <Link
+                                        to={`/detail/order_str/${order._id}`}
+                                        className={`text-white font-bold py-1 px-3 rounded ${order.status ? 'bg-slate-600 hover:bg-slate-700' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                        onClick={order.status ? (e) => e.preventDefault() : null}
+                                    >
+                                        Detail
+                                    </Link>
                                     <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDelete(order._id)}>Hapus</button>
                                 </td>
                             </tr>

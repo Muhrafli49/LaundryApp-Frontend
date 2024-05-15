@@ -24,18 +24,23 @@ const Login = () => {
         const data = {
             username: username,
             password: password
-        }
+        };
         axios.post('http://localhost:5000/login', data)
         .then(response => {
-            if(response.data.token) {
+            if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
+                const role = response.data.user.role; // Mendapatkan role dari respons
                 setTimeout(() => {
-                    navigate('/dashboard'); 
+                    if (role === 'admin') {
+                        navigate('/dashboard/admin');
+                    } else {
+                        navigate('/dashboard');
+                    }
                 }, 1500);
             }
         })
         .catch(error => {
-            setError(error.response.data.message);
+            setError(error.response?.data?.message || 'Terjadi kesalahan');
         })
         .finally(() => {
             setIsLoading(false);

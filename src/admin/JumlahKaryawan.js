@@ -17,7 +17,7 @@ const JumlahKaryawan = () => {
                 <div className="card">
                     <div className="card-body">
                         <h3 className="card-title mb-5">Daftar Karyawan</h3>
-                        <Link to="/dashboard" className="btn btn-primary btn-sm btn-kembali">Kembali</Link>
+                        <Link to="/dashboard/admin" className="btn btn-primary btn-sm btn-kembali">Kembali</Link>
                         <table className="table">
                             <thead>
                                 <tr>

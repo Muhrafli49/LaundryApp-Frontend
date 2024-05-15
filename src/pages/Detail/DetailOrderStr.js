@@ -2,6 +2,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import { Link } from "react-router-dom";
 
 const DetailOrderStr = () => {
     const { id } = useParams();
@@ -94,9 +95,9 @@ const DetailOrderStr = () => {
                         </div>
                     </div>
                     <div className="text-right p-3">
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                        <Link to={`/pembayaran/str/${order._id}`} className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                             Bayar Sekarang
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
