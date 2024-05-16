@@ -46,12 +46,13 @@ const PengajuanBarang = () => {
         <div>
             <Navbar />
             <div className="container mx-auto">
-                <div className="card mt-8 rounded-md">
+                <div className="card mt-8 shadow-md rounded-lg">
                     <div className="card-body flex justify-between items-center">
                         <div>
-                            <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2">Pengajuan Barang</h2>
+                            <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ">Pengajuan Barang</h2>
                             <Link to="/form_pengajuan" className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">+ Tambah Pengajuan</Link>
                         </div>
+                        
                         <div className="flex justify-end">
                             <Link to="/dashboard" className="m-4 mt-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-500 hover:text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -26,8 +26,9 @@ import TentangKami from './components/TentangKami';
 
 
 // Admin
-import DashboardAdmin from './admin/DashboardAdmin';
-import JumlahKaryawan from './admin/JumlahKaryawan';
+import DashboardAdmin from './admin/layouts/DashboardAdmin';
+import JumlahKaryawan from './admin/pages/JumlahKaryawan';
+import FormTambahPegawai from './admin/Form/FormTambahPegawai';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
         {/* Admin */}
         <Route path='/dashboard/admin'element={<DashboardAdmin/>}/>
         <Route path='/jumlah_karyawan' element={<JumlahKaryawan />} />
+        <Route path='/form_tambah_pegawai' element={<FormTambahPegawai />} />
       </Routes>
     </div>
   );
