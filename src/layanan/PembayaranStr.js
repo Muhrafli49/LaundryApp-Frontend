@@ -14,7 +14,7 @@ const PembayaranStr = () => {
         axios.get(`http://localhost:5000/order_str/${id}`)
             .then(res => {
                 setOrder(res.data.data);
-                setTotalHarga(res.data.data.totalBayarReg);
+                setTotalHarga(res.data.data.totalBayarStr);
             })
             .catch(err => {
                 console.error('Error fetching order:', err);
@@ -66,7 +66,7 @@ const PembayaranStr = () => {
                 </div>
                 <div className="p-5 text-center">
                     <h2 className="text-2xl font-bold mb-4">Melakukan Pembayaran</h2>
-                    <h5 className="text-md font-bold mb-4">#No Order : {order.noOrderReg}</h5>
+                    <h5 className="text-md font-bold mb-4">#No Order : {order.noOrderStr}</h5>
                     <p className="text-gray-800 mb-4" style={{ maxWidth: '18rem', wordWrap: 'break-word' }}>Mohon isi dengan teliti jumlah total pembayaran yang sesuai dengan transaksi</p>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">

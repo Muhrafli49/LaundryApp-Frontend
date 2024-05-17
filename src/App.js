@@ -21,7 +21,7 @@ import DetailOrderReg from './pages/Detail/DetailOrderReg';
 import DetailOrderStr from './pages/Detail/DetailOrderStr';
 import PembayaranExp from './layanan/PembayaranExp';
 import PembayaranReg from './layanan/PembayaranReg';
-import PembayaranStr from './layanan/PembayaranReg';
+import PembayaranStr from './layanan/PembayaranStr';
 import TentangKami from './components/TentangKami';
 
 
@@ -37,6 +37,8 @@ import PaketSetrikaTersedia from './admin/pages/Paket/PaketSetrikaTersedia';
 import FormPaketExpress from './admin/Form/FormPaketExpress';
 import FormPaketReguler from './admin/Form/FormPaketReguler';
 import FormPaketSetrika from './admin/Form/FormPaketSetrika';
+import PersetujuanPengajuan from './admin/pages/PersetujuanPengajuan';
+import EditFormPersetujuan from './admin/Edit/EditFormPersetujuan';
 
 
 function App() {
@@ -79,6 +81,8 @@ function App() {
         <Route path='/form_paket_express' element={<FormPaketExpress />}/>
         <Route path='/form_paket_reguler'element={<FormPaketReguler/>}/>
         <Route path='/form_paket_setrika'element={<FormPaketSetrika/>}/>
+        <Route path='/persetujuan_pengajuan'element={<PersetujuanPengajuan/>}/>
+        <Route path='/persetujuan/form_pengajuan/:id'element={<EditFormPersetujuan/>}/>
       </Routes>
     </div>
   );

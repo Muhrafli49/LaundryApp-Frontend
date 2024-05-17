@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormPengajuanBarang= () => {
     const initialFormData = {
@@ -15,6 +16,7 @@ const FormPengajuanBarang= () => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    const navigate = useNavigate();
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -44,6 +46,7 @@ const FormPengajuanBarang= () => {
                 setShowNotification(true); 
                 setTimeout(() => {
                     setShowNotification(false);
+                    navigate("/pengajuan_barang");
                 }, 2500);
             })
             .catch(error => {

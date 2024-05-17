@@ -7,14 +7,12 @@ const PengajuanBarang = () => {
     const [pengajuanBarang, setPengajuanBarang] = useState([]);
 
     useEffect(() => {
-        // Ambil data pengajuan barang dari API saat komponen dimuat
         fetchData();
     }, []);
 
     const fetchData = () => {
         axios.get("http://localhost:5000/pengajuan")
             .then(response => {
-                // Tambahkan nomor urut otomatis ke setiap pengajuan
                 const dataWithIndex = response.data.data.map((item, index) => ({
                     ...item,
                     noUrut: index + 1
@@ -31,7 +29,6 @@ const PengajuanBarang = () => {
             axios.delete(`http://localhost:5000/pengajuan/delete/${id}`)
                 .then(response => {
                     alert("Pengajuan berhasil dihapus.");
-                    // Hapus pengajuan dari state
                     const updatedPengajuan = [...pengajuanBarang];
                     updatedPengajuan.splice(index, 1);
                     setPengajuanBarang(updatedPengajuan);
@@ -72,6 +69,7 @@ const PengajuanBarang = () => {
                                     <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merk</th>
                                     <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Satuan</th>
                                     <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
+                                    <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th className="px-6 py-3 bg-gray-200 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                 </tr>
                             </thead>
@@ -85,9 +83,22 @@ const PengajuanBarang = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.hargaSatuan.toLocaleString()}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {pengajuan.status ? (
+                                                <span className="bg-green-500 text-white px-2 py-1 rounded-md">Diterima</span>
+                                            ) : (
+                                                <span className="bg-slate-500 text-white px-2 py-1 rounded-md">Proses</span>
+                                            )}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <Link to={`/edit/form_pengajuan/${pengajuan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
-                                            <button className="btn btn-danger btn-md p-2 ml-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
+                                            <Link
+                                                to={`/edit/form_pengajuan/${pengajuan._id}`}
+                                                className={`text-white font-bold py-2 px-3 rounded ${pengajuan.status ? 'bg-slate-600 hover:bg-slate-700' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                                onClick={pengajuan.status ? (e) => e.preventDefault() : null}
+                                            >
+                                                Edit
+                                            </Link>
+                                            <button className="bg-red-600 text-white font-bold py-2 px-3 rounded ml-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
                                         </td>
                                     </tr>
                                 ))}

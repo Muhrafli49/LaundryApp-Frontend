@@ -44,7 +44,7 @@ const Sidebar = () => {
                 </Link>
             </div>
             <div className="flex items-center ml-6">
-                <Link to="/pengajuan" className="flex items-center ">
+                <Link to="/persetujuan_pengajuan" className="flex items-center ">
                     <div className="flex items-center mr-2 ml-2 hover:text-gray-600 hover:scale-105 transition-transform">
                         <img src={PegawaiIcon} alt="Pengajuan Icon" className="w-4 h-4 mr-2 hover:text-gray-600 hover:scale-105 transition-transform" />
                         <h4 className="text-lg font-semibold m-3">Pengajuan</h4>

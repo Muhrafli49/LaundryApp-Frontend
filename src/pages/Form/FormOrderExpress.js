@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormOrderExpress = () => {
     const initialFormData = {
@@ -21,6 +22,7 @@ const FormOrderExpress = () => {
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
     const [paketOptions, setPaketOptions] = useState([]); // Tambah state untuk menyimpan opsi paket
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchPaketOptions();
@@ -94,6 +96,7 @@ const FormOrderExpress = () => {
             setShowNotification(true);
             setTimeout(() => {
                 setShowNotification(false);
+                navigate("/dashboard");
             }, 2500);
         } catch (error) {
             console.error("Error submitting form:", error);

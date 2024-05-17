@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EditFormPengajuan = () => {
     const { id } = useParams(); // Ambil ID dari URL
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState ({
         id: id,
@@ -62,7 +64,8 @@ const EditFormPengajuan = () => {
             setShowNotification(true); 
             setTimeout(() => {
                 setShowNotification(false);
-            }, 2500);
+                navigate("/pengajuan_barang");
+            }, 2000);
         } catch (error) {
             console.error("Error submitting form:", error);
             setError(error.response.data.message);
