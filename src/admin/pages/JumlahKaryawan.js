@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const JumlahKaryawan = () => {
     const [karyawan, setKaryawan] = useState([]);
-    const [showSidebar, setShowSidebar] = useState(true);
 
     useEffect(() => {
         fetchData();
@@ -31,10 +30,6 @@ const JumlahKaryawan = () => {
             });
     };
 
-    const toggleSidebar = () => {
-        setShowSidebar(!showSidebar);
-    };
-
     const handleDelete = (id) => {
         if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
             axios.delete(`http://localhost:5000/user/delete/${id}`)
@@ -53,7 +48,7 @@ const JumlahKaryawan = () => {
         <div className="flex flex-col h-screen">
             <Navbar />
             <div className="flex flex-row flex-1">
-                {showSidebar && <Sidebar toggleSidebar={toggleSidebar} />}
+                <Sidebar/>
                 <div className="flex-1 p-6 overflow-auto">
                     <div className="container mx-auto">
                         <div className="bg-white shadow-md rounded-lg">
@@ -89,7 +84,7 @@ const JumlahKaryawan = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.username}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                                    <button className="btn btn-primary btn-md p-2">Edit</button>
+                                                <Link to={`/edit/form_tambah_pegawai/${karyawan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
                                                     <button onClick={() => handleDelete(karyawan._id)} className="btn btn-danger btn-md p-2 ml-2">Hapus</button>
                                                 </td>
                                             </tr>
