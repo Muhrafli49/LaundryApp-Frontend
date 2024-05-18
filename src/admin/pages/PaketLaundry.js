@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import DoneIcon from '../../assets/ceklis-removebg.png';
+import ExpressPaketIcon from '../../assets/express-removebg.png';
+import RegulerPaketIcon from '../../assets/reguler_paket-removebg.png';
+import SetrikaPaketIcon from '../../assets/setrika_paket-removebg.png';
 
 const PaketLaundry = () => {
     return (
@@ -25,7 +27,7 @@ const PaketLaundry = () => {
                                         <Link to="/paket_express_tersedia" className="text-decoration-none">
                                             <div className="card-body text-center">
                                                 <div className="flex items-center justify-center">
-                                                    <img src={DoneIcon} alt="Order Done" className="w-10 h-10 mr-4" />
+                                                    <img src={ExpressPaketIcon} alt="Order Done" className="w-12 h-12 mr-4" />
                                                     <div>
                                                         <p className="card-title text-white font-bold text-sm md:text-lg mt-2 md:mt-4">Paket Express</p>
                                                     </div>
@@ -38,7 +40,7 @@ const PaketLaundry = () => {
                                         <Link to="/paket_reguler_tersedia" className="text-decoration-none">
                                             <div className="card-body text-center">
                                                 <div className="flex items-center justify-center">
-                                                    <img src={DoneIcon} alt="Order Done" className="w-10 h-10 mr-4" />
+                                                    <img src={RegulerPaketIcon} alt="Order Done" className="w-12 h-12 mr-4" />
                                                     <div>
                                                         <h5 className="card-title text-white font-bold text-sm md:text-lg mt-2 md:mt-3">Paket Reguler</h5>
                                                     </div>
@@ -51,7 +53,7 @@ const PaketLaundry = () => {
                                         <Link to="/paket_setrika_tersedia" className="text-decoration-none">
                                             <div className="card-body text-center">
                                                 <div className="flex items-center justify-center">
-                                                    <img src={DoneIcon} alt="Order Done" className="w-10 h-10 mr-4" />
+                                                    <img src={SetrikaPaketIcon} alt="Order Done" className="w-12 h-12 mr-4" />
                                                     <div>
                                                         <h5 className="card-title text-white font-bold text-sm md:text-lg mt-2 md:mt-3">Paket Setrika</h5>
                                                     </div>

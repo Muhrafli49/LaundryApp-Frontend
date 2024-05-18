@@ -2,10 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LaundryLogo from '../assets/laundry-removebg.png';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const Invoice = () => {
     const { id, type } = useParams();
     const [order, setOrder] = useState(null);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     const fetchOrderDetails = useCallback(async () => {
         try {
@@ -20,8 +23,36 @@ const Invoice = () => {
         fetchOrderDetails();
     }, [fetchOrderDetails]);
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
     const printInvoice = () => {
         window.print();
+    };
+
+    const downloadInvoiceAsPDF = () => {
+        const invoiceElement = document.getElementById('invoice');
+        html2canvas(invoiceElement).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save(`invoice_${id}.pdf`);
+        });
+    };
+
+    const downloadInvoiceAsJPG = () => {
+        const invoiceElement = document.getElementById('invoice');
+        html2canvas(invoiceElement).then((canvas) => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = `invoice_${id}.jpg`;
+            link.click();
+        });
     };
 
     if (!order) return <div className='container mx-auto flex justify-center items-center h-screen'>Loading...</div>;
@@ -29,7 +60,7 @@ const Invoice = () => {
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
+        return date.toLocaleDateString('id-ID', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit'
@@ -37,8 +68,8 @@ const Invoice = () => {
     };
 
     return (
-        <div className='container mx-auto flex justify-center items-center h-screen'>
-            <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <div className='container mx-auto flex flex-col justify-center items-center h-screen'>
+            <div id="invoice" className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mb-4">
                 <div className="flex justify-center items-center mb-4">
                     <img src={LaundryLogo} alt="Logo" className="h-12 w-12 mr-4" />
                     <h1 className="text-xl md:text-2xl font-bold">Bingo Laundry</h1>
@@ -77,15 +108,28 @@ const Invoice = () => {
                 </div>
 
                 <hr className='my-3' />
-
-                <div className='text-center'>
-                    <button
-                        onClick={printInvoice}
-                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-                    >
-                        Print Invoice
-                    </button>
-                </div>
+                <h4 className="font-bold text-center">Terimakasih,</h4>
+                <p className="text-center">{currentTime.toLocaleDateString('id-ID')} {currentTime.toLocaleTimeString('id-ID')}</p>
+            </div>
+            <div className='text-center flex flex-col-5'>
+                <button
+                    onClick={printInvoice}
+                    className="bg-blue-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-blue-700"
+                >
+                    Print Invoice
+                </button>
+                <button
+                    onClick={downloadInvoiceAsPDF}
+                    className="bg-green-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-green-700"
+                >
+                    Download as PDF
+                </button>
+                <button
+                    onClick={downloadInvoiceAsJPG}
+                    className="bg-red-500 text-white font-bold py-2 px-4 m-2  rounded hover:bg-red-700"
+                >
+                    Download as JPG
+                </button>
             </div>
         </div>
     );
