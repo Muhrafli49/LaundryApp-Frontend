@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LaundryLogo from '../assets/laundry-removebg.png'
+import LaundryLogo from '../assets/laundry-removebg.png';
+import LogoutIcon from '../assets/logout-removebg.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,14 +36,17 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="hidden md:block m-20">
-                        <button className="btn btn-danger" onClick={logout}>
+                        <button className="bg-slate-100 rounded-lg flex items-center py-2 px-2 hover:bg-slate-300" onClick={logout}>
                             {loggingOut ? (
                                 <svg className="animate-spin h-5 w-5 mr-3 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.008 8.008 0 014 12H0c0 4.418 3.582 8 8 8v-4zm14-8a8.008 8.008 0 01-4 6.928V20c4.418 0 8-3.582 8-8h-4zm-2-5.291A8.008 8.008 0 0120 12h4c0-4.427-3.584-8-8-8v4z"></path>
                                 </svg>
                             ) : (
-                                <span>Logout</span>
+                                <div className="flex items-center">
+                                    <img src={LogoutIcon} alt="Logout Icon" className="h-5 w-5 mr-2 mx-auto" />
+                                    {/* <span>Logout</span> */}
+                                </div>
                             )}
                         </button>
                     </div>
@@ -61,15 +65,15 @@ const Navbar = () => {
                             <Link to="/riwayat_transaksi" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Riwayat Transaksi</Link>
                             <Link to="/form_pengajuan" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Pengajuan</Link>
                             <Link to="/tentang_kami" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Tentang Kami</Link>
-                            <button className="btn btn-danger" onClick={logout}>
-                            {loggingOut ? (
-                                <svg className="animate-spin h-5 w-5 mr-3 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.008 8.008 0 014 12H0c0 4.418 3.582 8 8 8v-4zm14-8a8.008 8.008 0 01-4 6.928V20c4.418 0 8-3.582 8-8h-4zm-2-5.291A8.008 8.008 0 0120 12h4c0-4.427-3.584-8-8-8v4z"></path>
-                                </svg>
-                            ) : (
-                                <span>Logout</span>
-                            )}
+                            <button className="btn btn-danger flex items-center" onClick={logout}>
+                                {loggingOut ? (
+                                    <svg className="animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.008 8.008 0 014 12H0c0 4.418 3.582 8 8 8v-4zm14-8a8.008 8.008 0 01-4 6.928V20c4.418 0 8-3.582 8-8h-4zm-2-5.291A8.008 8.008 0 0120 12h4c0-4.427-3.584-8-8-8v4z"></path>
+                                    </svg>
+                                ) : (
+                                        <span>Logout</span>
+                                )}
                             </button>
                         </div>
                     </div>

@@ -40,7 +40,7 @@ const PengajuanBarang = () => {
     };
 
     return (
-        <div>
+        <div className="w-full h-full min-h-screen bg-yellow-50">
             <Navbar />
             <div className="container mx-auto">
                 <div className="card mt-8 shadow-md rounded-lg">
@@ -81,8 +81,12 @@ const PengajuanBarang = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jenisBarang}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jumlah}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.hargaSatuan.toLocaleString()}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">Rp {pengajuan.totalHarga.toLocaleString()}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {`Rp. ${new Intl.NumberFormat('id-ID').format(pengajuan.hargaSatuan)}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {`Rp. ${new Intl.NumberFormat('id-ID').format(pengajuan.totalHarga)}`}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {pengajuan.status ? (
                                                 <span className="bg-green-500 text-white px-2 py-1 rounded-md">Diterima</span>

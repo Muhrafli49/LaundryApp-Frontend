@@ -7,6 +7,8 @@ import TersediaIcon from '../assets/Tersedia-removebg.png';
 
 const Hero = () => {
     const [availablePackages, setAvailablePackages] = useState(0);
+    const [completedOrders, setCompletedOrders] = useState(0);
+    const [totalOrders, setTotalOrders] = useState(0);
 
     useEffect(() => {
         const fetchAvailablePackages = async () => {
@@ -26,7 +28,33 @@ const Hero = () => {
             }
         };
 
+        const fetchOrders = async () => {
+            try {
+                const responseExp = await axios.get('http://localhost:5000/order_exp');
+                const responseReg = await axios.get('http://localhost:5000/order_reg');
+                const responseStr = await axios.get('http://localhost:5000/order_str');
+                
+                const combinedOrders = [
+                    ...responseExp.data.data,
+                    ...responseReg.data.data,
+                    ...responseStr.data.data
+                ];
+
+                // Hitung total orderan
+                const totalOrdersCount = combinedOrders.length;
+
+                // Hitung orderan yang selesai (status true)
+                const completedOrdersCount = combinedOrders.filter(order => order.status === true).length;
+                
+                setTotalOrders(totalOrdersCount);
+                setCompletedOrders(completedOrdersCount);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        };
+
         fetchAvailablePackages();
+        fetchOrders();
     }, []);
 
     return (
@@ -50,7 +78,7 @@ const Hero = () => {
                                     <img src={OrderanIcon} alt="Order Done" className="w-15 h-12 mr-5" />
                                     <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-4 ml-2 font-bold">Orderan Selesai</h5>
-                                        <p className="card-text font-bold">100</p>
+                                        <p className="card-text font-bold">{completedOrders}</p> {/* Menampilkan jumlah orderan selesai */}
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +93,7 @@ const Hero = () => {
                                     <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
                                     <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-4 ml-2 font-bold">Total Orderan</h5>
-                                        <p className="card-text font-bold">500</p>
+                                        <p className="card-text font-bold">{totalOrders}</p> {/* Menampilkan jumlah total orderan */}
                                     </div>
                                 </div>
                             </div>

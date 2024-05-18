@@ -18,15 +18,6 @@ const OrderTable2 = () => {
         }
     };
 
-    // const handleDetail = async (id) => {
-    //     try {
-    //         const response = await axios.get(`http://localhost:5000/order_reg/${id}`);
-    //         alert(JSON.stringify(response.data)); // Tampilkan informasi data pada ID tersebut
-    //     } catch (error) {
-    //         console.error('Error fetching order detail:', error);
-    //     }
-    // };
-
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/order_reg/delete/${id}`);
