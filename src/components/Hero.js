@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import DoneIcon from '../assets/ceklis-removebg.png';
+import OrderanIcon from '../assets/Orderan-removebg.png';
+import TersediaIcon from '../assets/Tersedia-removebg.png';
 
 const Hero = () => {
     const [availablePackages, setAvailablePackages] = useState(0);
@@ -45,7 +47,7 @@ const Hero = () => {
                         <div className="card mb-3 p-3 hover:opacity-90 cursor-pointer rounded-lg bg-yellow-200 transition duration-300 ease-in-out transform hover:scale-105">
                             <div className="card-body text-center">
                                 <div className="flex items-center justify-center">
-                                    <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                    <img src={OrderanIcon} alt="Order Done" className="w-15 h-12 mr-5" />
                                     <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-4 ml-2 font-bold">Orderan Selesai</h5>
                                         <p className="card-text font-bold">100</p>
@@ -75,7 +77,7 @@ const Hero = () => {
                         <div className="card mb-3 p-3 hover:opacity-90 cursor-pointer rounded-lg bg-yellow-200 transition duration-300 ease-in-out transform hover:scale-105">
                             <div className="card-body text-center">
                                 <div className="flex items-center justify-center">
-                                    <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                    <img src={TersediaIcon} alt="Order Done" className="w-15 h-12 mr-5" />
                                     <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-4 ml-2 font-bold">Paket Tersedia</h5>
                                         <p className="card-text font-bold">{availablePackages}</p> {/* Menampilkan jumlah paket yang tersedia */}

@@ -48,7 +48,7 @@ function App() {
         {/* Pegawai */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/dashboard' element={<Dashboard />} />'
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/paket_tersedia' element={<PaketTersedia />} />
         <Route path='/paket_express' element={<PaketExpress />} />
         <Route path='/paket_reguler' element={<PaketReguler />} />
@@ -76,8 +76,8 @@ function App() {
         <Route path='/edit/form_tambah_pegawai/:id'element={<EditFormTambahPegawai/>}/>
         <Route path='/paket_laundry' element={<PaketLaundry />} />
         <Route path='/paket_express_tersedia' element={<PaketExpressTersedia />}/>
-        <Route path='paket_reguler_tersedia'element={<PaketRegulerTersedia/>}/>
-        <Route path='paket_setrika_tersedia'element={<PaketSetrikaTersedia/>}/>
+        <Route path='/paket_reguler_tersedia'element={<PaketRegulerTersedia/>}/>
+        <Route path='/paket_setrika_tersedia'element={<PaketSetrikaTersedia/>}/>
         <Route path='/form_paket_express' element={<FormPaketExpress />}/>
         <Route path='/form_paket_reguler'element={<FormPaketReguler/>}/>
         <Route path='/form_paket_setrika'element={<FormPaketSetrika/>}/>

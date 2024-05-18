@@ -1,7 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import DoneIcon from '../assets/ceklis-removebg.png';
+import ExpressPaketIcon from '../assets/express_paket-removebg.png';
+import RegulerPaketIcon from '../assets/reguler_paket-removebg.png';
+import SetrikaPaketIcon from '../assets/setrika_paket-removebg.png';
 
 const TambahOrderan = () => {
     return (
@@ -20,7 +22,7 @@ const TambahOrderan = () => {
                             <Link to="/form_order_express" className="text-decoration-none">
                                 <div className="card-body text-center">
                                     <div className="flex items-center justify-center">
-                                        <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                        <img src={ExpressPaketIcon} alt="Order Done" className="w-20 h-15 mr-5" />
                                         <div>
                                             <h5 className="card-title text-orange-950 text-lg mt-4">Paket Express</h5>
                                         </div>
@@ -32,7 +34,7 @@ const TambahOrderan = () => {
                                 <Link to="/form_order_reguler" className="text-decoration-none">
                                     <div className="card-body text-center">
                                         <div className="flex items-center justify-center">
-                                            <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                            <img src={RegulerPaketIcon} alt="Order Done" className="w-20 h-15 mr-5" />
                                             <div>
                                                 <h5 className="card-title text-orange-950 text-lg mt-3">Paket Reguler</h5>
                                             </div>
@@ -44,7 +46,7 @@ const TambahOrderan = () => {
                             <Link to="/form_order_setrika" className="text-decoration-none">
                                 <div className="card-body text-center">
                                     <div className="flex items-center justify-center">
-                                        <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                        <img src={SetrikaPaketIcon} alt="Order Done" className="w-20 h-15 mr-5" />
                                         <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-3">Paket Setrika</h5>
                                         </div>
