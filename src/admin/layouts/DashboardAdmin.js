@@ -9,7 +9,7 @@ const DashboardAdmin = () => {
         <div className="p-2">
             {/* Navbar */}
             <Navbar />
-            <div className="flex">
+            <div className="flex overflow-auto">
                 <Sidebar/>
                 <Hero />
             </div>

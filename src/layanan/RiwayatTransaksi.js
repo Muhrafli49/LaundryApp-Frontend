@@ -17,9 +17,6 @@ const TotalOrderan = () => {
             const responseReg = await axios.get('http://localhost:5000/order_reg');
             const responseStr = await axios.get('http://localhost:5000/order_str');
             
-            console.log('responseExp:', responseExp.data);
-            console.log('responseReg:', responseReg.data);
-            console.log('responseStr:', responseStr.data);
             const combinedOrders = [
                 ...responseExp.data.data.map(order => ({ ...order, orderType: 'exp' })),
                 ...responseReg.data.data.map(order => ({ ...order, orderType: 'reg' })),
@@ -124,7 +121,7 @@ const TotalOrderan = () => {
                                             )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <button className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-700">Send</button>
+                                            <Link to={`/send/${order.orderType}/${order._id}`} className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-700">Send</Link>
                                             <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-red-600 text-white font-bold py-2 px-3 rounded ml-2 hover:bg-red-700">Cetak</Link>
                                         </td>
                                     </tr>

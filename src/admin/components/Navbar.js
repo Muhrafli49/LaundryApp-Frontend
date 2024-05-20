@@ -32,9 +32,6 @@ const Navbar = () => {
                     {showDropdown && (
                         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                             <div className="py-1">
-                                <button className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left">
-                                    Admin
-                                </button>
                                 <button onClick={logout} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left">
                                     Logout
                                 </button>

@@ -26,7 +26,6 @@ const PersetujuanPengajuan = () => {
             });
     };
 
-
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
@@ -70,8 +69,12 @@ const PersetujuanPengajuan = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jenisBarang}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{pengajuan.jumlah}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{pengajuan.merk}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">Rp. {pengajuan.hargaSatuan}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">Rp. {pengajuan.totalHarga}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {`Rp. ${new Intl.NumberFormat('id-ID').format(pengajuan.hargaSatuan)}`}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    {`Rp. ${new Intl.NumberFormat('id-ID').format(pengajuan.totalHarga)}`}
+                                                </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {pengajuan.status ? (
                                                         <span className="text-green-500">Terverifikasi</span>
@@ -80,7 +83,13 @@ const PersetujuanPengajuan = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                                    <Link to={`/persetujuan/form_pengajuan/${pengajuan._id}`} className="btn btn-primary btn-md p-2">Tindakan</Link>
+                                                    <Link
+                                                        to={`/persetujuan/form_pengajuan/${pengajuan._id}`}
+                                                        className={`text-white font-bold py-2 px-3 rounded ${pengajuan.status ? 'bg-slate-600 hover:bg-slate-700' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                                        onClick={pengajuan.status ? (e) => e.preventDefault() : null}
+                                                    >
+                                                        Tindakan
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))}
@@ -93,6 +102,6 @@ const PersetujuanPengajuan = () => {
             </div>
         </div>
     );
-}
+};
 
 export default PersetujuanPengajuan;

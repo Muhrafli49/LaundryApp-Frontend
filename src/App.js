@@ -39,6 +39,7 @@ import FormPaketSetrika from './admin/Form/FormPaketSetrika';
 import PersetujuanPengajuan from './admin/pages/PersetujuanPengajuan';
 import EditFormPersetujuan from './admin/Edit/EditFormPersetujuan';
 import Invoice from './layanan/Invoice';
+import LaporanOrderan from './admin/pages/LaporanOrderan';
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
         <Route path="/form_paket_setrika" element={<ProtectedRoute component={FormPaketSetrika} roles={['admin']} />} />
         <Route path="/persetujuan_pengajuan" element={<ProtectedRoute component={PersetujuanPengajuan} roles={['admin']} />} />
         <Route path="/persetujuan/form_pengajuan/:id" element={<ProtectedRoute component={EditFormPersetujuan} roles={['admin']} />} />
+        <Route path="/laporan_orderan" element={<ProtectedRoute component={LaporanOrderan} roles={['admin']} />} />
       </Routes>
     </div>
   );

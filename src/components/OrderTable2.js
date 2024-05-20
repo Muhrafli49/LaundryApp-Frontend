@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 const OrderTable2 = () => {
     const [orders, setOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ordersPerPage] = useState(3);
 
     useEffect(() => {
         fetchData();
@@ -28,10 +31,19 @@ const OrderTable2 = () => {
         }
     };
 
+    // Pagination Logic
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <div className="container mt-4">
             <div className="overflow-x-auto">
-            <h2 className="lg:text-2xl sm:text-xl mb-2">Orderan Paket Reguler</h2>
+                <h2 className="lg:text-2xl sm:text-xl mb-2">Orderan Paket Reguler</h2>
                 <table className="w-full table-auto">
                     <thead>
                         <tr className="text-left bg-gray-200">
@@ -46,9 +58,9 @@ const OrderTable2 = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order, index) => (
+                        {currentOrders.map((order, index) => (
                             <tr key={order._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-300'}>
-                                <td className="px-6 py-3">{index + 1}</td>
+                                <td className="px-6 py-3">{indexOfFirstOrder + index + 1}</td>
                                 <td className="px-6 py-3">{order.noOrderReg}</td>
                                 <td className="px-6 py-3">{new Date(order.tglOrderReg).toLocaleDateString()}</td>
                                 <td className="px-6 py-3">{order.namaPelangganReg}</td>
@@ -69,9 +81,50 @@ const OrderTable2 = () => {
                         ))}
                     </tbody>
                 </table>
+                <Pagination 
+                    totalPages={totalPages} 
+                    currentPage={currentPage} 
+                    paginate={paginate}
+                />
             </div>
         </div>
-    );    
+    );
+};
+
+const Pagination = ({ totalPages, currentPage, paginate }) => {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <div className="flex justify-center mt-3">
+            <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-2 py-1 font-bold ${currentPage === 1 ? 'text-gray-400' : 'text-slate-600'}`}
+            >
+                <ChevronLeftIcon className="w-3 h-3" />
+            </button>
+            {pageNumbers.map(number => (
+                <button 
+                    key={number} 
+                    onClick={() => paginate(number)} 
+                    className={`px-2 py-1 mx-1 font-bold ${currentPage === number ? 'bg-slate-500 text-white' : 'text-slate-600'}`}
+                >
+                    {number}
+                </button>
+            ))}
+            <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-2 py-1 font-bold ${currentPage === totalPages ? 'text-gray-400' : 'text-slate-600'}`}
+            >
+                <ChevronRightIcon className="w-3 h-3" />
+            </button>
+        </div>
+    );
 };
 
 export default OrderTable2;

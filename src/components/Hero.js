@@ -90,7 +90,7 @@ const Hero = () => {
                         <div className="card mb-3 p-3 hover:opacity-90 cursor-pointer rounded-lg bg-yellow-200 transition duration-300 ease-in-out transform hover:scale-105">
                             <div className="card-body text-center">
                                 <div className="flex items-center justify-center">
-                                    <img src={DoneIcon} alt="Order Done" className="w-20 h-15 mr-5" />
+                                    <img src={DoneIcon} alt="Order Done" className="w-16 h-13 mr-5" />
                                     <div>
                                         <h5 className="card-title text-orange-950 text-lg mt-4 ml-2 font-bold">Total Orderan</h5>
                                         <p className="card-text font-bold">{totalOrders}</p> {/* Menampilkan jumlah total orderan */}
