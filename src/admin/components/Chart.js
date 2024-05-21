@@ -3,90 +3,125 @@ import ApexCharts from 'apexcharts';
 
 const Chart = () => {
     useEffect(() => {
-        const options = {
-            series: [
-                {
-                    name: "Pemasukan",
-                    data: [1500, 1418, 1456, 1526, 1356, 1256],
-                    color: "#1A56DB",
+        const getChartOptions = () => {
+            return {
+                series: [0, 0, 0],
+                colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
+                chart: {
+                    height: 320,
+                    width: "100%",
+                    type: "donut",
                 },
-                {
-                    name: "Pengeluaran",
-                    data: [643, 413, 765, 412, 1423, 1731],
-                    color: "#FF0000",
+                stroke: {
+                    colors: ["transparent"],
+                    lineCap: "",
                 },
-            ],
-            chart: {
-                type: 'area',
-                height: '100%',
-                width: '100%',
-                fontFamily: 'Inter, sans-serif',
-                dropShadow: {
-                    enabled: false,
-                },
-                toolbar: {
-                    show: false,
-                },
-            },
-            tooltip: {
-                enabled: true,
-                x: {
-                    show: false,
-                },
-            },
-            legend: {
-                show: false,
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    opacityFrom: 0.55,
-                    opacityTo: 0,
-                    shade: '#1C64F2',
-                    gradientToColors: ['#1C64F2', '#FF0000'],
-                },
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            stroke: {
-                width: 6,
-            },
-            grid: {
-                show: false,
-                strokeDashArray: 4,
-                padding: {
-                    left: 2,
-                    right: 2,
-                    top: 0,
-                },
-            },
-            xaxis: {
-                categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-                labels: {
-                    show: false,
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                },
-            },
-            yaxis: {
-                show: false,
-                labels: {
-                    formatter: function (value) {
-                        return '$' + value;
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            labels: {
+                                show: true,
+                                name: {
+                                    show: true,
+                                    fontFamily: "Inter, sans-serif",
+                                    offsetY: 20,
+                                },
+                                total: {
+                                    showAlways: true,
+                                    show: true,
+                                    label: "Pendapatan",
+                                    fontFamily: "Inter, sans-serif",
+                                    formatter: function (w) {
+                                        const sum = w.globals.seriesTotals.reduce((a, b) => {
+                                            return a + b;
+                                        }, 0);
+                                        return '$' + sum + 'k';
+                                    },
+                                },
+                                value: {
+                                    show: true,
+                                    fontFamily: "Inter, sans-serif",
+                                    offsetY: -20,
+                                    formatter: function (value) {
+                                        return '$' + value + 'k';
+                                    },
+                                },
+                            },
+                            size: "80%",
+                        },
                     },
                 },
-            },
+                grid: {
+                    padding: {
+                        top: -2,
+                    },
+                },
+                labels: ["PEMASUKAN", "PENGELUARAN", "PENDAPATAN"],
+                dataLabels: {
+                    enabled: false,
+                },
+                legend: {
+                    position: "bottom",
+                    fontFamily: "Inter, sans-serif",
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (value) {
+                            return '$' + value + 'k';
+                        },
+                    },
+                },
+                xaxis: {
+                    labels: {
+                        formatter: function (value) {
+                            return value;
+                        },
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                },
+            };
         };
 
-        const chartElement = document.getElementById('data-series-chart');
+        const chartElement = document.getElementById('donut-chart');
         if (chartElement && typeof ApexCharts !== 'undefined') {
-            const chart = new ApexCharts(chartElement, options);
+            const chart = new ApexCharts(chartElement, getChartOptions());
             chart.render();
+
+            // Get all the checkboxes by their class name
+            const checkboxes = document.querySelectorAll('#devices input[type="checkbox"]');
+
+            // Function to handle the checkbox change event
+            function handleCheckboxChange(event, chart) {
+                const checkbox = event.target;
+                if (checkbox.checked) {
+                    switch (checkbox.value) {
+                        case 'pemasukan':
+                            chart.updateSeries([35.1, 0, 22.4]);
+                            break;
+                        case 'pengeluaran':
+                            chart.updateSeries([0, 23.5, 2.4]);
+                            break;
+                        case 'pendapatan':
+                            chart.updateSeries([15.1, 22.5, 4.4]);
+                            break;
+                        default:
+                            chart.updateSeries([0, 0, 0]);
+                    }
+
+                } else {
+                    chart.updateSeries([0, 0, 0]);
+                }
+            }
+
+            // Attach the event listener to each checkbox
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', (event) => handleCheckboxChange(event, chart));
+            });
         }
     }, []);
 
@@ -99,7 +134,7 @@ const Chart = () => {
                     </div>
                     <div className="flex justify-center">
                         <div className="w-full h-80 overflow-hidden">
-                            <div id="data-series-chart" className="h-full"></div>
+                            <div id="donut-chart" className="h-full"></div>
                         </div>
                     </div>
                 </div>

@@ -38,6 +38,17 @@ const TotalOrderan = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleSendNotification = async (orderType, orderId) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/invoice/sendNotification/${orderType}/${orderId}`);
+            console.log('Notification sent successfully:', response.data);
+            alert('Notification sent successfully');
+        } catch (error) {
+            console.error('Failed to send notification:', error);
+            alert('Failed to send notification');
+        }
+    };
+
     const filteredOrders = orders.filter(order => {
         const fullName = order.namaPelangganExp || order.namaPelangganReg || order.namaPelangganStr;
         return fullName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -121,7 +132,12 @@ const TotalOrderan = () => {
                                             )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <Link to={`/send/${order.orderType}/${order._id}`} className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-700">Send</Link>
+                                            <button
+                                                onClick={() => handleSendNotification(order.orderType, order._id)}
+                                                className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-700"
+                                            >
+                                                Send
+                                            </button>
                                             <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-red-600 text-white font-bold py-2 px-3 rounded ml-2 hover:bg-red-700">Cetak</Link>
                                         </td>
                                     </tr>
