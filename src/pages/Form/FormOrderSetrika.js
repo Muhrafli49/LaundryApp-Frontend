@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-const FormOrderSetrika = () => {
+const FormOrderSetrika = ({ onClose }) => {
     const initialFormData = {
         namaPelangganStr: "",
         nomorTeleponStr: "",
@@ -108,17 +107,21 @@ const FormOrderSetrika = () => {
 
 
     return (
-        <div className="bg-yellow-50 min-h-screen">
-            <Navbar />
-            <div className="max-w-3xl mx-auto mt-5">
-                <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative">
-                    <h2 className="text-xl font-semibold mb-4 text-center">Form Order Setrika</h2>
-                    {error && <p className="text-red-500">{error}</p>}
-                    {showNotification && (
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                            <span className="block sm:inline">Order berhasil dibuat</span>
-                        </div>
-                    )}
+        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between">
+            <div className="relative">
+                <button onClick={onClose} className="absolute top-0 right-0 text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <h2 className="text-xl font-semibold mb-4 text-center">Form Order Setrika</h2>
+                {error && <p className="text-red-500">{error}</p>}
+                {showNotification && (
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                        <span className="block sm:inline">Order berhasil dibuat</span>
+                    </div>
+                )}
                     <form id="orderForm" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-2">
                             <div className="mb-2">
@@ -259,10 +262,6 @@ const FormOrderSetrika = () => {
                         </div>  
                     </form>
                 </div>
-            </div>
-            <br>
-            </br>
-        </div>
     );
 
 };

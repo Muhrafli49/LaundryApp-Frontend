@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Footer from '../components/Footer';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 const TotalOrderan = () => {
     const [orders, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ordersPerPage] = useState(5); 
 
     useEffect(() => {
         fetchData();
@@ -54,6 +58,14 @@ const TotalOrderan = () => {
         return fullName.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
+    // Pagination Logic
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
@@ -64,11 +76,12 @@ const TotalOrderan = () => {
         });
     };
 
+
     return (
-        <div className="w-full h-full min-h-screen bg-yellow-50"> 
+        <div className="flex flex-col min-h-screen bg-yellow-50"> 
             <Navbar />
-            <div className="container mx-auto">
-                <div className="card mt-8 shadow-md rounded-lg">
+            <div className="container mx-auto flex-grow">
+                <div className="card mt-8 shadow-md rounded-lg mb-3">
                     <div className="card-body flex justify-between items-center">
                         <h2 className="text-3xl lg:text-4xl mb-3 p-2 mt-2 font-bold">Riwayat Transaksi</h2>
                         <div className="flex justify-end">
@@ -111,7 +124,7 @@ const TotalOrderan = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {Array.isArray(filteredOrders) && filteredOrders.length > 0 && filteredOrders.map((order, index) => (
+                                {currentOrders.map((order, index) => (
                                     <tr key={order._id} className="border-b">
                                         <td className="px-6 py-4 whitespace-nowrap">{order.noUrut}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{order.noOrderExp || order.noOrderReg || order.noOrderStr}</td>
@@ -144,9 +157,51 @@ const TotalOrderan = () => {
                                 ))}
                             </tbody>
                         </table>
+                        <Pagination 
+                            totalPages={totalPages} 
+                            currentPage={currentPage} 
+                            paginate={paginate}
+                        />
                     </div>
                 </div>
             </div>
+            <Footer />
+        </div>
+    );
+};
+
+const Pagination = ({ totalPages, currentPage, paginate }) => {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <div className="flex justify-center mt-3 mb-2">
+            <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-2 py-1 font-bold ${currentPage === 1 ? 'text-gray-400' : 'text-slate-600'}`}
+            >
+                <ChevronLeftIcon className="w-3 h-3" />
+            </button>
+            {pageNumbers.map(number => (
+                <button 
+                    key={number} 
+                    onClick={() => paginate(number)} 
+                    className={`px-2 py-1 mx-1 font-bold ${currentPage === number ? 'bg-slate-500 text-white' : 'text-slate-600'}`}
+                >
+                    {number}
+                </button>
+            ))}
+            <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-2 py-1 font-bold ${currentPage === totalPages ? 'text-gray-400' : 'text-slate-600'}`}
+            >
+                <ChevronRightIcon className="w-3 h-3" />
+            </button>
         </div>
     );
 };

@@ -87,10 +87,6 @@ const OrderTable3 = () => {
                     paginate={paginate}
                 />
             </div>
-            <br>
-            </br>
-            <br>
-            </br>
         </div>
     );    
 };

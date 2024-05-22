@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import LaundryLogo from '../assets/laundry-removebg.png';
 import LogoutIcon from '../assets/logout-removebg.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [loggingOut, setLoggingOut] = useState(false);
+    const location = useLocation();
 
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
     };
 
     const logout = () => {
-        setLoggingOut(true); // Menandakan bahwa proses logout dimulai
+        setLoggingOut(true); 
         localStorage.removeItem('token');
         setTimeout(() => {
             window.location.href = '/';
-        }, 1000); // Menunggu 1 detik sebelum redirect ke halaman utama setelah logout
+        }, 1000); 
     }
 
     return (
@@ -29,10 +30,10 @@ const Navbar = () => {
                     </div>
                     <div className="hidden md:block">
                         <div className="flex space-x-4">
-                            <Link to="/paket_tersedia" className="text-white hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium mt-4">Daftar Paket</Link>
-                            <Link to="/riwayat_transaksi" className="text-white hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium mt-4">Riwayat Transaksi</Link>
-                            <Link to="/pengajuan_barang" className="text-white hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium mt-4">Pengajuan</Link>
-                            <Link to="/tentang_kami" className="text-white hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium mt-4">Tentang Kami</Link>
+                            <NavLink to="/paket_tersedia" isActive={location.pathname === '/paket_tersedia'}>Daftar Paket</NavLink>
+                            <NavLink to="/riwayat_transaksi" isActive={location.pathname === '/riwayat_transaksi'}>Riwayat Transaksi</NavLink>
+                            <NavLink to="/pengajuan_barang" isActive={location.pathname === '/pengajuan_barang'}>Pengajuan</NavLink>
+                            <NavLink to="/tentang_kami" isActive={location.pathname === '/tentang_kami'}>Tentang Kami</NavLink>
                         </div>
                     </div>
                     <div className="hidden md:block m-20">
@@ -61,10 +62,10 @@ const Navbar = () => {
                 {isOpen && (
                     <div className="md:hidden">
                         <div className="flex flex-col mt-2 space-y-2">
-                            <Link to="/paket_tersedia" className="text-white hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Daftar Paket</Link>
-                            <Link to="/riwayat_transaksi" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Riwayat Transaksi</Link>
-                            <Link to="/form_pengajuan" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Pengajuan</Link>
-                            <Link to="/tentang_kami" className="text-white  hover:bg-orange-900 px-3 py-2 rounded-md text-sm font-medium">Tentang Kami</Link>
+                            <NavLink to="/paket_tersedia" isActive={location.pathname === '/paket_tersedia'}>Daftar Paket</NavLink>
+                            <NavLink to="/riwayat_transaksi" isActive={location.pathname === '/riwayat_transaksi'}>Riwayat Transaksi</NavLink>
+                            <NavLink to="/pengajuan_barang" isActive={location.pathname === '/pengajuan_barang'}>Pengajuan</NavLink>
+                            <NavLink to="/tentang_kami" isActive={location.pathname === '/tentang_kami'}>Tentang Kami</NavLink>
                             <button className="btn btn-danger flex items-center" onClick={logout}>
                                 {loggingOut ? (
                                     <svg className="animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -72,7 +73,7 @@ const Navbar = () => {
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.008 8.008 0 014 12H0c0 4.418 3.582 8 8 8v-4zm14-8a8.008 8.008 0 01-4 6.928V20c4.418 0 8-3.582 8-8h-4zm-2-5.291A8.008 8.008 0 0120 12h4c0-4.427-3.584-8-8-8v4z"></path>
                                     </svg>
                                 ) : (
-                                        <span>Logout</span>
+                                    <span>Logout</span>
                                 )}
                             </button>
                         </div>
@@ -80,6 +81,17 @@ const Navbar = () => {
                 )}
             </div>
         </nav>
+    );
+}
+
+const NavLink = ({ to, children, isActive }) => {
+    return (
+        <Link
+            to={to}
+            className={`text-white px-3 py-2 rounded-md text-sm font-medium mt-4 ${isActive ? 'bg-orange-900' : 'hover:bg-orange-900'}`}
+        >
+            {children}
+        </Link>
     );
 }
 

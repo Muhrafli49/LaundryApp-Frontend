@@ -5,15 +5,8 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from './components/Login';
 import Dashboard from './layouts/Dashboard';
 import PaketTersedia from './layanan/PaketTersedia';
-import PaketExpress from './layanan/PaketExpress';
-import PaketReguler from './layanan/PaketReguler';
-import PaketSetrika from './layanan/PaketSetrika';
 import RiwayatTransaksi from './layanan/RiwayatTransaksi';
 import TambahOrder from './layanan/TambahOrderan';
-import FormOrderExpress from './pages/Form/FormOrderExpress';
-import FormOrderReguler from './pages/Form/FormOrderReguler';
-import FormOrderSetrika from './pages/Form/FormOrderSetrika';
-import FormPengajuanBarang from './pages/Form/FormPengajuan';
 import PengajuanBarang from './layanan/PengajuanBarang';
 import EditFormPengajuan from './pages/Edit/EditFormPengajuan';
 import DetailOrderExp from './pages/Detail/DetailOrderExp';
@@ -49,16 +42,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} roles={['pegawai', 'admin']} />} />
         <Route path="/paket_tersedia" element={<ProtectedRoute component={PaketTersedia} roles={['pegawai', 'admin']} />} />
-        <Route path="/paket_express" element={<ProtectedRoute component={PaketExpress} roles={['pegawai', 'admin']} />} />
-        <Route path="/paket_reguler" element={<ProtectedRoute component={PaketReguler} roles={['pegawai', 'admin']} />} />
-        <Route path="/paket_setrika" element={<ProtectedRoute component={PaketSetrika} roles={['pegawai', 'admin']} />} />
         <Route path="/riwayat_transaksi" element={<ProtectedRoute component={RiwayatTransaksi} roles={['pegawai', 'admin']} />} />
         <Route path="/tambah_orderan" element={<ProtectedRoute component={TambahOrder} roles={['pegawai', 'admin']} />} />
-        <Route path="/form_order_express" element={<ProtectedRoute component={FormOrderExpress} roles={['pegawai', 'admin']} />} />
-        <Route path="/form_order_reguler" element={<ProtectedRoute component={FormOrderReguler} roles={['pegawai', 'admin']} />} />
-        <Route path="/form_order_setrika" element={<ProtectedRoute component={FormOrderSetrika} roles={['pegawai', 'admin']} />} />
         <Route path="/pengajuan_barang" element={<ProtectedRoute component={PengajuanBarang} roles={['pegawai', 'admin']} />} />
-        <Route path="/form_pengajuan" element={<ProtectedRoute component={FormPengajuanBarang} roles={['pegawai', 'admin']} />} />
         <Route path="/edit/form_pengajuan/:id" element={<ProtectedRoute component={EditFormPengajuan} roles={['pegawai', 'admin']} />} />
         <Route path="/detail/order_exp/:id" element={<ProtectedRoute component={DetailOrderExp} roles={['pegawai', 'admin']} />} />
         <Route path="/detail/order_reg/:id" element={<ProtectedRoute component={DetailOrderReg} roles={['pegawai', 'admin']} />} />
