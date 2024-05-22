@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
+import FormPaketExpress from "../../Form/FormPaketExpress";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 const PaketExpressTersedia = () => {
     const [paketExpress, setPaketExpress] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedExpress, setSelectedExpress] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -33,21 +36,27 @@ const PaketExpressTersedia = () => {
         }
     };
 
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedExpress(null);
+    }
+
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
             <div className="flex flex-row flex-1">
                 <Sidebar />
-                <div className="flex-1 p-6 overflow-auto">
+                <div className={`flex-1 p-6 overflow-auto transition duration-300 ease-in-out ${isModalOpen ? 'filter blur-sm' : ''}`}>
                     <div className="container mx-auto">
                         <div className="bg-white shadow-md rounded-lg">
                             <div className="card-body flex justify-between items-center">
                                 <div>
                                     <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Paket Express</h2>
-                                    <Link to="/form_paket_express" className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 ml-5 mb-3 rounded">+ Tambah Paket</Link>
+                                    <button onClick={openModal} className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 ml-5 mb-3 rounded">+ Tambah Paket</button>
                                 </div>
                                 <div className="flex justify-end">
-                                    <Link to="/dashboard/admin" className="m-4 mt-4">
+                                    <Link to="/paket_laundry" className="m-4 mt-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-500 hover:text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                         </svg>
@@ -86,6 +95,22 @@ const PaketExpressTersedia = () => {
                     </div>
                 </div>
             </div>
+            {isModalOpen && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen px-4">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"/>
+                        </div>
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <FormPaketExpress
+                                express={selectedExpress}
+                                onClose={closeModal} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

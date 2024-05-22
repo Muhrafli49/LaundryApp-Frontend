@@ -1,6 +1,6 @@
 import { ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import DashbordIcon from '../../assets/dashboard-removebg.png';
 import PegawaiIcon from '../../assets/pegawaai-removebg.png'; 
 import PaketLaundryIcon from '../../assets/paket.png'; 
@@ -104,17 +104,25 @@ export default function Sidebar({ children }) {
 
 function SidebarItem({ icon, text, link }) {
     const { expanded } = useContext(SidebarContext);
+    const location = useLocation(); // React Router DOM's useLocation hook
+
+    // Menentukan apakah item sidebar aktif berdasarkan path saat ini
+    const isActive = location.pathname === link;
 
     return (
-        <li className="flex items-center my-2 sidebar-item">
-            <Link to={link} className="flex items-center w-full">
+        <li className={`flex items-center my-2 sidebar-item ${isActive ? "bg-slate-300" : ""}`}>
+            <Link
+                to={link}
+                className={`flex items-center w-full ${isActive ? "text-gray-900" : "text-gray-500 hover:text-gray-900"}`}
+            >
                 <div className="flex items-center justify-center w-16 h-16">
                     {icon}
                 </div>
-                <span className={`text-lg font-semibold ml-3 transition-all text-center ${expanded ? "block" : "hidden"} text-gray-500 hover:text-gray-900`}>
+                <span className={`text-lg font-semibold ml-3 transition-all text-center ${expanded ? "block" : "hidden"}`}>
                     {text}
                 </span>
             </Link>
         </li>
     );
 }
+

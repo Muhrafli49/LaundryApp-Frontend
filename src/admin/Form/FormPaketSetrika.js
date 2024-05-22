@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const FormPaketSetrika = () => {
+const FormPaketSetrika = ({ onClose }) => {
     const initialFormData = {
         namaPaket: "",
         beratMin: "",
@@ -14,7 +12,6 @@ const FormPaketSetrika = () => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,8 +39,8 @@ const FormPaketSetrika = () => {
                 setShowNotification(true);
                 setTimeout(() => {
                     setShowNotification(false);
-                    navigate("/paket_setrika_tersedia");
-                }, 2000);
+                    onClose();
+                }, 2500);
             })
             .catch(error => {
                 console.error("Error submitting form:", error);
@@ -60,17 +57,21 @@ const FormPaketSetrika = () => {
     };
 
     return (
-        <div className="bg-yellow-50 min-h-screen">
-            <Navbar />
-            <div className="max-w-md mx-auto mt-5">
-                <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative">
-                    <h2 className="text-xl font-semibold mb-4 text-center">Form Paket Setrika</h2>
-                    {error && <p className="text-red-500">{error}</p>}
-                    {showNotification && (
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                            <span className="block sm:inline">Paket Baru Berhasil Dibuat</span>
-                        </div>
-                    )}
+        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between max-w-lg mx-auto">
+            <div className="relative mb-4">
+                <button onClick={onClose} className="absolute top-0 right-0 text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <h2 className="text-xl font-semibold mb-4 text-center">Form Paket Setrika</h2>
+                {error && <p className="text-red-500">{error}</p>}
+                {showNotification && (
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                        <span className="block sm:inline">Paket Baru Berhasil Dibuat</span>
+                    </div>
+                )}
                     <form id="paketExpressForm" onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label htmlFor="namaPaket" className="block text-sm font-medium text-gray-700">Nama Paket</label>
@@ -130,8 +131,6 @@ const FormPaketSetrika = () => {
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
         </div>
     );
 };

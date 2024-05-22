@@ -81,7 +81,7 @@ const FormPengajuanBarang = ({ onClose }) => {
                         name="jenisBarang"
                         value={formData.jenisBarang}
                         onChange={handleChange}
-                        className="mt-1 p-2 px-5 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div className="mb-4">
@@ -92,7 +92,7 @@ const FormPengajuanBarang = ({ onClose }) => {
                         name="jumlah"
                         value={formData.jumlah}
                         onChange={handleChange}
-                        className="mt-1 p-2 px-5 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div className="mb-4">
@@ -103,7 +103,7 @@ const FormPengajuanBarang = ({ onClose }) => {
                         name="merk"
                         value={formData.merk}
                         onChange={handleChange}
-                        className="mt-1 p-2 px-5 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div className="mb-4">

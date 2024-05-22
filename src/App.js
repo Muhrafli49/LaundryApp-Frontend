@@ -20,15 +20,11 @@ import TentangKami from './components/TentangKami';
 // Admin
 import DashboardAdmin from './admin/layouts/DashboardAdmin';
 import JumlahKaryawan from './admin/pages/JumlahKaryawan';
-import FormTambahPegawai from './admin/Form/FormTambahPegawai';
 import EditFormTambahPegawai from './admin/Edit/EditFormTambahPegawai';
 import PaketLaundry from './admin/pages/PaketLaundry';
 import PaketExpressTersedia from './admin/pages/Paket/PaketExpressTersedia';
 import PaketRegulerTersedia from './admin/pages/Paket/PaketRegulerTersedia';
 import PaketSetrikaTersedia from './admin/pages/Paket/PaketSetrikaTersedia';
-import FormPaketExpress from './admin/Form/FormPaketExpress';
-import FormPaketReguler from './admin/Form/FormPaketReguler';
-import FormPaketSetrika from './admin/Form/FormPaketSetrika';
 import PersetujuanPengajuan from './admin/pages/PersetujuanPengajuan';
 import EditFormPersetujuan from './admin/Edit/EditFormPersetujuan';
 import Invoice from './layanan/Invoice';
@@ -58,15 +54,11 @@ function App() {
         {/* Admin */}
         <Route path="/dashboard/admin" element={<ProtectedRoute component={DashboardAdmin} roles={['admin']} />} />
         <Route path="/jumlah_karyawan" element={<ProtectedRoute component={JumlahKaryawan} roles={['admin']} />} />
-        <Route path="/form_tambah_pegawai" element={<ProtectedRoute component={FormTambahPegawai} roles={['admin']} />} />
         <Route path="/edit/form_tambah_pegawai/:id" element={<ProtectedRoute component={EditFormTambahPegawai} roles={['admin']} />} />
         <Route path="/paket_laundry" element={<ProtectedRoute component={PaketLaundry} roles={['admin']} />} />
         <Route path="/paket_express_tersedia" element={<ProtectedRoute component={PaketExpressTersedia} roles={['admin']} />} />
         <Route path="/paket_reguler_tersedia" element={<ProtectedRoute component={PaketRegulerTersedia} roles={['admin']} />} />
         <Route path="/paket_setrika_tersedia" element={<ProtectedRoute component={PaketSetrikaTersedia} roles={['admin']} />} />
-        <Route path="/form_paket_express" element={<ProtectedRoute component={FormPaketExpress} roles={['admin']} />} />
-        <Route path="/form_paket_reguler" element={<ProtectedRoute component={FormPaketReguler} roles={['admin']} />} />
-        <Route path="/form_paket_setrika" element={<ProtectedRoute component={FormPaketSetrika} roles={['admin']} />} />
         <Route path="/persetujuan_pengajuan" element={<ProtectedRoute component={PersetujuanPengajuan} roles={['admin']} />} />
         <Route path="/persetujuan/form_pengajuan/:id" element={<ProtectedRoute component={EditFormPersetujuan} roles={['admin']} />} />
         <Route path="/laporan_orderan" element={<ProtectedRoute component={LaporanOrderan} roles={['admin']} />} />

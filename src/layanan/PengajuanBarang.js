@@ -130,12 +130,19 @@ const PengajuanBarang = () => {
 
             {/* Modal Form Pengajuan Barang */}
             {showFormModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg animate__animated animate__slideInDown">
-                        <FormPengajuanBarang
+                
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen px-4">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"/>
+                        </div>
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <FormPengajuanBarang
                             pengajuan={selectedPengajuan}
-                            onClose={closeFormModal}
-                        />
+                            onClose={closeFormModal}/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

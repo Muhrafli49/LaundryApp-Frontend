@@ -3,9 +3,12 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import FormTambahPegawai from "../Form/FormTambahPegawai"; 
 
 const JumlahKaryawan = () => {
     const [karyawan, setKaryawan] = useState([]);
+    const [showFormModal, setShowFormModal] = useState(false);
+    const [selectedPegawai, setSelectedPegawai] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -44,18 +47,27 @@ const JumlahKaryawan = () => {
         }
     };
 
+    const openFormModal = () => {
+        setShowFormModal(true);
+    };
+
+    const closeFormModal = () => {
+        setSelectedPegawai(null);
+        setShowFormModal(false);
+    };
+
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
             <div className="flex flex-row flex-1">
                 <Sidebar/>
-                <div className="flex-1 p-6 overflow-auto">
+                <div className={`flex-1 p-6 overflow-auto transition duration-300 ease-in-out ${showFormModal ? 'filter blur-sm' : ''}`}>
                     <div className="container mx-auto">
                         <div className="bg-white shadow-md rounded-lg">
                             <div className="card-body flex justify-between items-center">
                                 <div>
                                     <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Daftar Pegawai</h2>
-                                    <Link to="/form_tambah_pegawai" className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 ml-5 mb-3 rounded">+ Tambah Pegawai</Link>
+                                    <button onClick={openFormModal} className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 ml-5 mb-3 rounded">+ Tambah Pegawai</button>
                                 </div>
                                 <div className="flex justify-end">
                                     <Link to="/dashboard/admin" className="m-4 mt-4">
@@ -84,7 +96,7 @@ const JumlahKaryawan = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.username}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                                <Link to={`/edit/form_tambah_pegawai/${karyawan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
+                                                    <Link to={`/edit/form_tambah_pegawai/${karyawan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
                                                     <button onClick={() => handleDelete(karyawan._id)} className="btn btn-danger btn-md p-2 ml-2">Hapus</button>
                                                 </td>
                                             </tr>
@@ -96,6 +108,25 @@ const JumlahKaryawan = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal Form Tambah Pegawai */}
+            {showFormModal && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen px-4">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"/>
+                        </div>
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <FormTambahPegawai
+                                pegawai={selectedPegawai}
+                                onClose={closeFormModal}
+                            />
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            )}
         </div>
     );
 }
