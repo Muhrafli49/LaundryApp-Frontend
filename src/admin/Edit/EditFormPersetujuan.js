@@ -78,7 +78,7 @@ const EditFormPersetujuan = () => {
                     <div className="max-w-md mx-auto mt-5">
                         <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative">
                             <h2 className="text-xl font-semibold mb-4 text-center">
-                                Edit Tindakan Pengajuan
+                                Tindakan Pengajuan
                             </h2>
                             {error && <p className="text-red-500">{error}</p>}
                             {showNotification && (

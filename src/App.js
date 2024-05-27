@@ -15,7 +15,7 @@ import DetailOrderStr from './pages/Detail/DetailOrderStr';
 import PembayaranExp from './layanan/PembayaranExp';
 import PembayaranReg from './layanan/PembayaranReg';
 import PembayaranStr from './layanan/PembayaranStr';
-import TentangKami from './components/TentangKami';
+import Pelanggan from './layanan/Pelanggan';
 
 // Admin
 import DashboardAdmin from './admin/layouts/DashboardAdmin';
@@ -49,7 +49,7 @@ function App() {
         <Route path="/pembayaran/reg/:id" element={<ProtectedRoute component={PembayaranReg} roles={['pegawai', 'admin']} />} />
         <Route path="/pembayaran/str/:id" element={<ProtectedRoute component={PembayaranStr} roles={['pegawai', 'admin']} />} />
         <Route path="/invoice/:type/:id" element={<ProtectedRoute component={Invoice} roles={['pegawai', 'admin']} />} />
-        <Route path="/tentang_kami" element={<TentangKami />} />
+        <Route path="/tambah_pelanggan" element={<ProtectedRoute component={Pelanggan} roles={['pegawai', 'admin']} />} />
 
         {/* Admin */}
         <Route path="/dashboard/admin" element={<ProtectedRoute component={DashboardAdmin} roles={['admin']} />} />

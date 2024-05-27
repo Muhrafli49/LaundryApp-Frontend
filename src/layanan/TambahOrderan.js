@@ -6,7 +6,8 @@ import RegulerPaketIcon from '../assets/reguler_paket-removebg.png';
 import SetrikaPaketIcon from '../assets/setrika_paket-removebg.png';
 import FormOrderExpress from "../pages/Form/FormOrderExpress"; 
 import FormOrderReguler from "../pages/Form/FormOrderReguler"; 
-import FormOrderSetrika from "../pages/Form/FormOrderSetrika"; 
+import FormOrderSetrika from "../pages/Form/FormOrderSetrika";
+import Footer from '../components/Footer';
 import "animate.css/animate.min.css"; // Import animate.css
 
 const TambahOrderan = () => {
@@ -23,13 +24,13 @@ const TambahOrderan = () => {
     const closeSetrikaForm = () => setShowSetrikaForm(false);
 
     return (
-        <div className="w-full h-full min-h-screen bg-yellow-50">
+        <div className="flex flex-col min-h-screen bg-yellow-50">
             <Navbar />
-            <div className="container mx-auto">
+            <div className={`container mx-auto flex-grow transition duration-300 ease-in-out ${showExpressForm || showRegulerForm || showSetrikaForm? 'filter blur-sm' : ''}`}>
                 <div className="card mt-8">
                     <div className="card-body">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-3xl lg:text-4xl mb-5 p-2">Paket Tersedia</h2>
+                            <h2 className="text-3xl lg:text-4xl mb-5 p-2">Menu Tambah Order</h2>
                             <Link to="/dashboard" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3">Kembali</Link>
                         </div>
                         <h5 className="text-center my-3 font-semibold text-xl">Pilih Paket</h5>
@@ -101,6 +102,7 @@ const TambahOrderan = () => {
                     </div>
                 </div>
             }
+            <Footer />
         </div>
     );
 }

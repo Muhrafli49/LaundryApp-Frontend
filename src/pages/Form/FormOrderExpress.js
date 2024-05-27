@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 const FormOrderExpress = ({ onClose }) => {
     const initialFormData = {
         namaPelangganExp: "",
         nomorTeleponExp: "",
         alamatExp: "",
-        paketExp: "", 
-        hargaPerKgExp: 0, 
+        paketExp: "",
+        hargaPerKgExp: 0,
         beratExp: "",
-        waktuKerjaExp: 0, 
+        waktuKerjaExp: 0,
         tglOrderExp: "",
         tglSelesaiExp: "",
         keteranganExp: "",
@@ -20,20 +21,29 @@ const FormOrderExpress = ({ onClose }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
-    const [paketOptions, setPaketOptions] = useState([]); // Tambah state untuk menyimpan opsi paket
+    const [paketOptions, setPaketOptions] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPaketOptions();
     }, []);
 
-    // Mengambil opsi paket dari API
     const fetchPaketOptions = async () => {
         try {
             const response = await axios.get("http://localhost:5000/pkt_express");
             setPaketOptions(response.data.data);
         } catch (error) {
             console.error("Error fetching paket options:", error);
+        }
+    };
+
+    const searchPelanggan = async (searchTerm) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/pelanggan?nama=${searchTerm}`);
+            setSearchResults(response.data.data);
+        } catch (error) {
+            console.error('Error searching pelanggan:', error);
         }
     };
 
@@ -44,7 +54,6 @@ const FormOrderExpress = ({ onClose }) => {
             [name]: value
         });
 
-        // Jika nama paket dipilih, isi waktu kerja dan harga per kg sesuai dengan paket yang dipilih
         if (name === 'paketExp') {
             const selectedPaket = paketOptions.find(paket => paket._id === value);
             if (selectedPaket) {
@@ -59,37 +68,32 @@ const FormOrderExpress = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         for (const key in formData) {
             if (key !== "totalBayarExp" && formData[key] === "") {
                 alert("Semua field harus diisi");
-                return; 
+                return;
             }
         }
-    
-        // Hitung total bayar berdasarkan harga per kg dan berat
+
         const totalBayar = formData.hargaPerKgExp * formData.beratExp;
         setFormData(prevState => ({
             ...prevState,
             totalBayarExp: totalBayar
         }));
-    
+
         try {
-            // Dapatkan nama paket berdasarkan ID yang dipilih dari formData
             const selectedPaket = paketOptions.find(paket => paket._id === formData.paketExp);
             if (!selectedPaket) {
-                // Jika tidak ada paket yang sesuai, tangani kesalahan atau kembali
                 return;
             }
-    
-            // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
+
             await axios.post("http://localhost:5000/order_exp/tambah_order", {
                 ...formData,
-                paketExp: selectedPaket.namaPaket, // Kirim nama paket sebagai gantinya
+                paketExp: selectedPaket.namaPaket,
                 totalBayarExp: totalBayar
             });
-    
-            // Setelah berhasil, atur kembali formData dan tampilkan notifikasi
+
             setFormData(initialFormData);
             setError('');
             setShowNotification(true);
@@ -102,10 +106,19 @@ const FormOrderExpress = ({ onClose }) => {
             setError(error.response.data.message);
         }
     };
-    
 
     const handleCancel = () => {
         setFormData(initialFormData);
+    };
+
+    const handleSelectPelanggan = (pelanggan) => {
+        setFormData({
+            ...formData,
+            namaPelangganExp: pelanggan.nama,
+            nomorTeleponExp: pelanggan.telepon,
+            alamatExp: pelanggan.alamat
+        });
+        setSearchResults([]); 
     };
 
     return (
@@ -118,25 +131,41 @@ const FormOrderExpress = ({ onClose }) => {
                 </button>
             </div>
             <h2 className="text-xl font-semibold mb-4 text-center">Form Order Express</h2>
-                {error && <p className="text-red-500">{error}</p>}
-                {showNotification && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                        <span className="block sm:inline">Order berhasil dibuat</span>
+            {error && <p className="text-red-500">{error}</p>}
+            {showNotification && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                    <span className="block sm:inline">Order berhasil dibuat</span>
+                </div>
+            )}
+            <form id="orderForm" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-2 gap-2">
+                    <div className="mb-2">
+                        <label htmlFor="namaPelangganExp" className="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
+                        <input
+                            type="text"
+                            id="namaPelangganExp"
+                            name="namaPelangganExp"
+                            value={formData.namaPelangganExp}
+                            onChange={(e) => {
+                                handleChange(e);
+                                searchPelanggan(e.target.value);
+                            }}
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        {searchResults.length > 0 && (
+                            <ul className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-gray-300">
+                                {searchResults.map((pelanggan) => (
+                                    <li
+                                        key={pelanggan._id}
+                                        onClick={() => handleSelectPelanggan(pelanggan)}
+                                        className="cursor-pointer p-2 hover:bg-gray-100"
+                                    >
+                                        {pelanggan.nama}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
-                )}
-                    <form id="orderForm" onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-2 gap-2">
-                            <div className="mb-2">
-                                <label htmlFor="namaPelangganExp" className="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
-                                <input 
-                                    type="text" 
-                                    id="namaPelangganExp" 
-                                    name="namaPelangganExp" 
-                                    value={formData.namaPelangganExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
                             <div className="mb-2">
                                 <label htmlFor="nomorTeleponExp" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                                 <input 

@@ -36,7 +36,7 @@ const PersetujuanPengajuan = () => {
                         <div className="bg-white shadow-md rounded-lg">
                             <div className="card-body flex justify-between items-center">
                                 <div>
-                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Daftar Pengajuan</h2>
+                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Daftar Pengajuan </h2>
                                 </div>
                                 <div className="flex justify-end">
                                     <Link to="/dashboard/admin" className="m-4 mt-4">

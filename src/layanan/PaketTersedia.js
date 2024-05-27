@@ -27,7 +27,7 @@ const TambahOrder = () => {
                 <div className="card mt-8">
                     <div className="card-body">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-3xl lg:text-4xl mb-5 p-2">Paket Tersedia</h2>
+                            <h2 className="text-3xl lg:text-4xl mb-5 p-2 font-bold">Paket Tersedia</h2>
                             <Link to="/dashboard" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded m-3">Kembali</Link>
                         </div>
                         <h5 className="text-center my-3 font-semibold text-xl">Pilih Paket</h5>

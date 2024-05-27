@@ -32,8 +32,8 @@ const Navbar = () => {
                         <div className="flex space-x-4">
                             <NavLink to="/paket_tersedia" isActive={location.pathname === '/paket_tersedia'}>Daftar Paket</NavLink>
                             <NavLink to="/riwayat_transaksi" isActive={location.pathname === '/riwayat_transaksi'}>Riwayat Transaksi</NavLink>
+                            <NavLink to="/tambah_pelanggan" isActive={location.pathname === '/tambah_pelanggan'}>Pelanggan</NavLink>
                             <NavLink to="/pengajuan_barang" isActive={location.pathname === '/pengajuan_barang'}>Pengajuan</NavLink>
-                            <NavLink to="/tentang_kami" isActive={location.pathname === '/tentang_kami'}>Tentang Kami</NavLink>
                         </div>
                     </div>
                     <div className="hidden md:block m-20">
@@ -64,8 +64,8 @@ const Navbar = () => {
                         <div className="flex flex-col mt-2 space-y-2">
                             <NavLink to="/paket_tersedia" isActive={location.pathname === '/paket_tersedia'}>Daftar Paket</NavLink>
                             <NavLink to="/riwayat_transaksi" isActive={location.pathname === '/riwayat_transaksi'}>Riwayat Transaksi</NavLink>
+                            <NavLink to="/tambah_pelanggan" isActive={location.pathname === '/tambah_pelanggan'}>Pelanggan</NavLink>
                             <NavLink to="/pengajuan_barang" isActive={location.pathname === '/pengajuan_barang'}>Pengajuan</NavLink>
-                            <NavLink to="/tentang_kami" isActive={location.pathname === '/tentang_kami'}>Tentang Kami</NavLink>
                             <button className="btn btn-danger flex items-center" onClick={logout}>
                                 {loggingOut ? (
                                     <svg className="animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
