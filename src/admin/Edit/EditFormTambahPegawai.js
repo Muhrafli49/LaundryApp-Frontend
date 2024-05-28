@@ -88,7 +88,7 @@ const EditFormTambahPegawai = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                 </Link>
-                    <h2 className="text-xl font-semibold mb-4 text-center">Form Registrasi</h2>
+                    <h2 className="text-xl font-semibold mb-4 text-center">Update Data Pegawai</h2>
                     {error && <p className="text-red-500">{error}</p>}
                     {showNotification && (
                         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">

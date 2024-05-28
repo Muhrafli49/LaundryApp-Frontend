@@ -22,10 +22,13 @@ const FormOrderSetrika = ({ onClose }) => {
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
     const [paketOptions, setPaketOptions] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+    const [allPelanggan, setAllPelanggan] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPaketOptions();
+        fetchAllPelanggan(); 
     }, []);
 
     const fetchPaketOptions = async () => {
@@ -36,12 +39,31 @@ const FormOrderSetrika = ({ onClose }) => {
             console.error("Error fetching paket options:", error);
         }
     };
+
+    const fetchAllPelanggan = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/pelanggan");
+            setAllPelanggan(response.data.data);
+        } catch (error) {
+            console.error('Error fetching all pelanggan:', error);
+        }
+    };
+
+    const searchPelanggan = (searchTerm) => {
+        const results = allPelanggan.filter(pelanggan => pelanggan.nama.toLowerCase().includes(searchTerm.toLowerCase()));
+        setSearchResults(results);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
+
+        if (name === 'namaPelangganStr') {
+            searchPelanggan(value);
+        }
 
         // Jika nama paket dipilih, isi waktu kerja dan harga per kg sesuai dengan paket yang dipilih
         if (name === 'paketStr') {
@@ -105,6 +127,15 @@ const FormOrderSetrika = ({ onClose }) => {
         setFormData(initialFormData); 
     };
 
+    const handleSelectPelanggan = (pelanggan) => {
+        setFormData({
+            ...formData,
+            namaPelangganStr: pelanggan.nama,
+            nomorTeleponStr: pelanggan.telepon,
+            alamatStr: pelanggan.alamat
+        });
+        setSearchResults([]); 
+    };
 
     return (
         <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between">
@@ -131,9 +162,25 @@ const FormOrderSetrika = ({ onClose }) => {
                                     id="namaPelangganStr" 
                                     name="namaPelangganStr" 
                                     value={formData.namaPelangganStr} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                        searchPelanggan(e.target.value);
+                                    }}
+                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 />
+                                {searchResults.length > 0 && (
+                                    <ul className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-gray-300">
+                                        {searchResults.map((pelanggan) => (
+                                            <li
+                                                key={pelanggan._id}
+                                                onClick={() => handleSelectPelanggan(pelanggan)}
+                                                className="cursor-pointer p-2 hover:bg-gray-100"
+                                            >
+                                                {pelanggan.nama}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </div>
                             <div className="mb-2">
                                 <label htmlFor="nomorTeleponStr" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>

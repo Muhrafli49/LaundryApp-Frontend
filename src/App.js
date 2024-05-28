@@ -9,6 +9,7 @@ import RiwayatTransaksi from './layanan/RiwayatTransaksi';
 import TambahOrder from './layanan/TambahOrderan';
 import PengajuanBarang from './layanan/PengajuanBarang';
 import EditFormPengajuan from './pages/Edit/EditFormPengajuan';
+import EditFormPelanggan from './pages/Edit/EditFormPelanggan';
 import DetailOrderExp from './pages/Detail/DetailOrderExp';
 import DetailOrderReg from './pages/Detail/DetailOrderReg';
 import DetailOrderStr from './pages/Detail/DetailOrderStr';
@@ -50,6 +51,7 @@ function App() {
         <Route path="/pembayaran/str/:id" element={<ProtectedRoute component={PembayaranStr} roles={['pegawai', 'admin']} />} />
         <Route path="/invoice/:type/:id" element={<ProtectedRoute component={Invoice} roles={['pegawai', 'admin']} />} />
         <Route path="/tambah_pelanggan" element={<ProtectedRoute component={Pelanggan} roles={['pegawai', 'admin']} />} />
+        <Route path="/edit/form_tambah_pelanggan/:id" element={<ProtectedRoute component={EditFormPelanggan} roles={['pegawai', 'admin']} />} />
 
         {/* Admin */}
         <Route path="/dashboard/admin" element={<ProtectedRoute component={DashboardAdmin} roles={['admin']} />} />

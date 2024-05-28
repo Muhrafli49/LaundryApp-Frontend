@@ -21,10 +21,13 @@ const FormOrderReguler = ({ onClose }) => {
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
     const [paketOptions, setPaketOptions] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+    const [allPelanggan, setAllPelanggan] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPaketOptions();
+        fetchAllPelanggan(); 
     }, []);
 
     const fetchPaketOptions = async () => {
@@ -35,12 +38,31 @@ const FormOrderReguler = ({ onClose }) => {
             console.error("Error fetching paket options:", error);
         }
     };
+
+    const fetchAllPelanggan = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/pelanggan");
+            setAllPelanggan(response.data.data);
+        } catch (error) {
+            console.error('Error fetching all pelanggan:', error);
+        }
+    };
+    
+    const searchPelanggan = (searchTerm) => {
+        const results = allPelanggan.filter(pelanggan => pelanggan.nama.toLowerCase().includes(searchTerm.toLowerCase()));
+        setSearchResults(results);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
+
+        if (name === 'namaPelangganReg') {
+            searchPelanggan(value);
+        }
 
         if (name === 'paketReg') {
             const selectedPaket = paketOptions.find(paket => paket._id === value);
@@ -75,14 +97,13 @@ const FormOrderReguler = ({ onClose }) => {
             // Dapatkan nama paket berdasarkan ID yang dipilih dari formData
             const selectedPaket = paketOptions.find(paket => paket._id === formData.paketReg);
             if (!selectedPaket) {
-                // Jika tidak ada paket yang sesuai, tangani kesalahan atau kembali
                 return;
             }
     
             // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
             await axios.post("http://localhost:5000/order_Reg/tambah_order", {
                 ...formData,
-                paketReg: selectedPaket.namaPaket, // Kirim nama paket sebagai gantinya
+                paketReg: selectedPaket.namaPaket, 
                 totalBayarReg: totalBayar
             });
     
@@ -102,6 +123,16 @@ const FormOrderReguler = ({ onClose }) => {
 
     const handleCancel = () => {
         setFormData(initialFormData); 
+    };
+
+    const handleSelectPelanggan = (pelanggan) => {
+        setFormData({
+            ...formData,
+            namaPelangganReg: pelanggan.nama,
+            nomorTeleponReg: pelanggan.telepon,
+            alamatReg: pelanggan.alamat
+        });
+        setSearchResults([]); 
     };
 
 
@@ -125,14 +156,30 @@ const FormOrderReguler = ({ onClose }) => {
                         <div className="grid grid-cols-2 gap-2">
                             <div className="mb-2">
                                 <label htmlFor="namaPelangganReg" className="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
-                                <input 
-                                    type="text" 
-                                    id="namaPelangganReg" 
-                                    name="namaPelangganReg" 
-                                    value={formData.namaPelangganReg} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
+                                <input
+                            type="text"
+                            id="namaPelangganReg"
+                            name="namaPelangganReg"
+                            value={formData.namaPelangganReg}
+                            onChange={(e) => {
+                                handleChange(e);
+                                searchPelanggan(e.target.value);
+                            }}
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            />
+                            {searchResults.length > 0 && (
+                                <ul className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-gray-300">
+                                    {searchResults.map((pelanggan) => (
+                                        <li
+                                            key={pelanggan._id}
+                                            onClick={() => handleSelectPelanggan(pelanggan)}
+                                            className="cursor-pointer p-2 hover:bg-gray-100"
+                                        >
+                                            {pelanggan.nama}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                             </div>
                             <div className="mb-2">
                                 <label htmlFor="nomorTeleponReg" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>

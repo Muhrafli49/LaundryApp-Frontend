@@ -93,7 +93,7 @@ export default function Sidebar({ children }) {
                     >
                         <div className="leading-4">
                             <h4 className="font-semibold">Admin</h4>
-                            <span className="text-xs text-gray-600">Admin@gmail.com</span>
+                            <span className="text-xs text-gray-600">bingolaundry@gmail.com</span>
                         </div>
                     </div>
                 </div>

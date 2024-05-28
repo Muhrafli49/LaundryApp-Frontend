@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 const FormOrderExpress = ({ onClose }) => {
     const initialFormData = {
         namaPelangganExp: "",
@@ -23,10 +22,12 @@ const FormOrderExpress = ({ onClose }) => {
     const [showNotification, setShowNotification] = useState(false);
     const [paketOptions, setPaketOptions] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
+    const [allPelanggan, setAllPelanggan] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPaketOptions();
+        fetchAllPelanggan(); 
     }, []);
 
     const fetchPaketOptions = async () => {
@@ -38,13 +39,18 @@ const FormOrderExpress = ({ onClose }) => {
         }
     };
 
-    const searchPelanggan = async (searchTerm) => {
+    const fetchAllPelanggan = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/pelanggan?nama=${searchTerm}`);
-            setSearchResults(response.data.data);
+            const response = await axios.get("http://localhost:5000/pelanggan");
+            setAllPelanggan(response.data.data);
         } catch (error) {
-            console.error('Error searching pelanggan:', error);
+            console.error('Error fetching all pelanggan:', error);
         }
+    };
+
+    const searchPelanggan = (searchTerm) => {
+        const results = allPelanggan.filter(pelanggan => pelanggan.nama.toLowerCase().includes(searchTerm.toLowerCase()));
+        setSearchResults(results);
     };
 
     const handleChange = (e) => {
@@ -53,6 +59,10 @@ const FormOrderExpress = ({ onClose }) => {
             ...formData,
             [name]: value
         });
+
+        if (name === 'namaPelangganExp') {
+            searchPelanggan(value);
+        }
 
         if (name === 'paketExp') {
             const selectedPaket = paketOptions.find(paket => paket._id === value);
@@ -118,7 +128,7 @@ const FormOrderExpress = ({ onClose }) => {
             nomorTeleponExp: pelanggan.telepon,
             alamatExp: pelanggan.alamat
         });
-        setSearchResults([]); 
+        setSearchResults([]);
     };
 
     return (
@@ -146,10 +156,7 @@ const FormOrderExpress = ({ onClose }) => {
                             id="namaPelangganExp"
                             name="namaPelangganExp"
                             value={formData.namaPelangganExp}
-                            onChange={(e) => {
-                                handleChange(e);
-                                searchPelanggan(e.target.value);
-                            }}
+                            onChange={handleChange}
                             className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                         />
                         {searchResults.length > 0 && (
@@ -166,133 +173,133 @@ const FormOrderExpress = ({ onClose }) => {
                             </ul>
                         )}
                     </div>
-                            <div className="mb-2">
-                                <label htmlFor="nomorTeleponExp" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
-                                <input 
-                                    type="int"
-                                    id="nomorTeleponExp" 
-                                    name="nomorTeleponExp" 
-                                    value={formData.nomorTeleponExp} 
-                                    onChange={handleChange} 
-                                    maxLength={13} 
-                                    pattern="[0-9]*" 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="alamatExp" className="block text-sm font-medium text-gray-700">Alamat</label>
-                                <textarea 
-                                    id="alamatExp" 
-                                    name="alamatExp" 
-                                    value={formData.alamatExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="hargaPerKgExp" className="block text-sm font-medium text-gray-700">Harga Per Kg</label>
-                                <input 
-                                    type="text" 
-                                    id="hargaPerKgExp" 
-                                    name="hargaPerKgExp" 
-                                    value={formData.hargaPerKgExp} 
-                                    onChange={handleChange} 
-                                    disabled 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200"
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="paketExp" className="block text-sm font-medium text-gray-700">Paket</label>
-                                <select
-                                    id="paketExp"
-                                    name="paketExp"
-                                    value={formData.paketExp}
-                                    onChange={handleChange}
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="">Pilih Paket</option>
-                                    {paketOptions.map((paket, index) => (
-                                        <option key={index} value={paket._id}>{paket.namaPaket}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="beratExp" className="block text-sm font-medium text-gray-700">Berat</label>
-                                <input 
-                                    type="text" 
-                                    id="beratExp" 
-                                    name="beratExp" 
-                                    value={formData.beratExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="waktuKerjaExp" className="block text-sm font-medium text-gray-700">Waktu Kerja (Jam)</label>
-                                <input 
-                                    type="text" 
-                                    id="waktuKerjaExp" 
-                                    name="waktuKerjaExp" 
-                                    value={formData.waktuKerjaExp} 
-                                    onChange={handleChange}
-                                    disabled 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="tglOrderExp" className="block text-sm font-medium text-gray-700">Tanggal Order</label>
-                                <input 
-                                    type="date" 
-                                    id="tglOrderExp" 
-                                    name="tglOrderExp" 
-                                    value={formData.tglOrderExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="tglSelesaiExp" className="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
-                                <input 
-                                    type="date" 
-                                    id="tglSelesaiExp" 
-                                    name="tglSelesaiExp" 
-                                    value={formData.tglSelesaiExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="keteranganExp" className="block text-sm font-medium text-gray-700">Keterangan</label>
-                                <textarea
-                                    id="keteranganExp" 
-                                    name="keteranganExp" 
-                                    value={formData.keteranganExp} 
-                                    onChange={handleChange} 
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                />
-                            </div>
-                            <div className="mb-2">
-                                <label htmlFor="totalBayarExp" className="block text-sm font-medium text-gray-700">Total Bayar</label>
-                                <input 
-                                    type="text" 
-                                    id="totalBayarExp" 
-                                    name="totalBayarExp" 
-                                    value={formData.hargaPerKgExp * formData.beratExp} 
-                                    onChange={handleChange}
-                                    disabled   
-                                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
-                                />
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 right-0 mb-4 mr-4">
-                            <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none mr-2">
-                                Simpan
-                            </button>
-                            <button type="button" className="px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none focus:bg-slate-500" onClick={handleCancel}>
-                                Batal
-                            </button>
-                        </div>
-                    </form>
+                    <div className="mb-2">
+                        <label htmlFor="nomorTeleponExp" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                        <input 
+                            type="int"
+                            id="nomorTeleponExp" 
+                            name="nomorTeleponExp" 
+                            value={formData.nomorTeleponExp} 
+                            onChange={handleChange} 
+                            maxLength={13} 
+                            pattern="[0-9]*" 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="alamatExp" className="block text-sm font-medium text-gray-700">Alamat</label>
+                        <textarea 
+                            id="alamatExp" 
+                            name="alamatExp" 
+                            value={formData.alamatExp} 
+                            onChange={handleChange} 
+                            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="hargaPerKgExp" className="block text-sm font-medium text-gray-700">Harga Per Kg</label>
+                        <input 
+                            type="text" 
+                            id="hargaPerKgExp" 
+                            name="hargaPerKgExp" 
+                            value={formData.hargaPerKgExp} 
+                            onChange={handleChange} 
+                            disabled 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200"
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="paketExp" className="block text-sm font-medium text-gray-700">Paket</label>
+                        <select
+                            id="paketExp"
+                            name="paketExp"
+                            value={formData.paketExp}
+                            onChange={handleChange}
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Pilih Paket</option>
+                            {paketOptions.map((paket, index) => (
+                                <option key={index} value={paket._id}>{paket.namaPaket}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="beratExp" className="block text-sm font-medium text-gray-700">Berat</label>
+                        <input 
+                            type="text" 
+                            id="beratExp" 
+                            name="beratExp" 
+                            value={formData.beratExp} 
+                            onChange={handleChange} 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="waktuKerjaExp" className="block text-sm font-medium text-gray-700">Waktu Kerja (Jam)</label>
+                        <input 
+                            type="text" 
+                            id="waktuKerjaExp" 
+                            name="waktuKerjaExp" 
+                            value={formData.waktuKerjaExp} 
+                            onChange={handleChange}
+                            disabled 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="tglOrderExp" className="block text-sm font-medium text-gray-700">Tanggal Order</label>
+                        <input 
+                            type="date" 
+                            id="tglOrderExp" 
+                            name="tglOrderExp" 
+                            value={formData.tglOrderExp} 
+                            onChange={handleChange} 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="tglSelesaiExp" className="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
+                        <input 
+                            type="date" 
+                            id="tglSelesaiExp" 
+                            name="tglSelesaiExp" 
+                            value={formData.tglSelesaiExp} 
+                            onChange={handleChange} 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="keteranganExp" className="block text-sm font-medium text-gray-700">Keterangan</label>
+                        <textarea
+                            id="keteranganExp" 
+                            name="keteranganExp" 
+                            value={formData.keteranganExp} 
+                            onChange={handleChange} 
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label htmlFor="totalBayarExp" className="block text-sm font-medium text-gray-700">Total Bayar</label>
+                        <input 
+                            type="text" 
+                            id="totalBayarExp" 
+                            name="totalBayarExp" 
+                            value={formData.hargaPerKgExp * formData.beratExp} 
+                            onChange={handleChange}
+                            disabled   
+                            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-200" 
+                        />
+                    </div>
                 </div>
+                <div className="absolute bottom-0 right-0 mb-4 mr-4">
+                    <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none mr-2">
+                        Simpan
+                    </button>
+                    <button type="button" className="px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 focus:outline-none focus:bg-slate-500" onClick={handleCancel}>
+                        Batal
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 

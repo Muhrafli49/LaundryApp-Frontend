@@ -5,8 +5,8 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; 
 
-const EditFormPengajuan = ({ onClose }) => {
-    const { id } = useParams(); // Ambil ID dari URL
+const EditFormPengajuan = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState ({
@@ -44,7 +44,7 @@ const EditFormPengajuan = ({ onClose }) => {
                 totalHarga: res.data.data.totalHarga
             });
         });
-    }, [id]); // Hanya jalankan sekali saat id berubah
+    }, [id]); 
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,8 +59,7 @@ const EditFormPengajuan = ({ onClose }) => {
         const calculatedTotalHarga = formData.jumlah * formData.hargaSatuan;
     
         try {
-            const response = await axios.put(`http://localhost:5000/pengajuan/edit/${id}`, {...formData, totalHarga: calculatedTotalHarga});
-            console.log("Response from API:", response.data);
+            await axios.put(`http://localhost:5000/pengajuan/edit/${id}`, {...formData, totalHarga: calculatedTotalHarga});
             setError('');
             setShowNotification(true); 
             setTimeout(() => {
