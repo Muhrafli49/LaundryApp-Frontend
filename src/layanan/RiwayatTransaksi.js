@@ -5,12 +5,14 @@ import axios from "axios";
 import Footer from '../components/Footer';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import WhatsappIcon from "../assets/whatsapp-removebg.png";
+import InvoiceIcon from "../assets/point-of-sale-bill-removebg.png";
 
 const TotalOrderan = () => {
     const [orders, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [ordersPerPage] = useState(5); 
+    const [ordersPerPage] = useState(5);
+    const [filter, setFilter] = useState("all"); 
 
     useEffect(() => {
         fetchData();
@@ -43,6 +45,10 @@ const TotalOrderan = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleFilterChange = (event) => {
+        setFilter(event.target.value);
+    };
+
     const handleSendNotification = async (orderType, orderId) => {
         try {
             const response = await axios.get(`http://localhost:5000/invoice/sendNotification/${orderType}/${orderId}`);
@@ -54,19 +60,6 @@ const TotalOrderan = () => {
         }
     };
 
-    const filteredOrders = orders.filter(order => {
-        const fullName = order.namaPelangganExp || order.namaPelangganReg || order.namaPelangganStr;
-        return fullName.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-
-    // Pagination Logic
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
-    const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
@@ -77,9 +70,34 @@ const TotalOrderan = () => {
         });
     };
 
+    // Filter berdasarkan pilihan tanggal
+    const filteredOrders = orders.filter(order => {
+        const fullName = order.namaPelangganExp || order.namaPelangganReg || order.namaPelangganStr;
+        const dateFilter = new Date(order.tglSelesaiExp || order.tglSelesaiReg || order.tglSelesaiStr);
+
+        if (filter === "today") {
+            const today = new Date();
+            return fullName.toLowerCase().includes(searchTerm.toLowerCase()) && dateFilter.toDateString() === today.toDateString();
+        } else if (filter === "week") {
+            const today = new Date();
+            const nextWeek = new Date();
+            nextWeek.setDate(today.getDate() + 7);
+            return fullName.toLowerCase().includes(searchTerm.toLowerCase()) && dateFilter >= today && dateFilter <= nextWeek;
+        } else {
+            return fullName.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+    });
+
+    // Pagination Logic
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="flex flex-col min-h-screen bg-yellow-50"> 
+        <div className="flex flex-col min-h-screen bg-yellow-50">
             <Navbar />
             <div className="container mx-auto flex-grow">
                 <div className="card mt-8 shadow-md rounded-lg mb-3">
@@ -107,6 +125,13 @@ const TotalOrderan = () => {
                                     <path fillRule="evenodd" d="M8 1a7 7 0 0 1 5.585 11.243l5.146 5.146-1.415 1.415-5.146-5.146A7 7 0 1 1 8 1zm0 2a5 5 0 1 0 0 10A5 5 0 0 0 8 3z" clipRule="evenodd" />
                                 </svg>
                             </div>
+                        </div>
+                        <div className="ml-4">
+                            <select value={filter} onChange={handleFilterChange} className="border border-gray-800 rounded-md py-2 px-4 mr-3 font-semibold">
+                                <option value="all">Semua</option>
+                                <option value="today">Hari Ini</option>
+                                <option value="week">Seminggu Kedepan</option>
+                            </select>
                         </div>
                     </div>
                     <div className="overflow-x-auto">
@@ -151,11 +176,12 @@ const TotalOrderan = () => {
                                                     onClick={() => handleSendNotification(order.orderType, order._id)}
                                                     className="bg-green-500 text-white font-bold py-2 px-3 rounded hover:bg-green-700 flex items-center"
                                                 >
-                                                    Send
+                                                    Kirim
                                                     <img src={WhatsappIcon} alt="WhatsApp Icon" className="w-5 h-5 ml-2" />
                                                 </button>
-                                                <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-blue-600 text-white font-bold py-2 px-3 rounded hover:bg-blue-700">
+                                                <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-blue-600 text-white font-bold py-2 px-3 rounded hover:bg-blue-700 flex items-center">
                                                     Cetak
+                                                    <img src={InvoiceIcon} alt="Invoice Icon" className="w-5 h-5 ml-2" />
                                                 </Link>
                                             </div>
                                         </td>   

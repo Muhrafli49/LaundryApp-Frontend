@@ -15,7 +15,8 @@ const OrderTable2 = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:5000/order_reg');
-            setOrders(response.data.data);
+            const sortedOrders = response.data.data.sort((a, b) => new Date(b.tglOrderReg) - new Date(a.tglOrderReg));
+            setOrders(sortedOrders);
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
