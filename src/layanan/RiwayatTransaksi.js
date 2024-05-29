@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Footer from '../components/Footer';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import WhatsappIcon from "../assets/whatsapp-removebg.png";
 
 const TotalOrderan = () => {
     const [orders, setOrders] = useState([]);
@@ -139,20 +140,25 @@ const TotalOrderan = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {order.status ? (
-                                                <span className="bg-green-500 text-white px-2 py-1 rounded-md">Selesai</span>
+                                                <span className="bg-lime-500 text-white px-2 py-1 rounded-md">Selesai</span>
                                             ) : (
                                                 <span className="bg-slate-500 text-white px-2 py-1 rounded-md">Pending</span>
                                             )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                            <button
-                                                onClick={() => handleSendNotification(order.orderType, order._id)}
-                                                className="bg-blue-500 text-white font-bold py-2 px-3 rounded hover:bg-blue-700"
-                                            >
-                                                Send
-                                            </button>
-                                            <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-red-600 text-white font-bold py-2 px-3 rounded ml-2 hover:bg-red-700">Cetak</Link>
-                                        </td>
+                                            <div className="flex items-center gap-x-2">
+                                                <button
+                                                    onClick={() => handleSendNotification(order.orderType, order._id)}
+                                                    className="bg-green-500 text-white font-bold py-2 px-3 rounded hover:bg-green-700 flex items-center"
+                                                >
+                                                    Send
+                                                    <img src={WhatsappIcon} alt="WhatsApp Icon" className="w-5 h-5 ml-2" />
+                                                </button>
+                                                <Link to={`/invoice/${order.orderType}/${order._id}`} className="bg-blue-600 text-white font-bold py-2 px-3 rounded hover:bg-blue-700">
+                                                    Cetak
+                                                </Link>
+                                            </div>
+                                        </td>   
                                     </tr>
                                 ))}
                             </tbody>
