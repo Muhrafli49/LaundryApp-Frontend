@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import FormPaketExpress from "../../Form/FormPaketExpress";
-import axios from "axios";
+import axios from '../../../services/index';
 import { Link } from "react-router-dom";
 
 const PaketExpressTersedia = () => {

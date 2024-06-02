@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../services/index';
 import ApexCharts from 'apexcharts';
 
 const Chart = () => {

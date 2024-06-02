@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import axios from "axios";
+import axios from '../../services/index';
 import { Link } from "react-router-dom";
 import FormTambahPegawai from "../Form/FormTambahPegawai"; 
 

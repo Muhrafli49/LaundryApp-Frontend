@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ApexCharts from "react-apexcharts";
-import axios from "axios";
+import axios from '../../services/index';
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import 'tailwindcss/tailwind.css';

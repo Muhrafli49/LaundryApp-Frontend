@@ -3,8 +3,8 @@ import PegawaiIcon from '../../assets/user.png';
 import PaketLaundry from '../../assets/paket_icon-removebg.png';
 import PengajuanIcon from '../../assets/pengajuan_icon-removebg.png';
 import TotalOrderan from '../../assets/rupiah.png';
-import axios from 'axios';
-import Chart from './Chart'; // Adjust the path as necessary
+import axios from '../../services/index';
+import Chart from './Chart'; 
 
 const Hero = () => {
     const [jumlahPegawai, setJumlahPegawai] = useState(0);
