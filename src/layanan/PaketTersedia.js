@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import PaketExpress from "./PaketExpress"; // Sesuaikan dengan path komponen PaketExpress yang sebenarnya
+import PaketExpress from "./PaketExpress";
+import PaketReguler from "./PaketReguler";
+import PaketSetrika from "./PaketSetrika";
 import ExpressPaketIcon from '../assets/express_paket-removebg.png';
 import RegulerPaketIcon from '../assets/reguler_paket-removebg.png';
 import SetrikaPaketIcon from '../assets/setrika_paket-removebg.png';
@@ -78,7 +80,7 @@ const TambahOrder = () => {
             {showRegulerModal &&
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-5 rounded-lg shadow-lg">
-                        <PaketExpress onClose={closeRegulerModal} />
+                        <PaketReguler onClose={closeRegulerModal} />
                     </div>
                 </div>
             }
@@ -86,7 +88,7 @@ const TambahOrder = () => {
             {showSetrikaModal &&
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-5 rounded-lg shadow-lg">
-                        <PaketExpress onClose={closeSetrikaModal} />
+                        <PaketSetrika onClose={closeSetrikaModal} />
                     </div>
                 </div>
             }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from '../services/index';
 import Footer from '../components/Footer';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import WhatsappIcon from "../assets/whatsapp-removebg.png";

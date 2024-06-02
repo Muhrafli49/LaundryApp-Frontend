@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DoneIcon from '../assets/ceklis-removebg.png';
 import { useParams, useNavigate } from "react-router-dom"; 
-import axios from "axios";
+import axios from '../services/index';
 
 const PembayaranReg = () => {
     const { id } = useParams();

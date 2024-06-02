@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from '../services/index';
 
 const PaketReguler = ({ onClose }) => {
     // State untuk menyimpan data paket reguler

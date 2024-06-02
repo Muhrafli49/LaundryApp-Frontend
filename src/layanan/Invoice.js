@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../services/index';
 import LaundryLogo from '../assets/laundry-removebg.png';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';

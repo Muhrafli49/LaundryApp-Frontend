@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
-import axios from "axios";
-
+import axios from '../services/index';
 const PaketSetrika = ({ onClose }) => {
     // State untuk menyimpan data paket setrika
     const [paketSetrika, setPaketSetrika] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../services/index';
 import DoneIcon from '../assets/ceklis-removebg.png';
 import OrderanIcon from '../assets/Orderan-removebg.png';
 import TersediaIcon from '../assets/Tersedia-removebg.png';

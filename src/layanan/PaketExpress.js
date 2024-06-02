@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from '../services/index';
 
 const PaketExpress = ({ onClose }) => {
     const [paketExpress, setPaketExpress] = useState([]);
