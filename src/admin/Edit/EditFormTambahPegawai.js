@@ -27,7 +27,7 @@ const EditFormTambahPegawai = () => {
     const [showNotification, setShowNotification] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/user/${id}`)
+        axios.get(`/user/${id}`)
             .then(res => {
                 const data = res.data.data;
                 setFormData({
@@ -61,7 +61,7 @@ const EditFormTambahPegawai = () => {
         }
 
         try {
-            await axios.put(`http://localhost:5000/user/edit/${id}`, { ...formData });
+            await axios.put(`/user/edit/${id}`, { ...formData });
             setError('');
             setShowNotification(true);
             setTimeout(() => {

@@ -16,7 +16,7 @@ const PaketSetrikaTersedia = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_setrika");
+            const response = await axios.get("/pkt_setrika");
             setPaketSetrika(response.data.data);
         } catch (error) {
             console.error("Error fetching paket express:", error);
@@ -26,7 +26,7 @@ const PaketSetrikaTersedia = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
             try {
-                const response = await axios.delete(`http://localhost:5000/pkt_setrika/delete/${id}`);
+                const response = await axios.delete(`/pkt_setrika/delete/${id}`);
                 console.log("Data berhasil dihapus:", response.data);
                 // Reload data after deletion
                 fetchData();

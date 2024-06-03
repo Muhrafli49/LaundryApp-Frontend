@@ -31,7 +31,7 @@ const FormPaketSetrika = ({ onClose }) => {
             }
         }
 
-        axios.post("http://localhost:5000/pkt_setrika/tambah", formData)
+        axios.post("/pkt_setrika/tambah", formData)
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData);

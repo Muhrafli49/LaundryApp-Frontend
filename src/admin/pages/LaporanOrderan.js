@@ -45,7 +45,7 @@ const LaporanOrderan = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/invoice/total_order');
+                const response = await axios.get('/invoice/total_order');
                 const { totalExp, totalReg, totalStr } = response.data;
                 setSeriesData([totalExp, totalReg, totalStr]);
                 setIsLoading(false);

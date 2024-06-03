@@ -31,7 +31,7 @@ const FormPaketExpress = ({ onClose }) => {
             }
         }
 
-        axios.post("http://localhost:5000/pkt_express/tambah", formData)
+        axios.post("/pkt_express/tambah", formData)
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData);

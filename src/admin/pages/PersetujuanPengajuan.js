@@ -12,7 +12,7 @@ const PersetujuanPengajuan = () => {
     }, []);
 
     const fetchData = () => {
-        axios.get("http://localhost:5000/pengajuan")
+        axios.get("/pengajuan")
             .then(response => {
                 // Tambahkan nomor urut otomatis ke setiap pengajuan
                 const dataWithIndex = response.data.data.map((item, index) => ({

@@ -31,7 +31,7 @@ const FormTambahPegawai = ({ onClose }) => {
             }
         }
 
-        axios.post("http://localhost:5000/registrasi", formData)
+        axios.post("/registrasi", formData)
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData);

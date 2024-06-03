@@ -16,7 +16,7 @@ const EditFormPersetujuan = () => {
 
     // Mengambil data pengajuan barang berdasarkan ID dari backend
     useEffect(() => {
-        axios.get(`http://localhost:5000/pengajuan/${id}`)
+        axios.get(`/pengajuan/${id}`)
             .then((res) => {
                 const data = res.data.data;
                 setFormData({
@@ -32,7 +32,7 @@ const EditFormPersetujuan = () => {
     const handleChangeStatus = async (newStatus) => {
         try {
             const response = await axios.put(
-                `http://localhost:5000/pengajuan/edit/${id}`,
+                `/pengajuan/edit/${id}`,
                 { status: newStatus }
             );
             console.log("Status changed successfully:", response.data);
@@ -55,7 +55,7 @@ const EditFormPersetujuan = () => {
         try {
             // Kirim permintaan untuk menyimpan data status yang diubah
             const response = await axios.put(
-                `http://localhost:5000/pengajuan/edit/${id}`,
+                `/pengajuan/edit/${id}`,
                 { status: formData.status === "Diterima" } // Mengubah string menjadi boolean
             );
             console.log("Response from API:", response.data);

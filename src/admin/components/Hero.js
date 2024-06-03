@@ -15,7 +15,7 @@ const Hero = () => {
     useEffect(() => {
         const fetchJumlahPegawai = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/total_pegawai');
+                const response = await axios.get('/total_pegawai');
                 setJumlahPegawai(response.data.data);
             } catch (error) {
                 console.error('Error fetching total pegawai:', error);
@@ -24,7 +24,7 @@ const Hero = () => {
 
         const fetchJumlahPaket = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/jumlah/total_paket');
+                const response = await axios.get('/jumlah/total_paket');
                 setJumlahPaket(response.data.data);
             } catch (error) {
                 console.error('Error fetching total paket:', error);
@@ -33,7 +33,7 @@ const Hero = () => {
 
         const fetchJumlahPengajuan = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/pengajuan/count');
+                const response = await axios.get('/pengajuan/count');
                 setJumlahPengajuan(response.data.count);
             } catch (error) {
                 console.error('Error fetching total pengajuan:', error);
@@ -42,7 +42,7 @@ const Hero = () => {
 
         const fetchTotalPendapatan = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/order/total_pendapatan');
+                const response = await axios.get('/order/total_pendapatan');
                 setTotalPendapatan(response.data.subtotal);
             } catch (error) {
                 console.error('Error fetching total pendapatan:', error);

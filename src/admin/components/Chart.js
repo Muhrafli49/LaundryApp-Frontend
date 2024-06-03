@@ -10,7 +10,7 @@ const Chart = () => {
         // Function to fetch data from endpoint
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/order/total_pendapatan_pengeluaran');
+                const response = await axios.get('/order/total_pendapatan_pengeluaran');
                 const data = response.data.data;
                 setChartData([data.totalPendapatan, data.totalPengeluaran, data.netIncome]);
                 setLoading(false);

@@ -15,7 +15,7 @@ const JumlahKaryawan = () => {
     }, []);
 
     const fetchData = () => {
-        axios.get("http://localhost:5000/user/all")
+        axios.get("/user/all")
             .then(response => {
                 if (response.data.status) {
                     const filteredKaryawan = response.data.data.filter(item => item.role !== 'admin');
@@ -35,7 +35,7 @@ const JumlahKaryawan = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            axios.delete(`http://localhost:5000/user/delete/${id}`)
+            axios.delete(`/user/delete/${id}`)
                 .then(response => {
                     console.log("Data berhasil dihapus:", response.data);
                     // Memuat ulang data setelah penghapusan

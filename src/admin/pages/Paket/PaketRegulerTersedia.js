@@ -16,7 +16,7 @@ const PaketRegulerTersedia = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_reguler");
+            const response = await axios.get("/pkt_reguler");
             setPaketReguler(response.data.data);
         } catch (error) {
             console.error("Error fetching paket reguler:", error);
@@ -26,7 +26,7 @@ const PaketRegulerTersedia = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
             try {
-                const response = await axios.delete(`http://localhost:5000/pkt_reguler/delete/${id}`);
+                const response = await axios.delete(`/pkt_reguler/delete/${id}`);
                 console.log("Data berhasil dihapus:", response.data);
                 // Reload data after deletion
                 fetchData();
