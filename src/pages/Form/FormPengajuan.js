@@ -34,7 +34,7 @@ const FormPengajuanBarang = ({ onClose }) => {
 
         const calculatedTotalHarga = formData.jumlah * formData.hargaSatuan;
 
-        axios.post("http://localhost:5000/pengajuan/tambah_pengajuan", { ...formData, totalHarga: calculatedTotalHarga })
+        axios.post("/pengajuan/tambah_pengajuan", { ...formData, totalHarga: calculatedTotalHarga })
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData);

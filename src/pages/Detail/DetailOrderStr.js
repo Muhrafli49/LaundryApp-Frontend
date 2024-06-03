@@ -10,7 +10,7 @@ const DetailOrderStr = () => {
     const [order, setOrder] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/order_str/${id}`)
+        axios.get(`/order_str/${id}`)
             .then(res => {
                 setOrder(res.data.data);
                 console.log(res.data.data); // Menampilkan data yang ditangkap dari server

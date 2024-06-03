@@ -12,7 +12,7 @@ const PaketSetrika = ({ onClose }) => {
     // Fungsi untuk mengambil data paket setrika dari API
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_setrika");
+            const response = await axios.get("/pkt_setrika");
             setPaketSetrika(response.data.data);
         } catch (error) {
             console.error("Error fetching paket setrika:", error);

@@ -30,7 +30,7 @@ const FormPelanggan = ({ onClose }) => {
             }
         }
 
-        axios.post("http://localhost:5000/pelanggan/tambah_pelanggan", formData)
+        axios.post("/pelanggan/tambah_pelanggan", formData)
             .then(response => {
                 console.log("Response from API:", response.data);
                 setFormData(initialFormData);

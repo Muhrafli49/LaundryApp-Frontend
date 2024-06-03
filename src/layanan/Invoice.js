@@ -12,7 +12,7 @@ const Invoice = () => {
 
     const fetchOrderDetails = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/invoice/${type}/${id}`);
+            const response = await axios.get(`/invoice/${type}/${id}`);
             setOrder(response.data);
         } catch (error) {
             console.error('Error fetching order details:', error);

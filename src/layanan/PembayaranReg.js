@@ -11,7 +11,7 @@ const PembayaranReg = () => {
     const [totalHarga, setTotalHarga] = useState(0);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/order_reg/${id}`)
+        axios.get(`/order_reg/${id}`)
             .then(res => {
                 setOrder(res.data.data);
                 setTotalHarga(res.data.data.totalBayarReg);
@@ -26,13 +26,7 @@ const PembayaranReg = () => {
     
         // Parsing totalAmount ke tipe angka
         const parsedTotalAmount = parseFloat(totalAmount);
-    
-        // Memeriksa apakah pesanan sudah terbayar
-        // if (order.status) {
-        //     alert("Pesanan ini sudah terbayarkan.");
-        //     navigate("/riwayat_transaksi");
-        //     return; // Menghentikan proses pembayaran jika pesanan sudah terbayarkan
-        // }
+
     
         // Memeriksa apakah jumlah pembayaran cukup
         if (parsedTotalAmount >= totalHarga) {

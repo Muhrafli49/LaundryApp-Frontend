@@ -32,7 +32,7 @@ const FormOrderExpress = ({ onClose }) => {
 
     const fetchPaketOptions = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_express");
+            const response = await axios.get("/pkt_express");
             setPaketOptions(response.data.data);
         } catch (error) {
             console.error("Error fetching paket options:", error);
@@ -41,7 +41,7 @@ const FormOrderExpress = ({ onClose }) => {
 
     const fetchAllPelanggan = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pelanggan");
+            const response = await axios.get("/pelanggan");
             setAllPelanggan(response.data.data);
         } catch (error) {
             console.error('Error fetching all pelanggan:', error);
@@ -98,7 +98,7 @@ const FormOrderExpress = ({ onClose }) => {
                 return;
             }
 
-            await axios.post("http://localhost:5000/order_exp/tambah_order", {
+            await axios.post("/order_exp/tambah_order", {
                 ...formData,
                 paketExp: selectedPaket.namaPaket,
                 totalBayarExp: totalBayar

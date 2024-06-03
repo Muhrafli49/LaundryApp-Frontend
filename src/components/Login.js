@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -13,21 +12,23 @@ const Login = () => {
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
         setError('');
-    }
+    };
 
     const onChangePassword = (e) => {
         setPassword(e.target.value);
         setError('');
-    }
+    };
 
-    const submitLogin = () => {
+    const submitLogin = async () => {
         setIsLoading(true);
         const data = {
-            username: username,
-            password: password
+            username,
+            password,
         };
-        axios.post('http://localhost:5000/login', data)
-        .then(response => {
+
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER}/login`, data);
+
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 const role = response.data.user.role; // Mendapatkan role dari respons
@@ -39,14 +40,12 @@ const Login = () => {
                     }
                 }, 1500);
             }
-        })
-        .catch(error => {
+        } catch (error) {
             setError(error.response?.data?.message || 'Terjadi kesalahan');
-        })
-        .finally(() => {
+        } finally {
             setIsLoading(false);
-        });
-    }
+        }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-r from-amber-500" style={{ backgroundColor: '#ED9455' }}>
@@ -55,7 +54,7 @@ const Login = () => {
                     <h1 className="text-3xl font-bold text-center mb-4">Bingo Laundry</h1>
                     <h4 className="text-lg text-center mb-4 text-gray-600">Selamat Datang !!!</h4>
                     {error && (
-                            <div className="text-red-600 text-sm mb-3">{error}</div>
+                        <div className="text-red-600 text-sm mb-3">{error}</div>
                     )}
                     <form onSubmit={(e) => { e.preventDefault(); submitLogin(); }}>
                         <div className="mb-4">

@@ -14,7 +14,7 @@ const OrderTable2 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/order_reg');
+            const response = await axios.get('/order_reg');
             const sortedOrders = response.data.data.sort((a, b) => new Date(b.tglOrderReg) - new Date(a.tglOrderReg));
             setOrders(sortedOrders);
         } catch (error) {
@@ -24,7 +24,7 @@ const OrderTable2 = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/order_reg/delete/${id}`);
+            await axios.delete(`/order_reg/delete/${id}`);
             alert('Order berhasil dihapus.');
             fetchData(); // Ambil data baru setelah penghapusan berhasil
         } catch (error) {

@@ -51,7 +51,7 @@ const TotalOrderan = () => {
 
     const handleSendNotification = async (orderType, orderId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/invoice/sendNotification/${orderType}/${orderId}`);
+            const response = await axios.get(`/invoice/sendNotification/${orderType}/${orderId}`);
             console.log('Notification sent successfully:', response.data);
             alert('Notification sent successfully');
         } catch (error) {

@@ -20,7 +20,7 @@ const Pelanggan = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/pelanggan'); // URL diperbarui
+            const response = await axios.get('/pelanggan');
             const dataWithIndex = response.data.data.map((customer, index) => ({
                 ...customer,
                 noUrut: index + 1

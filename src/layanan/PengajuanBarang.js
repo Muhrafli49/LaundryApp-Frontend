@@ -15,7 +15,7 @@ const PengajuanBarang = () => {
     }, []);
 
     const fetchData = () => {
-        axios.get("http://localhost:5000/pengajuan")
+        axios.get("/pengajuan")
             .then(response => {
                 const dataWithIndex = response.data.data.map((item, index) => ({
                     ...item,

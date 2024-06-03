@@ -33,7 +33,7 @@ const FormOrderSetrika = ({ onClose }) => {
 
     const fetchPaketOptions = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_setrika");
+            const response = await axios.get("/pkt_setrika");
             setPaketOptions(response.data.data);
         } catch (error) {
             console.error("Error fetching paket options:", error);
@@ -42,7 +42,7 @@ const FormOrderSetrika = ({ onClose }) => {
 
     const fetchAllPelanggan = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pelanggan");
+            const response = await axios.get("/pelanggan");
             setAllPelanggan(response.data.data);
         } catch (error) {
             console.error('Error fetching all pelanggan:', error);
@@ -103,7 +103,7 @@ const FormOrderSetrika = ({ onClose }) => {
             }
     
             // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
-            await axios.post("http://localhost:5000/order_str/tambah_order", {
+            await axios.post("/order_str/tambah_order", {
                 ...formData,
                 paketStr: selectedPaket.namaPaket, // Kirim nama paket sebagai gantinya
                 totalBayarStr: totalBayar

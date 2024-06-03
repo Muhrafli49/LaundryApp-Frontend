@@ -26,7 +26,7 @@ const EditFormPengajuan = () => {
 
     // Mengambil data pengajuan barang berdasarkan ID dari backend
     useEffect(() => {
-        axios.get('http://localhost:5000/pengajuan/'+id)
+        axios.get('/pengajuan/'+id)
         .then(res => {
             setFormData({
                 jenisBarang: res.data.data.jenisBarang,
@@ -59,7 +59,7 @@ const EditFormPengajuan = () => {
         const calculatedTotalHarga = formData.jumlah * formData.hargaSatuan;
     
         try {
-            await axios.put(`http://localhost:5000/pengajuan/edit/${id}`, {...formData, totalHarga: calculatedTotalHarga});
+            await axios.put(`/pengajuan/edit/${id}`, {...formData, totalHarga: calculatedTotalHarga});
             setError('');
             setShowNotification(true); 
             setTimeout(() => {

@@ -32,7 +32,7 @@ const FormOrderReguler = ({ onClose }) => {
 
     const fetchPaketOptions = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pkt_reguler");
+            const response = await axios.get("/pkt_reguler");
             setPaketOptions(response.data.data);
         } catch (error) {
             console.error("Error fetching paket options:", error);
@@ -41,7 +41,7 @@ const FormOrderReguler = ({ onClose }) => {
 
     const fetchAllPelanggan = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/pelanggan");
+            const response = await axios.get("/pelanggan");
             setAllPelanggan(response.data.data);
         } catch (error) {
             console.error('Error fetching all pelanggan:', error);
@@ -101,7 +101,7 @@ const FormOrderReguler = ({ onClose }) => {
             }
     
             // Kirim permintaan POST dengan data yang sesuai, termasuk nama paket
-            await axios.post("http://localhost:5000/order_Reg/tambah_order", {
+            await axios.post("/order_Reg/tambah_order", {
                 ...formData,
                 paketReg: selectedPaket.namaPaket, 
                 totalBayarReg: totalBayar
