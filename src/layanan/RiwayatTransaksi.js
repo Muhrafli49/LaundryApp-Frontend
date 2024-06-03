@@ -20,9 +20,9 @@ const TotalOrderan = () => {
 
     const fetchData = async () => {
         try {
-            const responseExp = await axios.get('http://localhost:5000/order_exp');
-            const responseReg = await axios.get('http://localhost:5000/order_reg');
-            const responseStr = await axios.get('http://localhost:5000/order_str');
+            const responseExp = await axios.get('/order_exp');
+            const responseReg = await axios.get('/order_reg');
+            const responseStr = await axios.get('/order_str');
             
             const combinedOrders = [
                 ...responseExp.data.data.map(order => ({ ...order, orderType: 'exp' })),
