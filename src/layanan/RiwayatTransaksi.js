@@ -12,7 +12,7 @@ const TotalOrderan = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [ordersPerPage] = useState(5);
-    const [filter, setFilter] = useState("all"); 
+    const [filter, setFilter] = useState("all");
 
     useEffect(() => {
         fetchData();
@@ -25,10 +25,13 @@ const TotalOrderan = () => {
             const responseStr = await axios.get('/order_str');
             
             const combinedOrders = [
-                ...responseExp.data.data.map(order => ({ ...order, orderType: 'exp' })),
-                ...responseReg.data.data.map(order => ({ ...order, orderType: 'reg' })),
-                ...responseStr.data.data.map(order => ({ ...order, orderType: 'str' }))
+                ...responseExp.data.data.map(order => ({ ...order, orderType: 'exp', orderDate: new Date(order.tglSelesaiExp) })),
+                ...responseReg.data.data.map(order => ({ ...order, orderType: 'reg', orderDate: new Date(order.tglSelesaiReg) })),
+                ...responseStr.data.data.map(order => ({ ...order, orderType: 'str', orderDate: new Date(order.tglSelesaiStr) }))
             ];
+
+            // Sort orders by orderDate descending (newest first)
+            combinedOrders.sort((a, b) => b.orderDate - a.orderDate);
 
             const dataWithIndex = combinedOrders.map((order, index) => ({
                 ...order,
@@ -165,7 +168,7 @@ const TotalOrderan = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {order.status ? (
-                                                <span className="bg-lime-500 text-white px-2 py-1 rounded-md">Selesai</span>
+                                                <span className="bg-lime-500 text-white px-2 py-1 rounded-md">Dibayarkan</span>
                                             ) : (
                                                 <span className="bg-slate-500 text-white px-2 py-1 rounded-md">Pending</span>
                                             )}
@@ -184,7 +187,7 @@ const TotalOrderan = () => {
                                                     <img src={InvoiceIcon} alt="Invoice Icon" className="w-5 h-5 ml-2" />
                                                 </Link>
                                             </div>
-                                        </td>   
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

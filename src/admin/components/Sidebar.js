@@ -7,6 +7,7 @@ import PaketLaundryIcon from '../../assets/paket.png';
 import LaporanIcon from '../../assets/laporan-removebg.png'; 
 import PengajuanIcon from '../../assets/pengajuan-removebg.png'; 
 import ProfileIcon from '../../assets/Profile_icon-removebg.png';
+import ScanBarcode from '../../assets/qr-code-scan-removebg.png';
 
 const SidebarContext = createContext();
 
@@ -75,6 +76,7 @@ export default function Sidebar({ children }) {
                         <SidebarItem icon={<img src={PaketLaundryIcon} alt="Paket Laundry Icon" className="w-10 h-10 icon hover:scale-105" />} text="Paket Laundry" link="/paket_laundry" />
                         <SidebarItem icon={<img src={LaporanIcon} alt="Laporan Pengajuan Icon" className="w-10 h-10 icon hover:scale-105" />} text="Rekap Order" link="/laporan_orderan" />
                         <SidebarItem icon={<img src={PengajuanIcon} alt="Pengajuan Icon" className="w-10 h-10 icon hover:scale-105" />} text="Pengajuan" link="/persetujuan_pengajuan" />
+                        <SidebarItem icon={<img src={ScanBarcode} alt="Pengajuan Icon" className="w-10 h-10 icon hover:scale-105" />} text="QR Code" link="/barcode" />
                         {children}
                     </ul>
                 </SidebarContext.Provider>

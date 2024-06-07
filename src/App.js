@@ -30,6 +30,7 @@ import PersetujuanPengajuan from './admin/pages/PersetujuanPengajuan';
 import EditFormPersetujuan from './admin/Edit/EditFormPersetujuan';
 import Invoice from './layanan/Invoice';
 import LaporanOrderan from './admin/pages/LaporanOrderan';
+import Barcode from './admin/pages/BarcodeQr';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/invoice/:type/:id" element={<ProtectedRoute component={Invoice} roles={['pegawai', 'admin']} />} />
         <Route path="/tambah_pelanggan" element={<ProtectedRoute component={Pelanggan} roles={['pegawai', 'admin']} />} />
         <Route path="/edit/form_tambah_pelanggan/:id" element={<ProtectedRoute component={EditFormPelanggan} roles={['pegawai', 'admin']} />} />
+        <Route path="/barcode" element={<ProtectedRoute component={Barcode} roles={['pegawai', 'admin']} />} />
 
         {/* Admin */}
         <Route path="/dashboard/admin" element={<ProtectedRoute component={DashboardAdmin} roles={['admin']} />} />
