@@ -8,19 +8,18 @@ const Barcode = () => {
     const [qrCode, setQrCode] = useState('');
 
     useEffect(() => {
-        fetchQrCode();  // Panggil fungsi fetchQrCode saat komponen dimount
-        const interval = setInterval(fetchQrCode, 5000);  // Refresh setiap 5 detik
+        fetchQrCode();  
+        const interval = setInterval(fetchQrCode, 2000); 
 
-        return () => clearInterval(interval);  // Clean up untuk menghentikan interval
+        return () => clearInterval(interval);  
     }, []);
 
     const fetchQrCode = async () => {
         try {
-            const response = await axios.get('/konfigurasi/qr-code'); // Endpoint untuk mendapatkan QR code
-            setQrCode(response.data); // Menyimpan QR code base64 ke dalam state
+            const response = await axios.get('/konfigurasi/qr-code'); 
+            setQrCode(response.data); 
         } catch (error) {
             console.error('Error fetching QR code:', error);
-            // Handle error jika terjadi
         }
     };
 
