@@ -118,19 +118,19 @@ const Invoice = () => {
                 <div className='text-center flex flex-col-5'>
                     <button
                         onClick={printInvoice}
-                        className="bg-blue-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-blue-700"
+                        className="bg-blue-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-blue-700 print-hidden"
                     >
                         Print Invoice
                     </button>
                     <button
                         onClick={downloadInvoiceAsPDF}
-                        className="bg-green-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-green-700"
+                        className="bg-green-500 text-white font-bold py-2 px-4 m-2 rounded hover:bg-green-700 print-hidden"
                     >
                         Download as PDF
                     </button>
                     <button
                         onClick={downloadInvoiceAsJPG}
-                        className="bg-red-500 text-white font-bold py-2 px-4 m-2  rounded hover:bg-red-700"
+                        className="bg-red-500 text-white font-bold py-2 px-4 m-2  rounded hover:bg-red-700 print-hidden"
                     >
                         Download as JPG
                     </button>

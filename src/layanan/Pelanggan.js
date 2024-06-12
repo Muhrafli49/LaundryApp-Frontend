@@ -21,7 +21,8 @@ const Pelanggan = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('/pelanggan');
-            const dataWithIndex = response.data.data.map((customer, index) => ({
+            const sortedData = response.data.data.reverse(); // Reverse array to show newest first
+            const dataWithIndex = sortedData.map((customer, index) => ({
                 ...customer,
                 noUrut: index + 1
             }));
@@ -30,6 +31,7 @@ const Pelanggan = () => {
             console.error('Error fetching customers:', error);
         }
     };
+    
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
