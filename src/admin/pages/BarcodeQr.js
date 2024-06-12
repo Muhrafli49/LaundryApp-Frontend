@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from "react";
-import axios from '../../services/index';
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
+import axios from '../../services/index';
 
 const Barcode = () => {
-    const [qrCode, setQrCode] = useState('');
+    const [qrCodeHtml, setQrCodeHtml] = useState('');
+    const [loadingError, setLoadingError] = useState(false);
+    const [lastRefreshed, setLastRefreshed] = useState('');
 
     useEffect(() => {
-        fetchQrCode();  
-        const interval = setInterval(fetchQrCode, 2000); 
+        fetchQrCode(); // Initial fetch when component mounts
+        const interval = setInterval(fetchQrCode, 2000); // Polling every 2 seconds
 
-        return () => clearInterval(interval);  
+        return () => clearInterval(interval); // Cleanup function to clearInterval
     }, []);
 
     const fetchQrCode = async () => {
         try {
-            const response = await axios.get('/konfigurasi/qr-code'); 
-            setQrCode(response.data); 
+            const response = await axios.get('/konfigurasi/qr-code');
+            const html = response.data;
+            setQrCodeHtml(html);
+            setLoadingError(false);
+            setLastRefreshed(new Date().toLocaleTimeString());
         } catch (error) {
-            console.error('Error fetching QR code:', error);
+            console.error('Error refreshing QR code:', error);
+            setLoadingError(true);
         }
     };
 
@@ -44,11 +50,14 @@ const Barcode = () => {
                                 </div>
                             </div>
                             <div className="p-6 text-center">
-                                {qrCode && (
-                                    <>
-                                        <img src={qrCode} alt="QR Code" className="mx-auto" />
-                                        <p className="mt-4 text-gray-600 text-lg">Silahkan scan barcode</p>
-                                    </>
+                                <div id="qrcode-container" dangerouslySetInnerHTML={{ __html: qrCodeHtml }} />
+                                {loadingError ? (
+                                    <p id="loading-message" className="mt-4 text-red-500 text-lg">Error loading QR code</p>
+                                ) : (
+                                    <p id="loading-message" className="mt-4 text-gray-600 text-lg">Silahkan scan barcode</p>
+                                )}
+                                {lastRefreshed && (
+                                    <p id="timestamp">Refreshed at {lastRefreshed}</p>
                                 )}
                             </div>
                         </div>
