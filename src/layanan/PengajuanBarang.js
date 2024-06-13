@@ -30,7 +30,7 @@ const PengajuanBarang = () => {
 
     const handleDelete = (id, index) => {
         if (window.confirm("Apakah Anda yakin ingin menghapus pengajuan ini?")) {
-            axios.delete(`http://localhost:5000/pengajuan/delete/${id}`)
+            axios.delete(`/pengajuan/delete/${id}`)
                 .then(response => {
                     alert("Pengajuan berhasil dihapus.");
                     const updatedPengajuan = [...pengajuanBarang];
