@@ -9,6 +9,7 @@ const Hero = () => {
     const [availablePackages, setAvailablePackages] = useState(0);
     const [completedOrders, setCompletedOrders] = useState(0);
     const [totalOrders, setTotalOrders] = useState(0);
+    const [showBackToTop, setShowBackToTop] = useState(false);
 
     useEffect(() => {
         const fetchAvailablePackages = async () => {
@@ -51,11 +52,34 @@ const Hero = () => {
 
         fetchAvailablePackages();
         fetchOrders();
+
+        // Add scroll listener
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            // Clean up scroll listener
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
+
+    const handleScroll = () => {
+        if (window.scrollY > 200) { // Show button after scrolling down 200px
+            setShowBackToTop(true);
+        } else {
+            setShowBackToTop(false);
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4 hero-title text-xl">
+            <h2 className="mb-4 hero-title lg:text-2xl md:text-xl sm:text-lg">
                 <strong>Selamat Datang </strong> 
                 di Dashboard <br />
                 Pegawai
@@ -112,6 +136,11 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
+            {showBackToTop && (
+                <button onClick={scrollToTop} className="fixed bottom-4 right-4 bg-slate-300 hover:bg-slate-200font-bold py-2 px-2 rounded" style={{ height: '3rem', lineHeight: '2rem' }}>
+                    Back to Top
+                </button>
+            )}
         </div>
     );
 }

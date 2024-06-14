@@ -8,6 +8,7 @@ import OrderTable2 from '../components/OrderTable2';
 import OrderTable3 from '../components/OrderTable3';
 import Footer from '../components/Footer';
 
+
 const Dashboard = () => {
     const token = localStorage.getItem('token');
 
@@ -16,15 +17,18 @@ const Dashboard = () => {
     }
 
     return (
-        <div className='min-h-screen bg-yellow-50'>
-            <Navbar activePage="dashboard" />
-            <HeroSection />
-            <div className="container mx-auto py-8">
-                <OrderTable />
-                <OrderTable2 />
-                <OrderTable3 />
+        <div className='min-h-screen bg-yellow-50 relative'>
+            <div className='bg-bubble'></div>
+            <div className="relative z-10">
+                <Navbar activePage="dashboard" />
+                <HeroSection />
+                <div className="container mx-auto py-8">
+                    <OrderTable />
+                    <OrderTable2 />
+                    <OrderTable3 />
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </div>
     );
 }

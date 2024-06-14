@@ -26,7 +26,7 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-16">
                     <div className="flex-shrink-0 flex items-center">
                         <img src={LaundryLogo} alt="Logo" className="h-12 w-12 m-4" />
-                        <Link to="/dashboard" className="text-white text-lg font-semibold">Bingo Laundry</Link>
+                        <Link to="/dashboard" className="text-white lg:text-2xl md:text-xl sm:text-lg font-semibold">Bingo Laundry</Link>
                     </div>
                     <div className="hidden md:block">
                         <div className="flex space-x-4">
@@ -88,7 +88,7 @@ const NavLink = ({ to, children, isActive }) => {
     return (
         <Link
             to={to}
-            className={`text-white px-3 py-2 rounded-md text-sm font-medium mt-4 ${isActive ? 'bg-orange-900' : 'hover:bg-orange-900'}`}
+            className={`text-white px-3 py-2 rounded-md text-base font-medium mt-4 ${isActive ? 'bg-orange-900' : 'hover:bg-orange-900'}`}
         >
             {children}
         </Link>

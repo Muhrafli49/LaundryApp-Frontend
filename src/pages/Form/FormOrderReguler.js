@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from '../../services/index';
 import { useNavigate } from "react-router-dom";
+import { Alert, AlertIcon } from "@chakra-ui/react";
 
 const FormOrderReguler = ({ onClose }) => {
     const initialFormData = {
@@ -20,6 +21,7 @@ const FormOrderReguler = ({ onClose }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    const [showWarning, setShowWarning] = useState(false); 
     const [paketOptions, setPaketOptions] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
     const [allPelanggan, setAllPelanggan] = useState([]);
@@ -77,13 +79,12 @@ const FormOrderReguler = ({ onClose }) => {
     };
     
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        
         for (const key in formData) {
             if (key !== "totalBayarReg" && formData[key] === "") {
-                alert("Semua field harus diisi");
-                return; 
+                setShowWarning(true); // Show the warning if any field is empty
+                return;
             }
         }
 
@@ -135,9 +136,28 @@ const FormOrderReguler = ({ onClose }) => {
         setSearchResults([]); 
     };
 
+    const handleFormClick = () => {
+        setShowWarning(false);
+    };
 
     return (
-        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between">
+        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between" onClick={handleFormClick}>
+            {showNotification && (
+                <div className="animate-drop bg-white border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 shadow-lg">
+                    <Alert status="success" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Order berhasil dibuat</span>
+                    </Alert>
+                </div>
+            )}
+            {showWarning && (
+                <div className="animate-drop bg-white border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4 shadow-lg">
+                    <Alert status="warning" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Semua field harus diisi</span>
+                    </Alert>
+                </div>
+            )}
             <div className="relative">
                 <button onClick={onClose} className="absolute top-0 right-0 text-gray-600 hover:text-gray-900 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -147,11 +167,6 @@ const FormOrderReguler = ({ onClose }) => {
             </div>
             <h2 className="text-xl font-semibold mb-4 text-center">Form Order Reguler</h2>
                 {error && <p className="text-red-500">{error}</p>}
-                {showNotification && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                        <span className="block sm:inline">Order berhasil dibuat</span>
-                    </div>
-                )}
                     <form id="orderForm" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-2">
                             <div className="mb-2">
@@ -190,7 +205,8 @@ const FormOrderReguler = ({ onClose }) => {
                                     value={formData.nomorTeleponReg} 
                                     onChange={handleChange} 
                                     maxLength={13} 
-                                    pattern="[0-9]*" 
+                                    pattern="[0-9]*"
+                                    disabled 
                                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>
@@ -200,7 +216,8 @@ const FormOrderReguler = ({ onClose }) => {
                                     id="alamatReg" 
                                     name="alamatReg" 
                                     value={formData.alamatReg} 
-                                    onChange={handleChange} 
+                                    onChange={handleChange}
+                                    disabled 
                                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                 />
                             </div>

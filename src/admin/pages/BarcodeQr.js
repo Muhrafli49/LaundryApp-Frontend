@@ -4,23 +4,23 @@ import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import axios from '../../services/index';
 
+
 const Barcode = () => {
     const [qrCodeHtml, setQrCodeHtml] = useState('');
     const [loadingError, setLoadingError] = useState(false);
     const [lastRefreshed, setLastRefreshed] = useState('');
 
     useEffect(() => {
-        fetchQrCode(); // Initial fetch when component mounts
-        const interval = setInterval(fetchQrCode, 2000); // Polling every 2 seconds
+        fetchQrCode(); // Panggil fungsi fetchQrCode saat komponen dimount
+        const interval = setInterval(fetchQrCode, 5000); // Polling setiap 2 detik
 
-        return () => clearInterval(interval); // Cleanup function to clearInterval
+        return () => clearInterval(interval); // Membersihkan interval saat komponen di-unmount
     }, []);
 
     const fetchQrCode = async () => {
         try {
             const response = await axios.get('/konfigurasi/qr-code');
-            const html = response.data;
-            setQrCodeHtml(html);
+            setQrCodeHtml(response.data); // Mengatur HTML QR code dari respons server
             setLoadingError(false);
             setLastRefreshed(new Date().toLocaleTimeString());
         } catch (error) {
@@ -39,7 +39,7 @@ const Barcode = () => {
                         <div className="bg-white shadow-md rounded-lg">
                             <div className="card-body flex justify-between items-center">
                                 <div>
-                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Scan Barcode </h2>
+                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Scan Barcode</h2>
                                 </div>
                                 <div className="flex justify-end">
                                     <Link to="/dashboard/admin" className="m-4 mt-4">

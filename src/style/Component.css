@@ -1,0 +1,58 @@
+/* styles.css atau di file CSS global Anda */
+/* styles.css atau di file CSS global Anda */
+.bg-pattern::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: radial-gradient(white 10%, transparent 5%);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.btn-login {
+  min-height: 3rem;
+}
+
+.btn-login .animate-spin-slow {
+  animation: spin 3s linear infinite; /* Atur durasi dan jenis animasi di sini */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveBackground {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 50% 50%;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  .bg-bubble {
+    background-image: url("../assets/bubble.png"); /* Ganti dengan path yang sesuai */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    animation: moveBackground 15s linear infinite; /* Ubah durasi animasi menjadi 15 detik */
+    filter: blur(2px);
+  }
+  

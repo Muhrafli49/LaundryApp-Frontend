@@ -7,6 +7,10 @@ const OrderTable3 = () => {
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [ordersPerPage] = useState(3);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [orderIdToDelete, setOrderIdToDelete] = useState('');
+
 
     useEffect(() => {
         fetchData();
@@ -22,11 +26,12 @@ const OrderTable3 = () => {
         }
     };
 
-    const handleDelete = async (id) => {
+    const confirmDelete = async () => {
         try {
-            await axios.delete(`/order_str/delete/${id}`);
-            alert('Order berhasil dihapus.');
-            fetchData(); // Ambil data baru setelah penghapusan berhasil
+            await axios.delete(`/order_str/delete/${orderIdToDelete}`);
+            setModalContent('Order berhasil dihapus.');
+            setShowModal(false);
+            fetchData(); // Fetch new data after deletion
         } catch (error) {
             console.error('Error deleting order:', error);
         }
@@ -76,7 +81,11 @@ const OrderTable3 = () => {
                                     >
                                         Detail
                                     </Link>
-                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onClick={() => handleDelete(order._id)}>Hapus</button>
+                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onClick={() => {
+                                        setOrderIdToDelete(order._id);
+                                        setModalContent(`Apakah yakin ingin menghapus order dengan nomor ${order.noOrderExp}?`);
+                                        setShowModal(true);
+                                    }}>Hapus</button>
                                 </td>
                             </tr>
                         ))}
@@ -88,6 +97,13 @@ const OrderTable3 = () => {
                     paginate={paginate}
                 />
             </div>
+            {showModal && (
+                <Modal
+                    content={modalContent}
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowModal(false)}
+                />
+            )}
         </div>
     );    
 };
@@ -124,6 +140,20 @@ const Pagination = ({ totalPages, currentPage, paginate }) => {
             >
                 <ChevronRightIcon className="w-3 h-3" />
             </button>
+        </div>
+    );
+};
+
+const Modal = ({ content, onConfirm, onCancel }) => {
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-white p-4 rounded shadow-lg w-96">
+                <p className="text-lg mb-4">{content}</p>
+                <div className="flex justify-end">
+                    <button onClick={onConfirm} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Ya</button>
+                    <button onClick={onCancel} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
+                </div>
+            </div>
         </div>
     );
 };

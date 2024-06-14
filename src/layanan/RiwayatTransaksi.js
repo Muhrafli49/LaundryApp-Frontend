@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import WhatsappIcon from "../assets/whatsapp-removebg.png";
 import InvoiceIcon from "../assets/point-of-sale-bill-removebg.png";
+import { Alert, AlertIcon } from '@chakra-ui/react';
 
 const TotalOrderan = () => {
     const [orders, setOrders] = useState([]);
@@ -13,6 +14,9 @@ const TotalOrderan = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [ordersPerPage] = useState(5);
     const [filter, setFilter] = useState("all");
+    const [showModal, setShowModal] = useState(false);
+    const [orderToSendNotification, setOrderToSendNotification] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -53,15 +57,37 @@ const TotalOrderan = () => {
     };
 
     const handleSendNotification = async (orderType, orderId) => {
-        try {
-            const response = await axios.get(`/invoice/sendNotification/${orderType}/${orderId}`);
-            console.log('Notification sent successfully:', response.data);
-            alert('Notification sent successfully');
-        } catch (error) {
-            console.error('Failed to send notification:', error);
-            alert('Failed to send notification');
+        // Set orderToSendNotification and show modal
+        setOrderToSendNotification({ orderType, orderId });
+        setShowModal(true);
+    };
+
+    const handleConfirmSendNotification = async () => {
+        if (orderToSendNotification) {
+            const { orderType, orderId } = orderToSendNotification;
+            try {
+                const response = await axios.get(`/invoice/sendNotification/${orderType}/${orderId}`);
+                console.log('Notification sent successfully:', response.data);
+    
+                // Ganti alert dengan Chakra UI Alert
+                setShowAlert(true); // Set state untuk menampilkan alert
+                setTimeout(() => {
+                    setShowAlert(false); // Sembunyikan alert setelah 2 detik
+                }, 3000);
+    
+            } catch (error) {
+                console.error('Failed to send notification:', error);
+                alert('Failed to send notification');
+            } finally {
+                setShowModal(false); // Close modal after action
+            }
         }
     };
+
+    const handleCancelSendNotification = () => {
+        setShowModal(false); // Close modal without action
+    };
+
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -103,6 +129,14 @@ const TotalOrderan = () => {
         <div className="flex flex-col min-h-screen bg-yellow-50">
             <Navbar />
             <div className="container mx-auto flex-grow">
+            {showAlert && (
+                <div className="animate-slide-down bg-slate-200 border border-blue-400 text-blue-700 px-4 py-3 rounded absolute top-10 left-1/2 transform -translate-x-1/2">
+                    <Alert status="info" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Notifikasi berhasil terkirim!!</span>
+                    </Alert>
+                </div>
+            )}
                 <div className="card mt-8 shadow-md rounded-lg mb-3">
                     <div className="card-body flex justify-between items-center">
                         <h2 className="text-3xl lg:text-4xl mb-3 p-2 mt-2 font-bold">Riwayat Transaksi</h2>
@@ -170,7 +204,7 @@ const TotalOrderan = () => {
                                             {order.status ? (
                                                 <span className="bg-lime-500 text-white px-2 py-1 rounded-md">Dibayarkan</span>
                                             ) : (
-                                                <span className="bg-slate-500 text-white px-2 py-1 rounded-md">Pending</span>
+                                                <span className="bg-slate-500 text-white px-2 py-1 rounded-md">Belum lunas</span>
                                             )}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
@@ -200,6 +234,17 @@ const TotalOrderan = () => {
                     </div>
                 </div>
             </div>
+            {showModal && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+                        <div className="bg-white p-4 rounded shadow-lg w-96">
+                            <p className="text-lg mb-4">Apakah yakin ingin mengirimkan notifikasi? Jika ya, orderan dikatakan selesai.</p>
+                            <div className="flex justify-end">
+                                <button onClick={handleConfirmSendNotification} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Ya</button>
+                                <button onClick={handleCancelSendNotification} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             <Footer />
         </div>
     );

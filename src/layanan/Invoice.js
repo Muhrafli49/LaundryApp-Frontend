@@ -108,7 +108,7 @@ const Invoice = () => {
                         <p className="text-right">Rp. {new Intl.NumberFormat('id-ID').format(order.totalBayarExp || order.totalBayarReg || order.totalBayarStr || 0)}</p>
                         
                         <p className="text-left"><strong>Status:</strong></p>
-                        <p className="text-right">{order.status ? 'Selesai' : 'Pending'}</p>
+                        <p className="text-right">{order.status ? 'Lunas' : 'Belum lunas'}</p>
                     </div>
 
                     <hr className='my-3' />

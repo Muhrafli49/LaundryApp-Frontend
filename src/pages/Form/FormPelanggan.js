@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from '../../services/index';
+import { Alert, AlertIcon } from "@chakra-ui/react";
 
 const FormPelanggan = ({ onClose }) => {
     const initialFormData = {
@@ -11,6 +12,7 @@ const FormPelanggan = ({ onClose }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,7 +27,7 @@ const FormPelanggan = ({ onClose }) => {
 
         for (const key in formData) {
             if (formData[key] === "") {
-                alert("Semua field harus diisi");
+                setShowWarning(true); 
                 return;
             }
         }
@@ -52,8 +54,28 @@ const FormPelanggan = ({ onClose }) => {
         onClose();
     };
 
+    const handleFormClick = () => {
+        setShowWarning(false); 
+    };
+
     return (
-        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between max-w-md mx-auto">
+        <div className="bg-slate-300 p-8 rounded-lg shadow-lg relative justify-between max-w-md mx-auto"  onClick={handleFormClick}>
+            {showNotification && (
+                <div className="animate-drop bg-white border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 shadow-lg">
+                    <Alert status="success" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Pelanggan baru berhasil dibuat</span>
+                    </Alert>
+                </div>
+            )}
+            {showWarning && (
+                <div className="animate-drop bg-white border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4 shadow-lg">
+                    <Alert status="warning" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Semua field harus diisi</span>
+                    </Alert>
+                </div>
+            )}
             <div className="relative mb-4">
                 <button onClick={onClose} className="absolute top-0 right-0 text-gray-600 hover:text-gray-900 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,11 +85,6 @@ const FormPelanggan = ({ onClose }) => {
             </div>
             <h2 className="text-xl font-semibold mb-4 text-center">Form Pelanggan Baru</h2>
             {error && <p className="text-red-500">{error}</p>}
-            {showNotification && (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                    <span className="block sm:inline">Pelanggan Berhasil Ditambahkan</span>
-                </div>
-            )}
             <form id="pelangganform" onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="nama" className="block text-sm font-medium text-gray-700">Nama</label>

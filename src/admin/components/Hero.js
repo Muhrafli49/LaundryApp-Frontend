@@ -15,7 +15,7 @@ const Hero = () => {
     useEffect(() => {
         const fetchJumlahPegawai = async () => {
             try {
-                const response = await axios.get('/total_pegawai');
+                const response = await axios.get('/pelanggan/total_pelanggan');
                 setJumlahPegawai(response.data.data);
             } catch (error) {
                 console.error('Error fetching total pegawai:', error);
@@ -81,7 +81,7 @@ const Hero = () => {
                             <img src={PegawaiIcon} alt="Pegawai Icon"/>
                         </div>
                         <div className='text-right'>
-                            <p className="text-lg font-semibold">Jumlah Pegawai</p>
+                            <p className="text-lg font-semibold">Jumlah Pelanggan</p>
                             <p className="text-xl font-bold">{jumlahPegawai}</p>
                         </div>
                     </div>

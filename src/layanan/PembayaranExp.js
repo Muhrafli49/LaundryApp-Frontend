@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DoneIcon from '../assets/ceklis-removebg.png';
 import { useParams, useNavigate } from "react-router-dom"; 
 import axios from '../services/index';
+import { Alert, AlertIcon } from "@chakra-ui/react";
 
 const PembayaranExp = () => {
     const { id } = useParams();
@@ -9,6 +10,8 @@ const PembayaranExp = () => {
     const [order, setOrder] = useState({});
     const [totalAmount, setTotalAmount] = useState("");
     const [totalHarga, setTotalHarga] = useState(0);
+    const [showNotification, setShowNotification] = useState(false);
+    const [showWarning, setShowWarning] = useState(false); 
 
     useEffect(() => {
         axios.get(`/order_exp/${id}`)
@@ -30,38 +33,58 @@ const PembayaranExp = () => {
         // Memeriksa apakah jumlah pembayaran cukup
         if (parsedTotalAmount >= totalHarga) {
             try {
-                // Mengirim permintaan ke server untuk mengubah status menjadi true
                 await axios.put(`/order_exp/edit/${id}`, {
                     status: true
                 });
     
-                // Menampilkan pesan bahwa pembayaran berhasil jika permintaan berhasil
-                alert("Pembayaran berhasil!");
-    
-                // Navigasi ke halaman /riwayat_transaksi setelah pembayaran berhasil
-                navigate("/riwayat_transaksi");
+                setShowNotification(true);
+
+                setTimeout(() => {
+                    navigate("/riwayat_transaksi");
+                }, 2500);
             } catch (error) {
                 console.error("Error:", error);
             }
         } else {
-            // Menampilkan pesan alert pembayaran gagal jika jumlah pembayaran kurang dari total harga
-            alert("Pembayaran gagal. Jumlah pembayaran kurang dari total harga.");
-            
+            setShowWarning(true);            
         }
+    };
+
+    const handleFormClick = () => {
+        setShowWarning(false);
     };
 
     return (
         <div className="bg-gradient-to-b from-orange-100 to-orange-500 h-screen relative flex items-center justify-center">
-            <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-b from-white to-transparent rounded-full mix-blend-multiply pointer-events-none"></div>
+            {/* Alert Success */}
+            {showNotification && (
+                <div className="animate-slide-down bg-white border border-green-400 text-green-700 px-4 py-3 rounded absolute top-10 left-1/2 transform -translate-x-1/2">
+                    <Alert status="success" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Pembayaran berhasil!</span>
+                    </Alert>
+                </div>
+            )}
+            {/* Alert Warning */}
+            {showWarning && (
+                <div className="animate-slide-down bg-white border border-yellow-400 text-yellow-700 px-4 py-3 rounded absolute top-10 left-1/2 transform -translate-x-1/2">
+                    <Alert status="warning" className="flex items-center">
+                        <AlertIcon boxSize="20px" />
+                        <span className="ml-2">Pembayaran gagal. Jumlah pembayaran kurang dari total harga.</span>
+                    </Alert>
+                </div>
+            )}
+            {/* Konten utama */}
             <div className="max-w-xl bg-white shadow-md rounded-lg overflow-hidden relative">
                 <div className="bg-orange-500 h-32 flex items-center justify-center">
                     <img src={DoneIcon} alt="Done" className="w-20 h-auto" /> 
                 </div>
                 <div className="p-5 text-center">
                     <h2 className="text-2xl font-bold mb-4">Melakukan Pembayaran</h2>
-                    <h5 className="text-md font-bold mb-4">#No Order : {order.noOrderExp}</h5>
+                    <h5 className="text-md font-bold mb-2">#No Order : {order.noOrderExp}</h5>
+                    <h5 className="text-md font-bold mb-4">#Total Nominal: {order.totalBayarExp ? order.totalBayarExp.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '-'}</h5>
                     <p className="text-gray-800 mb-4" style={{ maxWidth: '18rem', wordWrap: 'break-word' }}>Mohon isi dengan teliti jumlah total pembayaran yang sesuai dengan transaksi</p>
-                    <form onSubmit={handleSubmit}>
+                    <form onClick={handleFormClick} onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label
                                 htmlFor="totalAmount"
