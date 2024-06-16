@@ -70,7 +70,7 @@ const LaporanOrderan = () => {
                         <div className="bg-white shadow-md rounded-lg p-8">
                             <div className="card-body">
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-3xl lg:text-4xl mb-5">Rekapan Orderan</h2>
+                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Rekapan Orderan</h2>
                                 </div>
                                 {isLoading ? (
                                     <div className="flex justify-center">

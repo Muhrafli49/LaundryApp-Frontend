@@ -1,11 +1,11 @@
 import { ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState, useEffect } from "react";
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import DashbordIcon from '../../assets/dashboard-removebg.png';
-import PegawaiIcon from '../../assets/pegawaai-removebg.png'; 
-import PaketLaundryIcon from '../../assets/paket.png'; 
-import LaporanIcon from '../../assets/laporan-removebg.png'; 
-import PengajuanIcon from '../../assets/pengajuan-removebg.png'; 
+import PegawaiIcon from '../../assets/pegawaai-removebg.png';
+import PaketLaundryIcon from '../../assets/paket.png';
+import LaporanIcon from '../../assets/laporan-removebg.png';
+import PengajuanIcon from '../../assets/pengajuan-removebg.png';
 import ProfileIcon from '../../assets/Profile_icon-removebg.png';
 import ScanBarcode from '../../assets/qr-code-scan-removebg.png';
 
@@ -51,7 +51,7 @@ export default function Sidebar({ children }) {
     }, [expanded]);
 
     return (
-        <aside className={`h-screen ${expanded ? "w-1/5" : "w-20"} transition-all bg-orange-100 mt-0 rounded-sm border border-slate-900`}>
+        <aside className={`h-full ${expanded ? "w-1/5" : "w-20"} transition-all bg-orange-100 mt-0 rounded-sm border border-slate-900 flex-shrink-0`}>
             <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                 <div className="p-4 pb-2 flex justify-between items-center">
                     <Link to="/dashboard/admin" className="flex items-center">
@@ -127,4 +127,3 @@ function SidebarItem({ icon, text, link }) {
         </li>
     );
 }
-

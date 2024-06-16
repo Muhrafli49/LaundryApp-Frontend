@@ -58,7 +58,7 @@ const Hero = () => {
 
     return (
         <div className="flex-1">
-            <div className="p-4">
+            <div className="p-4 mt-2"> {/* Tambahkan mt-2 di sini untuk menggeser ke atas */}
                 <h2 className="text-xl font-semibold mb-4">
                     <strong>Selamat Datang </strong> 
                     di Dashboard <br />

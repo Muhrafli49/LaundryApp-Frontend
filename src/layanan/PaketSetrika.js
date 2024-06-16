@@ -48,7 +48,9 @@ const PaketSetrika = ({ onClose }) => {
                                     <td className="px-6 py-4 whitespace-nowrap">{paket.namaPaket}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{paket.waktuKerja}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{paket.beratMin}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">Rp. {paket.harga}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        {`Rp. ${new Intl.NumberFormat('id-ID').format(paket.harga)}`}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

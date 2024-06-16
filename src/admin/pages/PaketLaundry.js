@@ -17,7 +17,7 @@ const PaketLaundry = () => {
                         <div className="bg-white shadow-md rounded-lg p-8">
                             <div className="card-body">
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-3xl lg:text-4xl mb-5">Paket Laundry</h2>
+                                    <h2 className="text-3xl lg:text-4xl mb-5 p-2 mt-2 font-bold ml-3">Paket Laundry</h2>
                                     <Link to="/dashboard/admin" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">Kembali</Link>
                                 </div>
                                 <h5 className="text-center my-3 font-semibold text-xl">Pilih Paket</h5>

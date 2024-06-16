@@ -9,6 +9,9 @@ const PengajuanBarang = () => {
     const [pengajuanBarang, setPengajuanBarang] = useState([]);
     const [showFormModal, setShowFormModal] = useState(false);
     const [selectedPengajuan, setSelectedPengajuan] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [orderIdToDelete, setOrderIdToDelete] = useState('');
 
     useEffect(() => {
         fetchData();
@@ -28,18 +31,14 @@ const PengajuanBarang = () => {
             });
     };
 
-    const handleDelete = (id, index) => {
-        if (window.confirm("Apakah Anda yakin ingin menghapus pengajuan ini?")) {
-            axios.delete(`/pengajuan/delete/${id}`)
-                .then(response => {
-                    alert("Pengajuan berhasil dihapus.");
-                    const updatedPengajuan = [...pengajuanBarang];
-                    updatedPengajuan.splice(index, 1);
-                    setPengajuanBarang(updatedPengajuan);
-                })
-                .catch(error => {
-                    console.error("Error deleting pengajuan:", error);
-                });
+    const confirmDelete = async () => {
+        try {
+            await axios.delete(`/pengajuan/delete/${orderIdToDelete}`); // Use the correct endpoint
+            setModalContent('Order berhasil dihapus.');
+            setShowModal(false);
+            fetchData(); // Fetch new data after deletion
+        } catch (error) {
+            console.error('Error deleting order:', error);
         }
     };
 
@@ -48,7 +47,6 @@ const PengajuanBarang = () => {
         setShowFormModal(false);
     };
 
-    
     return (
         <div className="flex flex-col min-h-screen bg-yellow-50">
             <Navbar />
@@ -112,12 +110,18 @@ const PengajuanBarang = () => {
                                             <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
                                             <Link
                                                     to={`/edit/form_pengajuan/${pengajuan._id}`}
-                                                    className={`text-white font-bold py-2 px-3 rounded ${pengajuan.status ? 'bg-slate-600 hover:bg-slate-700' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                                    className={`text-white font-bold py-2 px-3 rounded mr-2 ${pengajuan.status ? 'bg-slate-600 hover:bg-slate-700' : 'bg-blue-500 hover:bg-blue-700'}`}
                                                     onClick={pengajuan.status ? (e) => e.preventDefault() : null}
                                                 >
                                                     Edit
                                                 </Link>
-                                                <button className="bg-red-600 text-white font-bold py-2 px-3 rounded ml-2" onClick={() => handleDelete(pengajuan._id, index)}>Hapus</button>
+                                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded" onClick={() => {
+                                                    setOrderIdToDelete(pengajuan._id);
+                                                    setModalContent(`Apakah yakin ingin menghapus order dengan nomor ${pengajuan.noPengajuan}?`);
+                                                    setShowModal(true);
+                                                    }}>
+                                                        Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -130,7 +134,6 @@ const PengajuanBarang = () => {
 
             {/* Modal Form Pengajuan Barang */}
             {showFormModal && (
-                
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-screen px-4">
                         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -146,9 +149,30 @@ const PengajuanBarang = () => {
                     </div>
                 </div>
             )}
-                <Footer />
+            {showModal && (
+                <Modal
+                    content={modalContent}
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowModal(false)}
+                />
+            )}
+            <Footer />
         </div>
     );
-}
+};
+
+const Modal = ({ content, onConfirm, onCancel }) => {
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-white p-4 rounded shadow-lg w-96">
+                <p className="text-lg mb-4">{content}</p>
+                <div className="flex justify-end">
+                    <button onClick={onConfirm} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Ya</button>
+                    <button onClick={onCancel} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default PengajuanBarang;
