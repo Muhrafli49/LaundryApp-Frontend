@@ -111,6 +111,11 @@ function SidebarItem({ icon, text, link }) {
     // Menentukan apakah item sidebar aktif berdasarkan path saat ini
     const isActive = location.pathname === link;
 
+    // Check if the link is for QR Code, if so, do not render this SidebarItem
+    if (link === '/barcode') {
+        return null;
+    }
+
     return (
         <li className={`flex items-center my-2 sidebar-item ${isActive ? "bg-slate-300" : ""}`}>
             <Link

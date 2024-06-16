@@ -9,6 +9,9 @@ const JumlahKaryawan = () => {
     const [karyawan, setKaryawan] = useState([]);
     const [showFormModal, setShowFormModal] = useState(false);
     const [selectedPegawai, setSelectedPegawai] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [orderIdToDelete, setOrderIdToDelete] = useState('');
 
     useEffect(() => {
         fetchData();
@@ -33,17 +36,14 @@ const JumlahKaryawan = () => {
             });
     };
 
-    const handleDelete = (id) => {
-        if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            axios.delete(`/user/delete/${id}`)
-                .then(response => {
-                    console.log("Data berhasil dihapus:", response.data);
-                    // Memuat ulang data setelah penghapusan
-                    fetchData();
-                })
-                .catch(error => {
-                    console.error("Error deleting data:", error);
-                });
+    const confirmDelete = async () => {
+        try {
+            await axios.delete(`/user/delete/${orderIdToDelete}`);
+            setModalContent('Akun Pegawai berhasil dihapus');
+            setShowModal(false);
+            fetchData();
+        } catch (error) {
+            console.error('Error deleting account: ', error);
         }
     };
 
@@ -60,7 +60,7 @@ const JumlahKaryawan = () => {
         <div className="flex flex-col h-screen">
             <Navbar />
             <div className="flex flex-row flex-1">
-                <Sidebar/>
+                <Sidebar />
                 <div className={`flex-1 p-6 overflow-auto transition duration-300 ease-in-out ${showFormModal ? 'filter blur-sm' : ''}`}>
                     <div className="container mx-auto">
                         <div className="bg-white shadow-md rounded-lg">
@@ -96,8 +96,14 @@ const JumlahKaryawan = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.username}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">{karyawan.email}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap mx-auto text-sm font-medium">
-                                                    <Link to={`/edit/form_tambah_pegawai/${karyawan._id}`} className="btn btn-primary btn-md p-2">Edit</Link>
-                                                    <button onClick={() => handleDelete(karyawan._id)} className="btn btn-danger btn-md p-2 ml-2">Hapus</button>
+                                                    <Link to={`/edit/form_tambah_pegawai/${karyawan._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2">Edit</Link>
+                                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded" onClick={() => {
+                                                        setOrderIdToDelete(karyawan._id);
+                                                        setModalContent(`Apakah yakin ingin menghapus order dengan nomor ${karyawan.nama}?`);
+                                                        setShowModal(true);
+                                                    }}>
+                                                        Hapus
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -118,17 +124,38 @@ const JumlahKaryawan = () => {
                         </div>
                         <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <FormTambahPegawai
-                                pegawai={selectedPegawai}
-                                onClose={closeFormModal}
-                            />
+                                <FormTambahPegawai
+                                    pegawai={selectedPegawai}
+                                    onClose={closeFormModal}
+                                />
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
+            )}
+            {showModal && (
+                <Modal
+                    content={modalContent}
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowModal(false)}
+                />
             )}
         </div>
     );
-}
+};
+
+const Modal = ({ content, onConfirm, onCancel }) => {
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-white p-4 rounded shadow-lg w-96">
+                <p className="text-lg mb-4">{content}</p>
+                <div className="flex justify-end">
+                    <button onClick={onConfirm} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Ya</button>
+                    <button onClick={onCancel} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default JumlahKaryawan;
